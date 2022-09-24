@@ -1,0 +1,32 @@
+[
+  {
+    "title": "The Road to React",
+    "author": "Robin Wieruch",
+    "year": "2018",
+    "pages": "459"
+  },
+  {
+    "title": "React Design Patterns and Best Practices",
+    "author": "Michele Bertoli",
+    "year": "2017",
+    "pages": "320"
+  },
+  {
+    "title": "React Native in Action",
+    "author": "John Resig",
+    "year": "2019",
+    "pages": "321"
+  },
+  {
+    "title": "Secrets of the JavaScript Ninja",
+    "author": "Bear Bibeault",
+    "year": "2016",
+    "pages": "464"
+  },
+  {
+    "title": "JavaScript and jQuery: Interactive Front-End Web Development",
+    "author": " Jon Duckett",
+    "year": "2014",
+    "pages": "640"
+  }
+]
