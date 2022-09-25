@@ -1,15 +1,26 @@
-@import-normalize;
+@import '~modern-normalize/modern-normalize.css';
+
+:root {
+  --main-font: 'Montserrat', sans-serif;
+  --color-black: #000;
+  --color-whire: #fff;
+  --color-grey: #242a37;
+  --color-light-grey: #898f9f;
+  --color-orange: #ff6b08;
+}
+
+html {
+  font-size: 14px;
+}
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--main-font);
+  font-weight: 500;
+  line-height: 1.21;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+img {
+  max-width: 100%;
+  height: auto;
 }
