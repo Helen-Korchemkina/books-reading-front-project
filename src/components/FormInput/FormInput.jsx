@@ -2,13 +2,13 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import s from './FormInput.module.scss';
 
-function FormInput({
+const FormInput = ({
   label,
   input,
   errorMessage = '',
   modifClasses = {},
   children,
-}) {
+}) => {
   return (
     <div className={classNames(s.wrapper, modifClasses.wrapper)}>
       <label
@@ -19,6 +19,7 @@ function FormInput({
       </label>
       <input
         id={label.id}
+        name={label.id}
         className={
           errorMessage
             ? classNames(s.input, s.invalid, modifClasses.input)
@@ -33,17 +34,17 @@ function FormInput({
       {errorMessage ? <span className={s.error}>{errorMessage}</span> : null}
     </div>
   );
-}
+};
 
 FormInput.propTypes = {
   label: PropTypes.exact({
     id: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
+    text: PropTypes.node.isRequired,
   }).isRequired,
   input: PropTypes.exact({
     type: PropTypes.string,
     placeholder: PropTypes.string,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.any.isRequired,
     onChange: PropTypes.func.isRequired,
   }).isRequired,
   errorMessage: PropTypes.string,
