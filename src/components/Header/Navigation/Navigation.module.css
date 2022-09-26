@@ -1,0 +1,30 @@
+.icons {
+  width: 20px;
+  height: 20px;
+  color: var(--color-light-grey);
+  cursor: pointer;
+}
+
+.link {
+  text-align: center;
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  display: flex;
+  border-color: transparent;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.navWraper {
+  display: flex;
+}
+
+.vertical {
+  border: 1px solid var(--color-super-light-grey);
+  height: 33px;
+  float: left;
+  margin: 0 20px 0 0;
+}
