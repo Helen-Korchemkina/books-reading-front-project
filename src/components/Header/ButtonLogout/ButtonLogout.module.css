@@ -1,0 +1,9 @@
+.buttonLogout {
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 17px;
+}
