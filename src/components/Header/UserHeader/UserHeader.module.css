@@ -1,0 +1,6 @@
+.nameWraper {
+  display: flex;
+  flex-wrap: nowrap;
+  align-content: center;
+  align-items: center;
+}

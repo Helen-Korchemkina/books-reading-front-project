@@ -1,0 +1,43 @@
+.header__section {
+  height: 60px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-content: center;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__section2 {
+  height: 60px;
+  align-content: center;
+  align-items: center;
+}
+
+.header__logo {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 27px;
+}
+
+.wrapNav {
+  display: flex;
+  flex-wrap: nowrap;
+  align-content: center;
+  align-items: center;
+}
+
+.hiScreen {
+  margin-right: 25vw;
+}
+@media (min-width: 768px) {
+  .loScreen {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .hiScreen {
+    display: none;
+  }
+}
