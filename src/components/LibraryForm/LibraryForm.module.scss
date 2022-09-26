@@ -1,0 +1,68 @@
+@import 'scss-variables.scss';
+
+.form {
+  padding: 32px 0;
+
+  @media (min-width: $screenMd) {
+    padding: 40px 0 80px;
+  }
+
+  @media (min-width: $screenLg) {
+    display: flex;
+    align-items: flex-end;
+  }
+}
+
+.submit {
+  display: block;
+  min-width: 170px;
+  margin: 40px auto 0;
+
+  @media (min-width: $screenLg) {
+    margin: 0 0 0 48px;
+  }
+}
+
+.details {
+  @media (min-width: $screenMd) {
+    display: flex;
+    align-items: center;
+    column-gap: 32px;
+    margin: 24px 0 40px 0;
+
+    & > * {
+      margin-bottom: 0;
+    }
+  }
+
+  @media (min-width: $screenLg) {
+    column-gap: 16px;
+    margin: 0;
+  }
+}
+
+.title {
+  @media (min-width: $screenLg) {
+    flex-grow: 1;
+    margin: 0 16px 0 0;
+  }
+}
+
+.author {
+  flex-grow: 1;
+
+  @media (min-width: $screenLg) {
+    min-width: 250px;
+  }
+}
+
+.number {
+  @media (min-width: $screenMd) {
+    width: 152px;
+  }
+
+  @media (min-width: $screenLg) {
+    width: 134px;
+    margin: 0;
+  }
+}

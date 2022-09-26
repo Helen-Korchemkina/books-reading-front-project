@@ -1,0 +1,9 @@
+@import 'scss-variables.scss';
+
+.container {
+  padding: 32px 0;
+
+  @media (min-width: $screenMd) {
+    padding: 40px 0;
+  }
+}
