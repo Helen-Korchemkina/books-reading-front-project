@@ -1,0 +1,11 @@
+.navbar {
+  margin-top: 5px;
+  display: flex;
+  border-radius: 5px;
+  align-items: baseline;
+  width: 700px;
+  justify-content: space-between;
+  background-color: var(--background-color);
+  padding: 5px 20px;
+  box-shadow: var(--shadow);
+}
