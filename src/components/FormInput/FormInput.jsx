@@ -53,6 +53,7 @@ FormInput.propTypes = {
     label: PropTypes.string,
     input: PropTypes.string,
   }),
+  spanStar: PropTypes.string,
   children: PropTypes.node,
 };
 

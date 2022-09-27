@@ -1,5 +1,5 @@
 import { Routes, Route, Outlet } from 'react-router-dom';
-
+import LoginPage from 'pages/LoginPage/LoginPage';
 import Container from 'components/Container';
 import Library from 'pages/Library';
 import NotFound from 'pages/NotFound';
@@ -24,7 +24,7 @@ const App = () => {
   return (
     <Routes>
       <Route path="/register" element={<div>Register page dummy</div>} />
-      <Route path="/login" element={<div>Login page dummy</div>} />
+      <Route path="/login" element={<LoginPage />} />
       <Route path="/" element={<SharedLayout />}>
         <Route index element={<Library />} />
         <Route path="training" element={<div>Traning page dummy</div>} />
