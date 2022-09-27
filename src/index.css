@@ -1,8 +1,10 @@
 @import '~modern-normalize/modern-normalize.css';
+@import '~react-toastify/dist/ReactToastify.css';
 
 :root {
   --main-font: 'Montserrat', sans-serif;
   --second-font: 'Abril Fatface';
+  --third-font: 'Roboto';
   --color-black: #000;
   --color-white: #fff;
   --color-grey: #242a37;
@@ -10,6 +12,8 @@
   --color-orange: #ff6b08;
   --color-super-light-grey: #f5f7fa;
   --color-inner-bgn: #f6f7fb;
+  --toastify-icon-color-error: var(--color-orange);
+  --toastify-color-progress-error: var(--color-orange);
 }
 
 html {
