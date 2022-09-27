@@ -3,17 +3,20 @@ import { Routes, Route, Outlet } from 'react-router-dom';
 import Container from 'components/Container';
 import Library from 'pages/Library';
 import NotFound from 'pages/NotFound';
+import Header from 'components/Header';
 
 const SharedLayout = () => (
   <div
-    style={{
-      minHeight: '100vh',
-      backgroundColor: 'var(--color-inner-bgn)',
-    }}
+  // style={{
+  //   minHeight: '100vh',
+  //   backgroundColor: 'var(--color-inner-bgn)',
+  // }}
   >
     {/* Fake navigate menu */}
     <div style={{ backgroundColor: 'var(--color-white)' }}>
-      <Container style={{ minHeight: '60px' }}>Fake navigate menu</Container>
+      <Container>
+        <Header />
+      </Container>
     </div>
 
     <Outlet />
