@@ -15,7 +15,7 @@ const Navigation = () => {
         <BsHouseDoor className={s.icons} />
       </NavLink>
       <NavLink
-        to="/library"
+        to="/training"
         className={({ isActive }) =>
           isActive ? `${s.active} ${s.link}` : s.link
         }

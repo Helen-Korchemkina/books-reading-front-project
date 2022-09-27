@@ -1,1 +1,1 @@
-export { default } from './LibraryForm';
+export { default } from './LibraryForm.jsx';
