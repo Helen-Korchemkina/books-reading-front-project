@@ -28,3 +28,7 @@
   float: left;
   margin: 0 20px 0 0;
 }
+
+.active {
+  background: var(--color-super-light-grey);
+}
