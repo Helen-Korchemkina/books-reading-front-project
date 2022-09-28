@@ -5,25 +5,36 @@ import FormInput from 'components/FormInput';
 import { FcGoogle } from 'react-icons/fc';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import s from './LoginPage.module.scss';
+import s from '../LoginPage/LoginPage.module.scss';
+import BooksReadingAdvantages from 'components/BooksReadingAdvantages/BooksReadingAdvantages';
 
 const SignupSchema = Yup.object().shape({
+  name: Yup.string()
+    .required('Please enter your name')
+    .matches(/^\p{L}+$/u, 'Please use only letters'),
   email: Yup.string()
     .email('Invalid email')
     .required('Please enter your email'),
   password: Yup.string()
     .required('Please Enter your password')
-    .min(8, 'Must be 8 characters or more')
+    .min(5, 'Must be 8 characters or more')
+    .max(30, 'Must be no more than 30 characters ')
     .matches(/[a-z]+/, 'One lowercase character')
     .matches(/[A-Z]+/, 'One uppercase character')
     .matches(/\d+/, 'One number'),
+  confirmPassword: Yup.string()
+    .label('confirm password')
+    .required()
+    .oneOf([Yup.ref('password'), null], 'Passwords must match'),
 });
 
-export default function LoginPage() {
+export default function RegstrationPage() {
   const formik = useFormik({
     initialValues: {
+      name: '',
       email: '',
       password: '',
+      confirmPassword: '',
     },
     validationSchema: SignupSchema,
     onSubmit: (values, actions) => {
@@ -36,9 +47,9 @@ export default function LoginPage() {
 
   return (
     <div className={s.wrapper}>
-      <div className={s.pictureWrapper}>
+      <div className={`${s.pictureWrapper} ${s.pictureRegister}`}>
         <Container>
-          <div className={s.loginWrapper}>
+          <div className={s.registerWrapper}>
             <Button modifClass={s.googleBtn}>
               <span className={s.googleBtnLogo}>
                 <FcGoogle size="20px" />
@@ -51,6 +62,23 @@ export default function LoginPage() {
                 noValidate
                 autoComplete="off"
               >
+                <FormInput
+                  label={{
+                    id: 'name',
+                    text: (
+                      <>
+                        <span className={s.formText}>Name</span>
+                        <span className={s.isRequiredField}> *</span>
+                      </>
+                    ),
+                  }}
+                  input={{
+                    value: formik.values.name,
+                    onChange: formik.handleChange,
+                  }}
+                  modifClasses={s.inputform}
+                  errorMessage={errors.name && touched.name ? errors.name : ''}
+                />
                 <FormInput
                   label={{
                     id: 'email',
@@ -85,33 +113,49 @@ export default function LoginPage() {
                     type: 'password',
                     value: formik.values.password,
                     onChange: formik.handleChange,
-                    placeholder: 'Password',
                   }}
                   modifClasses={s.inputform}
                   errorMessage={
                     errors.password && touched.password ? errors.password : ''
                   }
                 />
+                <FormInput
+                  label={{
+                    id: 'confirmPassword',
+                    text: (
+                      <>
+                        <span className={s.formText}>Confirm password</span>
+                        <span className={s.isRequiredField}> *</span>
+                      </>
+                    ),
+                  }}
+                  input={{
+                    type: 'password',
+                    value: formik.values.confirmPassword,
+                    onChange: formik.handleChange,
+                  }}
+                  modifClasses={s.inputform}
+                  errorMessage={
+                    errors.confirmPassword && touched.confirmPassword
+                      ? errors.confirmPassword
+                      : ''
+                  }
+                />
+
                 <Button variant="filled" modifClass={s.loginBtn} type="submit">
-                  Login
+                  Register
                 </Button>
               </form>
             </div>
-
-            <Link className={s.regLink}>Register</Link>
+            <span className={s.loginLink}>
+              Already have an account? <Link className={s.regLink}>Log in</Link>
+            </span>
           </div>
         </Container>
       </div>
 
-      <div className={s.positionWrapper}>
-        <div className={s.textWrapper}>
-          <span className={s.decorationItem}>“</span>
-          <p className={s.textQuote}>
-            Books are the ships of thoughts, wandering through the waves of
-            time.
-          </p>
-          <p className={s.textAuthor}>Francis Bacon</p>
-        </div>
+      <div className={s.regTextWrapper}>
+        <BooksReadingAdvantages />
       </div>
     </div>
   );

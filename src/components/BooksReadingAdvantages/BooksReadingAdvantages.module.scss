@@ -1,0 +1,53 @@
+.title {
+  margin-top: 32px;
+  font-family: var(--second-font);
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 1.117;
+  text-align: center;
+  @media screen and (min-width: 481px) {
+    margin-top: 64px;
+  }
+  @media screen and (min-width: 769px) {
+    margin: 0;
+  }
+}
+.listContainer {
+  padding: 0 5px;
+  margin-top: 32px;
+  @media screen and (min-width: 481px) {
+    width: 455px;
+    margin: 0 auto;
+    margin-top: 48px;
+  }
+}
+.listTitle {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 14px;
+  @media screen and (min-width: 481px) {
+    margin-bottom: 20px;
+  }
+}
+.secondTextBlock {
+  margin-top: 32px;
+}
+.featuresList {
+  padding-left: 0;
+  margin-top: 14px;
+  list-style: none;
+}
+.featuresListItem {
+  display: inline-flex;
+  align-items: baseline;
+  margin-top: 12px;
+  @media screen and (min-width: 481px) {
+    display: list-item;
+  }
+}
+.listText {
+  margin-left: 12px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.121;
+}
