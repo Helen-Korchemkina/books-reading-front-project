@@ -1,0 +1,16 @@
+.wraper {
+  margin-top: 20px;
+  background-color: var(--background-color);
+  border-radius: 5px;
+}
+
+.title {
+  margin: 10px;
+  font-size: 30px;
+  color: rgb(190, 190, 190);
+}
+.text {
+  padding: 10px;
+  text-align: left;
+  font-size: 20px;
+}
