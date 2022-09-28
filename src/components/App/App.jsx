@@ -4,6 +4,7 @@ import Container from 'components/Container';
 import Library from 'pages/Library';
 import NotFound from 'pages/NotFound';
 import Header from 'components/Header';
+import RegistrationPage from 'pages/RegistrationPage/RegistrationPage';
 
 const SharedLayout = () => (
   <div
@@ -26,7 +27,7 @@ const SharedLayout = () => (
 const App = () => {
   return (
     <Routes>
-      <Route path="/register" element={<div>Register page dummy</div>} />
+      <Route path="/register" element={<RegistrationPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/" element={<SharedLayout />}>
         <Route index element={<Library />} />
