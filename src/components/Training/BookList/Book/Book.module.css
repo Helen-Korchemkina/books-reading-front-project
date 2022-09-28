@@ -1,0 +1,10 @@
+.item{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 15px 0;
+}
+
+.desc{
+    margin-right: 162px;
+    color: var(--color-grey);
+}

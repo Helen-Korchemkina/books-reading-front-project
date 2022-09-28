@@ -3,6 +3,7 @@
 :root {
   --main-font: 'Montserrat', sans-serif;
   --second-font: 'Abril Fatface';
+  --third-font: 'Open Sans';
   --color-black: #000;
   --color-white: #fff;
   --color-grey: #242a37;
@@ -10,6 +11,7 @@
   --color-orange: #ff6b08;
   --color-super-light-grey: #f5f7fa;
   --color-inner-bgn: #f6f7fb;
+  --color-blue: #091e3f;
 }
 
 html {
