@@ -1,0 +1,17 @@
+.spinner {
+  display: block;
+  margin: 30px auto;
+  width: 3rem;
+  height: 3rem;
+  color: var(--color-orange);
+  animation: infRotate 1s linear infinite;
+}
+
+@keyframes infRotate {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -28,7 +28,6 @@ const App = () => {
       <Route path="/" element={<SharedLayout />}>
         <Route index element={<Library />} />
         <Route path="training" element={<div>Traning page dummy</div>} />
-        <Route path="statistic" element={<div>Statistic page dummy</div>} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

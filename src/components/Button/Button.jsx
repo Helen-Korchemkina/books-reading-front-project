@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
+import LoadSpinner from 'components/LoadSpinner';
 import s from './Button.module.scss';
 
 const Button = ({
@@ -18,13 +19,15 @@ const Button = ({
     {
       className: classNames({
         [s[variant]]: true,
-        [s.loading]: isLoading,
         [modifClass]: Boolean(modifClass),
       }),
       onClick,
+      type: 'button',
       ...restProps,
     },
-    children
+    <span>
+      {children} {isLoading && <LoadSpinner modifClass={s.spinner} />}
+    </span>
   );
 };
 

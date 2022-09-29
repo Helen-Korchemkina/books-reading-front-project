@@ -2,6 +2,12 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 
 import { axiosBaseQuery } from 'redux/services/utils';
 
+export const BOOKS_STATUS = {
+  pending: 'Going to read',
+  reading: 'Reading now',
+  finish: 'Already read',
+};
+
 export const booksApi = createApi({
   reducerPath: 'booksApi',
   baseQuery: axiosBaseQuery(),
