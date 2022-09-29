@@ -1,13 +1,15 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { toast } from 'react-toastify';
 
+import { useAddBookMutation } from 'redux/books/books-api';
 import Container from 'components/Container';
 import FormInput from 'components/FormInput';
 import Button from 'components/Button';
 import s from './LibraryForm.module.scss';
 
-const addBookSchema = Yup.object().shape({
-  bookTitle: Yup.string()
+const VALIDATION_SCHEMA = Yup.object().shape({
+  title: Yup.string()
     .min(1, 'Fill in the field')
     .max(50, 'Maximum characters is 50')
     .required('Fill in the input field')
@@ -32,17 +34,23 @@ const addBookSchema = Yup.object().shape({
 });
 
 const LibraryForm = () => {
+  const [addBook, { isSuccess, isLoading }] = useAddBookMutation();
+
   const formik = useFormik({
     initialValues: {
-      bookTitle: '',
+      title: '',
       author: '',
       publicationDate: '',
       amountPages: '',
     },
-    validationSchema: addBookSchema,
-    onSubmit: (values, actions) => {
-      console.log(JSON.stringify(values, null, 2));
-      actions.resetForm();
+    validationSchema: VALIDATION_SCHEMA,
+    onSubmit: async (values, actions) => {
+      await addBook({ ...values, status: 'pending' });
+
+      if (isSuccess) {
+        toast.dismiss();
+        actions.resetForm();
+      }
     },
   });
 
@@ -57,15 +65,13 @@ const LibraryForm = () => {
         autoComplete="off"
       >
         <FormInput
-          label={{ id: 'bookTitle', text: 'Book title' }}
+          label={{ id: 'title', text: 'Book title' }}
           input={{
-            value: formik.values.bookTitle,
+            value: formik.values.title,
             onChange: formik.handleChange,
           }}
           modifClasses={{ wrapper: s.title }}
-          errorMessage={
-            errors.bookTitle && touched.bookTitle ? errors.bookTitle : ''
-          }
+          errorMessage={errors.title && touched.title ? errors.title : ''}
         />
 
         <div className={s.details}>
@@ -110,7 +116,13 @@ const LibraryForm = () => {
           />
         </div>
 
-        <Button variant="outline" type="submit" modifClass={s.submit}>
+        <Button
+          variant="outline"
+          type="submit"
+          modifClass={s.submit}
+          isLoading={isLoading}
+          disabled={isLoading}
+        >
           Add
         </Button>
       </form>

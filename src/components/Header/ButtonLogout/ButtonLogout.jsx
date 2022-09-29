@@ -1,6 +1,9 @@
+import { useEffect } from 'react';
 import s from './ButtonLogout.module.css';
 
 const ButtonLogout = () => {
+  useEffect(() => {}, []);
+
   const handleButton = e => {
     console.log(e);
   };
