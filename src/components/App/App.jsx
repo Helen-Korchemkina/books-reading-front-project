@@ -1,5 +1,6 @@
+import LoginPage from 'pages/LoginPage/LoginPage';
+import RegistrationPage from 'pages/RegistrationPage/RegistrationPage';
 import { Routes, Route } from 'react-router-dom';
-
 import NotFound from 'pages/NotFound';
 import AppBar from 'components/Header/AppBar';
 import Library from 'pages/Library';
