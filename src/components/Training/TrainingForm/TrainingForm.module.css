@@ -1,0 +1,25 @@
+.container{
+
+}
+
+.title{
+    width: 280px;
+    margin:32px 0 20px 0;
+    padding: 18px 0px;
+    font-size: 20px;
+    text-align: center;
+    color: var(--color-white);
+    background-color: #B1B5C2; 
+}
+
+.icon{
+    width: 48px;
+    height: 24px;
+    margin: 24px 0 0 0;
+    color: var(--color-orange);
+    cursor: pointer;
+}
+
+.dataTimePicker{
+    width: 280px;
+}
