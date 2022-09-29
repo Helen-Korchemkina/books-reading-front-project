@@ -1,31 +1,16 @@
-import { Routes, Route, Outlet } from 'react-router-dom';
-
-import Container from 'components/Container';
-import Library from 'pages/Library';
+import LoginPage from 'pages/LoginPage/LoginPage';
+import RegistrationPage from 'pages/RegistrationPage/RegistrationPage';
+import { Routes, Route } from 'react-router-dom';
 import NotFound from 'pages/NotFound';
-
-const SharedLayout = () => (
-  <div
-    style={{
-      minHeight: '100vh',
-      backgroundColor: 'var(--color-inner-bgn)',
-    }}
-  >
-    {/* Fake navigate menu */}
-    <div style={{ backgroundColor: 'var(--color-white)' }}>
-      <Container style={{ minHeight: '60px' }}>Fake navigate menu</Container>
-    </div>
-
-    <Outlet />
-  </div>
-);
+import AppBar from 'components/Header/AppBar';
+import Library from 'pages/Library';
 
 const App = () => {
   return (
     <Routes>
       <Route path="/register" element={<div>Register page dummy</div>} />
       <Route path="/login" element={<div>Login page dummy</div>} />
-      <Route path="/" element={<SharedLayout />}>
+      <Route path="/" element={<AppBar />}>
         <Route index element={<Library />} />
         <Route path="training" element={<div>Traning page dummy</div>} />
         <Route path="*" element={<NotFound />} />

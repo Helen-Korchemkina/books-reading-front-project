@@ -1,19 +1,26 @@
 .header__section {
-  height: 60px;
   display: flex;
   flex-wrap: nowrap;
   align-content: center;
   align-items: center;
   justify-content: space-between;
 }
+.header {
+  height: 60px;
+  box-shadow: 0px 2px 3px rgba(9, 30, 63, 0.1);
+}
 
 .header__section2 {
-  height: 60px;
   align-content: center;
   align-items: center;
+  box-shadow: 0px 2px 3px rgba(9, 30, 63, 0.1);
+  display: table-cell;
+  vertical-align: middle;
+  width: 100vw;
 }
 
 .header__logo {
+  font-family: var(--second-font);
   text-align: center;
   font-size: 20px;
   font-weight: 400;
@@ -40,4 +47,10 @@
   .hiScreen {
     display: none;
   }
+}
+
+.line {
+  background: var(--color-super-light-grey);
+  height: 2px;
+  border: none;
 }

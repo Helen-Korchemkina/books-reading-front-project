@@ -7,20 +7,18 @@ const Navigation = () => {
   return (
     <div className={s.navWraper}>
       <NavLink
-        to="/home"
-        style={({ isActive }) => ({
-          background: isActive && 'var(--color-super-light-grey)',
-        })}
-        className={s.link}
+        to="/"
+        className={({ isActive }) =>
+          isActive ? `${s.active} ${s.link}` : s.link
+        }
       >
         <BsHouseDoor className={s.icons} />
       </NavLink>
       <NavLink
-        to="/library"
-        style={({ isActive }) => ({
-          background: isActive && 'var(--color-super-light-grey)',
-        })}
-        className={s.link}
+        to="/training"
+        className={({ isActive }) =>
+          isActive ? `${s.active} ${s.link}` : s.link
+        }
       >
         <MdOutlineMenuBook className={s.icons} />
       </NavLink>
