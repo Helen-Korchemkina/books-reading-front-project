@@ -1,4 +1,4 @@
-import Trainig from '../../components/Training/Training';
+import Trainig from 'components/Training/Training';
 
 function TrainingPage() {
   return <Trainig />;
