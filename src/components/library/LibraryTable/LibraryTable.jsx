@@ -1,5 +1,3 @@
-import Media from 'react-media';
-import EllipsisText from 'react-ellipsis-text';
 import classNames from 'classnames';
 import Rating from '@mui/material/Rating';
 import { MdOutlineMenuBook } from 'react-icons/md';
@@ -36,29 +34,11 @@ const LibraryTable = ({ books = [], onShowResumeBtnClick }) => {
                   [s.iconFill]: book.status === BOOKS_STATUS.reading,
                 })}
               />
-              <Media queries={{ small: { minWidth: 768 } }}>
-                {matches =>
-                  matches.small && book.status === BOOKS_STATUS.finish ? (
-                    <EllipsisText text={book.title} length={20} />
-                  ) : (
-                    <span>{book.title}</span>
-                  )
-                }
-              </Media>
+              <span>{book.title}</span>
             </td>
             <td className={s.inlineTitle}>
-              <Media queries={{ small: { minWidth: 768 } }}>
-                {matches =>
-                  matches.small && book.status === BOOKS_STATUS.finish ? (
-                    <EllipsisText text={book.author} length={20} />
-                  ) : (
-                    <>
-                      <span className={s.subtitle}>Author:</span>
-                      {book.author}
-                    </>
-                  )
-                }
-              </Media>
+              <span className={s.subtitle}>Author:</span>
+              {book.author}
             </td>
             <td className={s.inlineTitle}>
               <span className={s.subtitle}>Year:</span>
