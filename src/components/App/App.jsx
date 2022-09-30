@@ -3,22 +3,20 @@ import RegistrationPage from 'pages/RegistrationPage/RegistrationPage';
 import { Routes, Route } from 'react-router-dom';
 import NotFound from 'pages/NotFound';
 import AppBar from 'components/Header/AppBar';
-import Library from 'pages/Library';
+import LibraryPage from 'pages/LibraryPage';
 import TrainingPage from 'pages/TrainingPage';
 
 const App = () => {
   return (
-    <>
-      <Routes>
-        <Route path="/register" element={<RegistrationPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/" element={<AppBar />}>
-          <Route index element={<Library />} />
-          <Route path="/training" element={<TrainingPage />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </>
+    <Routes>
+      <Route path="/register" element={<RegistrationPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/" element={<AppBar />}>
+        <Route index element={<LibraryPage />} />
+        <Route path="training" element={<TrainingPage />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
   );
 };
 

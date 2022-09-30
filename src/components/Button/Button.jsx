@@ -33,7 +33,7 @@ const Button = ({
 
 Button.propTypes = {
   tag: PropTypes.oneOf(['button', 'a']),
-  variant: PropTypes.oneOf(['outline', 'filled']),
+  variant: PropTypes.oneOf(['outline', 'filled', 'icon']),
   modifClass: PropTypes.string,
   isLoading: PropTypes.bool,
   onClick: PropTypes.func,
