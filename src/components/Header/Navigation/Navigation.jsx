@@ -8,6 +8,7 @@ const Navigation = () => {
     <div className={s.navWraper}>
       <NavLink
         to="/"
+        end
         className={({ isActive }) =>
           isActive ? `${s.active} ${s.link}` : s.link
         }
@@ -15,7 +16,7 @@ const Navigation = () => {
         <BsHouseDoor className={s.icons} />
       </NavLink>
       <NavLink
-        to="/training"
+        to="training"
         className={({ isActive }) =>
           isActive ? `${s.active} ${s.link}` : s.link
         }
