@@ -12,33 +12,25 @@
   text-align: center;
   text-decoration: none;
   color: var(--black);
-  background: #f6f7fb;
+  background-color: #f6f7fb;
   cursor: pointer;
-  transition: box-shadow 0.2s linear;
+  transition: border-color 0.2s linear;
   user-select: none;
 
   &:hover,
   &:focus {
-    box-shadow: 0px 2px 4px #090b0e;
+    border-color: #f25137;
     text-decoration: none;
   }
 
   &:disabled {
     opacity: 0.5;
     cursor: default;
-    box-shadow: none;
-  }
 
-  &.loading:after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    height: 80%;
-    aspect-ratio: 1/1;
-    background-size: contain;
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNDggNDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+DQo8cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9ImN1cnJlbnRDb2xvciIgZmlsbC1vcGFjaXR5PSIwLjAxIi8+DQo8cGF0aCBkPSJNNCAyNEM0IDM1LjA0NTcgMTIuOTU0MyA0NCAyNCA0NFY0NEMzNS4wNDU3IDQ0IDQ0IDM1LjA0NTcgNDQgMjRDNDQgMTIuOTU0MyAzNS4wNDU3IDQgMjQgNCIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4NCjxwYXRoIGQ9Ik0zNiAyNEMzNiAxNy4zNzI2IDMwLjYyNzQgMTIgMjQgMTJDMTcuMzcyNiAxMiAxMiAxNy4zNzI2IDEyIDI0QzEyIDMwLjYyNzQgMTcuMzcyNiAzNiAyNCAzNlYzNiIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIC8+DQo8L3N2Zz4NCg==);
-    animation: 2s linear 0s infinite infRotate;
+    &:hover,
+    &:focus {
+      border-color: #242a37;
+    }
   }
 }
 
@@ -46,17 +38,35 @@
   @extend .outline;
   color: var(--color-white);
   border: 1px solid var(--color-orange);
-  background: var(--color-orange);
+  background-color: var(--color-orange);
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  transition: background-color 0.2s linear;
+
+  & .spinner {
+    color: #242a37;
+  }
 
   &:hover,
   &:focus {
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.9);
+    background-color: #d15807;
   }
 
   &:disabled {
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    &:hover,
+    &:focus {
+      border-color: var(--color-orange);
+      background-color: var(--color-orange);
+    }
   }
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 80%;
+  margin: 0;
+  animation: infRotate 1s linear infinite;
 }
 
 @keyframes infRotate {
