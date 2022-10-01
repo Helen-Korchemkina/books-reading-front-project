@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-import LoadSpinner from 'components/LoadSpinner';
+import LoadSpinner from 'components/common/LoadSpinner';
 import s from './Button.module.scss';
 
 const Button = ({
@@ -33,7 +33,7 @@ const Button = ({
 
 Button.propTypes = {
   tag: PropTypes.oneOf(['button', 'a']),
-  variant: PropTypes.oneOf(['outline', 'filled']),
+  variant: PropTypes.oneOf(['outline', 'filled', 'icon']),
   modifClass: PropTypes.string,
   isLoading: PropTypes.bool,
   onClick: PropTypes.func,

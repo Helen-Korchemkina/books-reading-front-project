@@ -1,8 +1,8 @@
-import Container from 'components/Container';
+import Container from 'components/common/Container';
 import { Link } from 'react-router-dom';
-import Button from 'components/Button';
-import FormInput from 'components/FormInput';
-import { FcGoogle } from 'react-icons/fc';
+import Button from 'components/common/Button';
+import FormInput from 'components/common/FormInput';
+import GoogleBtn from 'components/GoogleBtn/GoogleBtn';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import s from '../LoginPage/LoginPage.module.scss';
@@ -50,12 +50,7 @@ export default function RegstrationPage() {
       <div className={`${s.pictureWrapper} ${s.pictureRegister}`}>
         <Container>
           <div className={s.registerWrapper}>
-            <Button modifClass={s.googleBtn}>
-              <span className={s.googleBtnLogo}>
-                <FcGoogle size="20px" />
-              </span>
-              <span className={s.googleBtnText}>Google</span>
-            </Button>
+            <GoogleBtn />
             <div className={s.formWrapper}>
               <form
                 onSubmit={formik.handleSubmit}
