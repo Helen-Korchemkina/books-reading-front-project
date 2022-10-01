@@ -1,5 +1,9 @@
 @import 'scss-variables.scss';
 
+.catalogWrapper {
+  position: relative;
+}
+
 .trainingBtn {
   display: block;
   min-width: 170px;
