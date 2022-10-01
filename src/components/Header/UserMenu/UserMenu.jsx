@@ -5,7 +5,7 @@ import UserHeader from '../UserHeader';
 
 import Media from 'react-media';
 import Container from 'components/Container';
-import { NavLink, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 const UserMenu = () => {
   const user = true;
