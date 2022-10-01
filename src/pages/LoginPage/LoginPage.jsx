@@ -2,7 +2,7 @@ import Container from 'components/Container';
 import { Link } from 'react-router-dom';
 import Button from 'components/Button';
 import FormInput from 'components/FormInput';
-import { FcGoogle } from 'react-icons/fc';
+import GoogleBtn from 'components/GoogleBtn/GoogleBtn';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import s from './LoginPage.module.scss';
@@ -39,12 +39,7 @@ export default function LoginPage() {
       <div className={s.pictureWrapper}>
         <Container>
           <div className={s.loginWrapper}>
-            <Button modifClass={s.googleBtn}>
-              <span className={s.googleBtnLogo}>
-                <FcGoogle size="20px" />
-              </span>
-              <span className={s.googleBtnText}>Google</span>
-            </Button>
+            <GoogleBtn />
             <div className={s.formWrapper}>
               <form
                 onSubmit={formik.handleSubmit}
