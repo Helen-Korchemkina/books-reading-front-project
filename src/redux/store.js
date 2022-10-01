@@ -2,8 +2,10 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
 import { rtkQueryErrorLogger } from 'redux/services/utils';
 import { booksApi } from 'redux/books/books-api';
+import { authApi } from './user/authOperations';
 
 const rootReducer = combineReducers({
+  [authApi.reducerPath]: authApi.reducer,
   [booksApi.reducerPath]: booksApi.reducer,
 });
 

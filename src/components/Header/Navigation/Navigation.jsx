@@ -5,7 +5,7 @@ import s from './Navigation.module.css';
 
 const Navigation = () => {
   return (
-    <div className={s.navWraper}>
+    <nav className={s.navWraper}>
       <NavLink
         to="/"
         end
@@ -25,7 +25,7 @@ const Navigation = () => {
       </NavLink>
 
       <div className={s.vertical}></div>
-    </div>
+    </nav>
   );
 };
 

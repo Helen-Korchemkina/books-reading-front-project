@@ -1,14 +1,15 @@
-import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { useLogoutUserQuery } from 'redux/user/authOperations';
+
 import s from './ButtonLogout.module.css';
 
 const ButtonLogout = () => {
-  useEffect(() => {}, []);
-
-  const handleButton = e => {
-    console.log(e);
-  };
+  const dispatch = useDispatch();
+  // const [logoutUser] = useLogoutUserQuery();
+  const handleLogout = () => {};
   return (
-    <button className={s.buttonLogout} onClick={handleButton}>
+    <button className={s.buttonLogout} onClick={() => dispatch(handleLogout)}>
       Logout
     </button>
   );
