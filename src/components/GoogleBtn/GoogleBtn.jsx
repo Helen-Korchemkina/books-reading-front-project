@@ -1,4 +1,4 @@
-import Button from 'components/Button';
+import Button from 'components/common/Button';
 import { FcGoogle } from 'react-icons/fc';
 import s from './GoogleBtn.module.scss';
 
