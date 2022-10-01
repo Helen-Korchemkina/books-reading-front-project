@@ -1,15 +1,9 @@
 @import 'scss-variables.scss';
 
-.title {
-  margin: 20px 0;
-  font-size: 19px;
-  font-weight: 600;
-}
-
 .trainingBtn {
   display: block;
   min-width: 170px;
-  margin: 20px auto;
+  margin: 20px auto 120px;
 
   @media (min-width: $screenMd) {
     min-width: 200px;
