@@ -1,5 +1,5 @@
-import Button from 'components/Button';
-import Container from 'components/Container';
+import Button from 'components/common/Button';
+import Container from 'components/common/Container';
 import { Link } from 'react-router-dom';
 import BooksReadingAdvantages from 'components/BooksReadingAdvantages/BooksReadingAdvantages';
 import s from './InfoPage.module.scss';
