@@ -2,9 +2,8 @@ import ButtonLogout from '../ButtonLogout';
 import s from './UserMenu.module.css';
 import Navigation from '../Navigation';
 import UserHeader from '../UserHeader';
-
 import Media from 'react-media';
-import Container from 'components/common/Container';
+import Container from 'components/Container';
 import { Outlet } from 'react-router-dom';
 
 const UserMenu = () => {
