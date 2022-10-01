@@ -143,7 +143,10 @@ export default function RegstrationPage() {
               </form>
             </div>
             <span className={s.loginLink}>
-              Already have an account? <Link className={s.regLink}>Log in</Link>
+              Already have an account?{' '}
+              <Link className={s.regLink} to="/login">
+                Log in
+              </Link>
             </span>
           </div>
         </Container>

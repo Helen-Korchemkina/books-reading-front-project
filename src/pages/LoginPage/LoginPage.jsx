@@ -93,7 +93,9 @@ export default function LoginPage() {
               </form>
             </div>
 
-            <Link className={s.regLink}>Register</Link>
+            <Link className={s.regLink} to="/register">
+              Register
+            </Link>
           </div>
         </Container>
       </div>
