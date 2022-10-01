@@ -1,0 +1,72 @@
+@import 'scss-variables.scss';
+
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 40px 20px 95px;
+  background-color: var(--color-white);
+  font-weight: 600;
+  color: var(--color-grey);
+
+  @media (min-width: $screenMd) {
+    position: static;
+    width: 610px;
+    margin: 0 auto;
+    padding: 40px;
+  }
+}
+
+.title {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+}
+
+.mainList {
+  margin: 0 0 20px 0;
+  padding: 0;
+  font-size: 16px;
+  list-style: none;
+
+  & > li {
+    position: relative;
+    padding: 0 0 0 30px;
+
+    & > .icon {
+      color: #a6abb9;
+    }
+  }
+}
+
+.subList {
+  margin: 5px 0;
+  padding: 0;
+  list-style: none;
+  font-weight: 400;
+  font-style: 14px;
+  color: var(--color-light-grey);
+
+  & > li {
+    position: relative;
+    padding: 0 0 0 20px;
+
+    & > .icon {
+      width: 15px;
+      color: var(--color-orange);
+    }
+  }
+}
+
+.icon {
+  position: absolute;
+  top: -3px;
+  left: 0;
+  width: 22px;
+  height: 22px;
+}
+
+.button {
+  display: block;
+  margin: 40px auto 0;
+}

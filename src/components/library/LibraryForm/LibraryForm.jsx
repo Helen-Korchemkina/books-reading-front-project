@@ -35,7 +35,7 @@ const VALIDATION_SCHEMA = Yup.object().shape({
 
 const LibraryForm = ({ onFormSubmit }) => {
   const mutation = useAddBookMutation();
-  const [addBook, { error, isLoading }] = mutation;
+  const [addBook, { isLoading }] = mutation;
 
   const formik = useFormik({
     initialValues: {

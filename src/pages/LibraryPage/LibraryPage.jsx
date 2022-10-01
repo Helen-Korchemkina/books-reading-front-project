@@ -10,6 +10,7 @@ import PlusButton from 'components/common/PlusButton';
 import LoadSpinner from 'components/common/LoadSpinner';
 import LibraryForm from 'components/library/LibraryForm';
 import LibraryCatalog from 'components/library/LibraryCatalog';
+import EmptyLibraryModal from 'components/library/EmptyLibraryModal';
 import s from './LibraryPage.module.scss';
 
 const LibraryPage = () => {
@@ -20,8 +21,8 @@ const LibraryPage = () => {
   } = useGetBooksQuery();
 
   const navigate = useNavigate();
-  const userHasRunnigTraining = true;
   const [switchComponents, setSwitchComponents] = useState(true);
+  const userHasRunnigTraining = true;
   const isMobileScreen = useMediaQuery({ query: '(max-width: 768px)' });
   const showAddForm = isMobileScreen ? switchComponents : true;
   const showCatalog = isMobileScreen ? !switchComponents : true;
@@ -46,7 +47,7 @@ const LibraryPage = () => {
   if (isBooksSuccess) {
     return (
       <Container>
-        {isMobileScreen && books.length !== 0 && (
+        {isMobileScreen && (
           <GoBackButton onClick={() => setSwitchComponents(!showAddForm)} />
         )}
 
@@ -67,27 +68,32 @@ const LibraryPage = () => {
             }
           />
         )}
+        <div className={s.catalogWrapper}>
+          {books.length === 0 && showCatalog && (
+            <EmptyLibraryModal
+              onConfirmBtnClick={() => setSwitchComponents(true)}
+            />
+          )}
 
-        {!hasPendingBook && <div>Library is empty</div>}
+          {books.length !== 0 && showCatalog && (
+            <>
+              <LibraryCatalog books={books} />
+              {!hasPendingBook && userHasRunnigTraining && (
+                <Button
+                  variant="filled"
+                  onClick={() => navigate('/training')}
+                  modifClass={s.trainingBtn}
+                >
+                  My training
+                </Button>
+              )}
 
-        {books.length !== 0 && showCatalog && (
-          <>
-            <LibraryCatalog books={books} />
-            {userHasRunnigTraining && (
-              <Button
-                variant="filled"
-                onClick={() => navigate('/training')}
-                modifClass={s.trainingBtn}
-              >
-                My training
-              </Button>
-            )}
-          </>
-        )}
-
-        {books.length !== 0 && isMobileScreen && showCatalog && (
-          <PlusButton onClick={() => setSwitchComponents(true)} />
-        )}
+              {isMobileScreen && (
+                <PlusButton onClick={() => setSwitchComponents(true)} />
+              )}
+            </>
+          )}
+        </div>
       </Container>
     );
   }
