@@ -1,20 +1,20 @@
-import Button from 'components/Button';
+import Button from 'components/common/Button';
 import { FcGoogle } from 'react-icons/fc';
 import s from './GoogleBtn.module.scss';
 
 export default function GoogleBtn() {
   return (
-    <Button modifClass={s.googleBtn}>
-      <a
-        href="https://books-reading-project.herokuapp.com/api/auth/google
+    <a
+      href="https://books-reading-project.herokuapp.com/api/auth/google
 "
-        className={s.link}
-      >
+      className={s.link}
+    >
+      <Button modifClass={s.googleBtn}>
         <span className={s.googleBtnLogo}>
           <FcGoogle size="20px" />
         </span>
         <span className={s.googleBtnText}>Google</span>
-      </a>
-    </Button>
+      </Button>
+    </a>
   );
 }

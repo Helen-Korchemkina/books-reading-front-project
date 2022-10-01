@@ -1,7 +1,7 @@
-import Container from 'components/Container';
+import Container from 'components/common/Container';
 import { Link } from 'react-router-dom';
-import Button from 'components/Button';
-import FormInput from 'components/FormInput';
+import Button from 'components/common/Button';
+import FormInput from 'components/common/FormInput';
 import GoogleBtn from 'components/GoogleBtn/GoogleBtn';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';

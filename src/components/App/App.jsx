@@ -1,9 +1,9 @@
 import LoginPage from 'pages/LoginPage/LoginPage';
 import RegistrationPage from 'pages/RegistrationPage/RegistrationPage';
 import { Routes, Route } from 'react-router-dom';
-import NotFound from 'pages/NotFound';
+import NotFoundPage from 'pages/NotFoundPage';
 import AppBar from 'components/Header/AppBar';
-import Library from 'pages/Library';
+import LibraryPage from 'pages/LibraryPage';
 import TrainingPage from 'pages/TrainingPage';
 import GoogleAnswerPage from 'pages/GoogleAnswerPage';
 import InfoPage from 'pages/InfoPageMobile/InfoPageMobile';
