@@ -1,0 +1,81 @@
+.table {
+    position: relative;
+    width: 100%;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.25;
+    text-align: left;
+    border-top: 1px solid #E0E5EB;
+    border-bottom: 1px solid #E0E5EB;
+    color: var(--color-grey);
+  
+    @media (min-width: 768px) {
+      border-collapse: separate;
+      border-spacing: 0 12px;
+      font-size: 14px;
+    }
+  }
+
+  .headerRow {
+    display: table-row;
+    font-weight: inherit;
+    color: var(--color-light-grey);
+  }
+
+  .title{
+      margin-left: 40px;
+  }
+
+  .bodyRowTitle {
+    @media (min-width: 768px) {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .bodyRow td{
+    @media (min-width: 768px) {
+        padding-top: 12px;
+        border-top: 1px solid #E0E5EB;
+        font-weight: 500;
+        line-height: 17px;
+
+      }
+  }
+  
+  .inlineTitle {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+  
+    @media (min-width: 768px) {
+      display: table-cell;
+    }
+  }
+  
+  .subtitle {
+    color: #898f9f;
+  
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+  
+  .icon {
+    position: absolute;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    color: var(--color-light-grey);
+  }
+
+  .iconDelete{
+    position: absolute;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    color: var(--color-light-grey); 
+  }
+  
+  .iconFill {
+    color: var(--color-orange);
+  }
