@@ -2,10 +2,10 @@ import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { BOOKS_STATUS } from 'redux/books/books-api';
-import LibraryTable from './LibraryTable';
-import s from './LibraryCategories.module.scss';
+import LibraryTable from 'components/library/LibraryTable';
+import s from './LibraryCatalog.module.scss';
 
-const LibraryCategories = ({ books = [] }) => {
+const LibraryCatalog = ({ books = [] }) => {
   const booksByStatus = useMemo(() => {
     return books.reduce(
       (acc, book) => {
@@ -57,8 +57,8 @@ const LibraryCategories = ({ books = [] }) => {
   );
 };
 
-LibraryCategories.propTypes = {
+LibraryCatalog.propTypes = {
   books: PropTypes.array.isRequired,
 };
 
-export default LibraryCategories;
+export default LibraryCatalog;

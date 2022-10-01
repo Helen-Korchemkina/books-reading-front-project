@@ -1,7 +1,7 @@
 import LoginPage from 'pages/LoginPage/LoginPage';
 import RegistrationPage from 'pages/RegistrationPage/RegistrationPage';
 import { Routes, Route } from 'react-router-dom';
-import NotFound from 'pages/NotFound';
+import NotFoundPage from 'pages/NotFoundPage';
 import AppBar from 'components/Header/AppBar';
 import LibraryPage from 'pages/LibraryPage';
 import TrainingPage from 'pages/TrainingPage';
@@ -16,7 +16,7 @@ const App = () => {
       <Route path="/" element={<AppBar />}>
         <Route index element={<LibraryPage />} />
         <Route path="training" element={<TrainingPage />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
   );

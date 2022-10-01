@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-import LoadSpinner from 'components/LoadSpinner';
+import LoadSpinner from 'components/common/LoadSpinner';
 import s from './Button.module.scss';
 
 const Button = ({
