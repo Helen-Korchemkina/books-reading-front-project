@@ -1,0 +1,26 @@
+.plusButton {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  min-width: 52px;
+  height: 52px;
+  margin-left: -26px;
+  border: 0;
+  border-radius: 50%;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 1px;
+    margin-left: -8px;
+    background-color: var(--color-white);
+  }
+
+  &::after {
+    transform: rotate(90deg);
+  }
+}

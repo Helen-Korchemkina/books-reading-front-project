@@ -2,15 +2,15 @@ import ButtonLogout from '../ButtonLogout';
 import s from './UserMenu.module.css';
 import Navigation from '../Navigation';
 import UserHeader from '../UserHeader';
-
 import Media from 'react-media';
 import Container from 'components/Container';
 import { Outlet } from 'react-router-dom';
 
+
 const UserMenu = () => {
   const user = true;
   return (
-    <>
+    <div className={s.wrapper}>
       <header className={s.header}>
         <Container>
           <div className={user ? s.header__section : s.header__section2}>
@@ -34,7 +34,7 @@ const UserMenu = () => {
       <main>
         <Outlet />
       </main>
-    </>
+    </div>
   );
 };
 

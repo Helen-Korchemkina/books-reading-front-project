@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import Container from 'components/Container';
+import Container from 'components/common/Container';
 
-import s from './NotFound.module.scss';
+import s from './NotFoundPage.module.scss';
 
-const NotFound = () => {
+const NotFoundPage = () => {
   return (
     <Container>
       <div className={s.container}>
@@ -14,4 +14,4 @@ const NotFound = () => {
   );
 };
 
-export default NotFound;
+export default NotFoundPage;

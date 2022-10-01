@@ -1,4 +1,4 @@
-import Container from 'components/Container';
+import Container from 'components/common/Container';
 import { Link } from 'react-router-dom';
 import Button from 'components/Button';
 import FormInput from 'components/FormInput';
