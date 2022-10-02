@@ -1,10 +1,11 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 
 import { useAddBookMutation } from 'redux/books/books-api';
-import FormInput from 'components/FormInput';
-import Button from 'components/Button';
+import FormInput from 'components/common/FormInput';
+import Button from 'components/common/Button';
 import s from './LibraryForm.module.scss';
 
 const VALIDATION_SCHEMA = Yup.object().shape({
@@ -20,6 +21,7 @@ const VALIDATION_SCHEMA = Yup.object().shape({
     .matches(/^[^- ]/, 'The field can`t start with a space or hyphen')
     .matches(/^([^\d]*)$/, 'The field can`t contains digits'),
   releaseDate: Yup.number()
+    .integer('Can`t containts "."')
     .min(1900, 'Minimum year is 1900')
     .max(
       new Date().getFullYear(),
@@ -27,13 +29,15 @@ const VALIDATION_SCHEMA = Yup.object().shape({
     )
     .required('Fill in the field'),
   countOfPages: Yup.number()
+    .integer('Can`t containts "."')
     .min(1, 'Minimum pages is 1')
     .max(9999, 'Maximum pages is 9999')
     .required('Fill in the field'),
 });
 
-const LibraryForm = () => {
-  const [addBook, { isSuccess, isLoading }] = useAddBookMutation();
+const LibraryForm = ({ onFormSubmit }) => {
+  const mutation = useAddBookMutation();
+  const [addBook, { isLoading }] = mutation;
 
   const formik = useFormik({
     initialValues: {
@@ -44,16 +48,19 @@ const LibraryForm = () => {
     },
     validationSchema: VALIDATION_SCHEMA,
     onSubmit: async (values, actions) => {
-      await addBook({
-        ...values,
-        status: 'Going to read',
-        rating: 0,
-        resume: '',
-      });
+      try {
+        await addBook({
+          ...values,
+          status: 'Going to read',
+          rating: 0,
+          resume: '',
+        }).unwrap();
 
-      if (isSuccess) {
         toast.dismiss();
         actions.resetForm();
+        onFormSubmit && onFormSubmit();
+      } catch (error) {
+        console.log(error);
       }
     },
   });
@@ -128,6 +135,10 @@ const LibraryForm = () => {
       </Button>
     </form>
   );
+};
+
+LibraryForm.propTypes = {
+  onFormSubmit: PropTypes.func,
 };
 
 export default LibraryForm;

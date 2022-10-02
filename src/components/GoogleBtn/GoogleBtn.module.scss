@@ -1,0 +1,29 @@
+.googleBtn {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 40px;
+  margin: 0 auto;
+
+  background-color: var(--color-super-light-grey);
+  @media screen and (max-width: 480px) {
+    margin-top: 32px;
+  }
+}
+.googleBtnText {
+  font-family: var(--third-font);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 2.375;
+  color: #707375;
+}
+.googleBtnLogo {
+  position: absolute;
+  left: 16px;
+  top: 7px;
+}
+.link {
+  text-decoration: none;
+}

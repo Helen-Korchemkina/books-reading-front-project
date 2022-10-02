@@ -1,13 +1,20 @@
 import classNames from 'classnames';
+import { useMediaQuery } from 'react-responsive';
+import LinesEllipsis from 'react-lines-ellipsis';
+import responsiveHOC from 'react-lines-ellipsis/lib/responsiveHOC';
 import Rating from '@mui/material/Rating';
 import { MdOutlineMenuBook } from 'react-icons/md';
 import PropTypes from 'prop-types';
 
 import { BOOKS_STATUS } from 'redux/books/books-api';
-import Button from 'components/Button';
+import Button from 'components/common/Button';
 import s from './LibraryTable.module.scss';
 
+const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis);
+
 const LibraryTable = ({ books = [], onShowResumeBtnClick }) => {
+  const isMobileScreen = useMediaQuery({ query: '(max-width: 768px)' });
+
   return (
     <table className={s.table}>
       <thead>
@@ -34,11 +41,27 @@ const LibraryTable = ({ books = [], onShowResumeBtnClick }) => {
                   [s.iconFill]: book.status === BOOKS_STATUS.reading,
                 })}
               />
-              <span>{book.title}</span>
+              {book.status === BOOKS_STATUS.finish && !isMobileScreen ? (
+                <ResponsiveEllipsis
+                  text={book.title}
+                  maxLine="1"
+                  basedOn="letters"
+                />
+              ) : (
+                <span>{book.title}</span>
+              )}
             </td>
             <td className={s.inlineTitle}>
               <span className={s.subtitle}>Author:</span>
-              {book.author}
+              {book.status === BOOKS_STATUS.finish && !isMobileScreen ? (
+                <ResponsiveEllipsis
+                  text={book.author}
+                  maxLine="1"
+                  basedOn="letters"
+                />
+              ) : (
+                <span>{book.author}</span>
+              )}
             </td>
             <td className={s.inlineTitle}>
               <span className={s.subtitle}>Year:</span>
@@ -53,7 +76,7 @@ const LibraryTable = ({ books = [], onShowResumeBtnClick }) => {
                 <span className={s.subtitle}>Rating:</span>
                 <Rating
                   className={s.rating}
-                  name="read-only"
+                  name="rating"
                   size="small"
                   defaultValue={book.rating}
                   readOnly

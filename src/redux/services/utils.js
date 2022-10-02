@@ -3,13 +3,15 @@ import { isRejectedWithValue } from '@reduxjs/toolkit';
 
 import { toastErrorNotification } from 'utils/utils';
 
-axios.defaults.baseURL = 'https://63318028cff0e7bf70eefa81.mockapi.io';
+const axiosInstance = axios.create({
+  baseURL: 'https://63318028cff0e7bf70eefa81.mockapi.io',
+});
 
 export const axiosBaseQuery =
   () =>
   async ({ url, method, body, params }) => {
     try {
-      const result = await axios({ url, method, data: body, params });
+      const result = await axiosInstance({ url, method, data: body, params });
       return { data: result.data };
     } catch (axiosError) {
       return {

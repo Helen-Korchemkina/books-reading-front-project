@@ -1,4 +1,4 @@
-import Container from '../Container/Container';
+import Container from '../common/Container/Container';
 import MyGoals from './MyGoals/MyGoals';
 import BookList from './BookList/BookList';
 import Graphic from './Graphic/Graphic';
@@ -6,6 +6,7 @@ import BooksTable from './BooksTable/BooksTable';
 import TrainingForm from './TrainingForm/TrainingForm';
 import MediaQuery from 'react-responsive';
 import s from './Training.module.css';
+
 
 const Training = () =>{
     return(
