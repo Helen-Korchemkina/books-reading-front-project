@@ -10,7 +10,7 @@ import {
   } from 'chart.js';
   import { Line } from 'react-chartjs-2';
 //   import Options from './Options';
-  import s from './Graphic.module.css';
+  import s from './Graphic.module.scss';
 
   
   ChartJS.register(
