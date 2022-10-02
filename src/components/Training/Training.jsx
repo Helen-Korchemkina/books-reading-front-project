@@ -5,6 +5,7 @@ import Graphic from './Graphic/Graphic';
 import BooksTable from './BooksTable/BooksTable';
 import TrainingForm from './TrainingForm/TrainingForm';
 import MediaQuery from 'react-responsive';
+import s from './Training.module.css';
 
 const Training = () =>{
     return(
@@ -22,9 +23,16 @@ const Training = () =>{
                 <Graphic/>
             </MediaQuery>
             <MediaQuery minWidth={1024}>
-                <MyGoals/>
-                <BooksTable/>
-                <Graphic/>
+                <div className={s.desctopContainer}>
+                    <div className={s.left}>
+                        <TrainingForm/>
+                        <BooksTable/>
+                        <Graphic/>
+                    </div>
+                    <div className={s.right}>
+                        <MyGoals/>
+                    </div>
+                </div>
             </MediaQuery>
         </Container>
         </>

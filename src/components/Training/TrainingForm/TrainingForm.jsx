@@ -4,21 +4,50 @@ import { HiArrowNarrowLeft } from 'react-icons/hi';
 import dayjs from 'dayjs';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import s from './TrainingForm.module.scss';
+
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+  const books = [
+    'title1',
+    'title2',
+    'title3',
+    'title4'
+];
+
+
 const TrainingForm = () =>{
     const [start, setStart] = useState(null);
     const [finish, setFinish] = useState(null);
-    const [book, setBook] = useState('');
+    const [book, setBook] = useState([]);
+
+   
 
     const handleChangeBook = (event) => {
-        setBook(event.target.start);
+        const {
+            target: { value },
+          } = event;
+          setBook(
+            // On autofill we get a stringified value.
+            typeof value === 'string' ? value.split(',') : value,
+          );
     };
 
     const handleChangeStart = (newValue) => {
@@ -65,21 +94,38 @@ const TrainingForm = () =>{
             </div>
             <div className={s.tableSelect}>
             <Box sx={{ minWidth: 120 }} className={s.boxSelect}>
-                <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Book</InputLabel>
-                    <Select
-                    className={s.select}
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={book}
-                    label="Choose book from the library"
-                    onChange={handleChangeBook}
+            <FormControl>
+                <Select
+                className={s.select}
+                multiple
+                displayEmpty
+                value={book}
+                onChange={handleChangeBook}
+                input={<OutlinedInput />}
+                renderValue={(selected) => {
+                    if (selected.length === 0) {
+                    return <em>Choose books from the library</em>;
+                    }
+
+                    return selected.join(', ');
+                }}
+                MenuProps={MenuProps}
+                inputProps={{ 'aria-label': 'Without label' }}
+                >
+                <MenuItem disabled value="">
+                    <em>Choose books from the library</em>
+                </MenuItem>
+                {books.map((name) => (
+                    <MenuItem
+                    key={name}
+                    value={name}
+                    
                     >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
-                </FormControl>
+                    {name}
+                    </MenuItem>
+                ))}
+                </Select>
+            </FormControl>
             </Box>
             <button type="submit" className={s.button}>Add</button>
             </div>
@@ -90,3 +136,6 @@ const TrainingForm = () =>{
 }
 
 export default TrainingForm;
+
+//86 style={getStyles(name, personName, theme)}
+//90 MenuProps={MenuProps}
