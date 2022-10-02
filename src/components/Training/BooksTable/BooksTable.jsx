@@ -1,6 +1,6 @@
 import { MdOutlineMenuBook } from 'react-icons/md';
-import Button from 'components/Button';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { MdDeleteOutline } from 'react-icons/md';
+import Button from 'components/common/Button';
 import classNames from 'classnames';
 import s from './BooksTable.module.scss';
 
@@ -49,7 +49,7 @@ const BooksTable = () =>{
               {book.releaseDate}
             </td>
             <td className={s.inlineTitle}>
-            {book.title !== '...' && <DeleteOutlineIcon
+            {book.title !== '...' && <MdDeleteOutline
               className={classNames({
                 [s.iconDelete]: true,
               })}

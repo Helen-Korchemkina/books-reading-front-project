@@ -5,6 +5,7 @@ import Graphic from './Graphic/Graphic';
 import BooksTable from './BooksTable/BooksTable';
 import TrainingForm from './TrainingForm/TrainingForm';
 import MediaQuery from 'react-responsive';
+import PlusButton from 'components/common/PlusButton';
 import s from './Training.module.css';
 
 
@@ -16,6 +17,7 @@ const Training = () =>{
                 <MyGoals/>
                 <BookList/>
                 <Graphic/>
+                <PlusButton/>
             </MediaQuery>
             <MediaQuery minWidth={768} maxWidth={1023}>
                 <MyGoals/>

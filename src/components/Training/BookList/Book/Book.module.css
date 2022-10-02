@@ -18,12 +18,12 @@
     color: var(--color-orange);
   }
 .icon {
-margin-left:-34px;
+margin-left:-29px;
 width: 22px;
 height: 17px;
 color: var(--color-light-grey);
 }
 
 .listTitle{
-    margin: 0 0 12px 12px;
+    margin: 0 0 12px 9px;
 }
