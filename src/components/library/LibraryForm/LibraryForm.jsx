@@ -21,6 +21,7 @@ const VALIDATION_SCHEMA = Yup.object().shape({
     .matches(/^[^- ]/, 'The field can`t start with a space or hyphen')
     .matches(/^([^\d]*)$/, 'The field can`t contains digits'),
   releaseDate: Yup.number()
+    .integer('Can`t containts "."')
     .min(1900, 'Minimum year is 1900')
     .max(
       new Date().getFullYear(),
@@ -28,14 +29,14 @@ const VALIDATION_SCHEMA = Yup.object().shape({
     )
     .required('Fill in the field'),
   countOfPages: Yup.number()
+    .integer('Can`t containts "."')
     .min(1, 'Minimum pages is 1')
     .max(9999, 'Maximum pages is 9999')
     .required('Fill in the field'),
 });
 
 const LibraryForm = ({ onFormSubmit }) => {
-  const mutation = useAddBookMutation();
-  const [addBook, { isLoading }] = mutation;
+  const [addBook, { isLoading }] = useAddBookMutation();
 
   const formik = useFormik({
     initialValues: {

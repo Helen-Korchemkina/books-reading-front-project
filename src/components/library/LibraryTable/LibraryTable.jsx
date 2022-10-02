@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { useMediaQuery } from 'react-responsive';
 import LinesEllipsis from 'react-lines-ellipsis';
 import responsiveHOC from 'react-lines-ellipsis/lib/responsiveHOC';
 import Rating from '@mui/material/Rating';
@@ -12,6 +13,8 @@ import s from './LibraryTable.module.scss';
 const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis);
 
 const LibraryTable = ({ books = [], onShowResumeBtnClick }) => {
+  const isMobileScreen = useMediaQuery({ query: '(max-width: 768px)' });
+
   return (
     <table className={s.table}>
       <thead>
@@ -38,7 +41,7 @@ const LibraryTable = ({ books = [], onShowResumeBtnClick }) => {
                   [s.iconFill]: book.status === BOOKS_STATUS.reading,
                 })}
               />
-              {book.status === BOOKS_STATUS.finish ? (
+              {book.status === BOOKS_STATUS.finish && !isMobileScreen ? (
                 <ResponsiveEllipsis
                   text={book.title}
                   maxLine="1"
@@ -50,7 +53,7 @@ const LibraryTable = ({ books = [], onShowResumeBtnClick }) => {
             </td>
             <td className={s.inlineTitle}>
               <span className={s.subtitle}>Author:</span>
-              {book.status === BOOKS_STATUS.finish ? (
+              {book.status === BOOKS_STATUS.finish && !isMobileScreen ? (
                 <ResponsiveEllipsis
                   text={book.author}
                   maxLine="1"
@@ -73,9 +76,9 @@ const LibraryTable = ({ books = [], onShowResumeBtnClick }) => {
                 <span className={s.subtitle}>Rating:</span>
                 <Rating
                   className={s.rating}
-                  name="read-only"
+                  name="rating"
                   size="small"
-                  defaultValue={book.rating}
+                  value={book.rating}
                   readOnly
                 />
               </td>

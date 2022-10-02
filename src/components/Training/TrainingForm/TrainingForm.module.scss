@@ -1,0 +1,105 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @media (min-width: 768px) {
+        // align-items: flex-start;
+      }
+    
+      @media (min-width: 1024px) {
+        margin-top: 40px;
+      }
+}
+
+.title{
+    width: 100%;
+    margin:0 0 20px 0;
+    padding: 18px 0px;
+    font-size: 20px;
+    text-align: center;
+    color: var(--color-white);
+    background-color: #B1B5C2; 
+    @media (min-width: 768px) {
+        min-width: 704px;
+        height: 60px;
+      }
+    
+      @media (min-width: 1024px) {
+        padding: 18px 0 18px 0;
+      }
+}
+
+.icon{
+    width: 48px;
+    height: 24px;
+    margin: 24px 0 0 0;
+    color: var(--color-orange);
+    cursor: pointer;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @media (min-width: 768px) {
+        align-items: flex-start;
+      }
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+        justify-content: left;
+        margin-bottom: 24px;
+      }
+}
+
+.content .dataTimePicker{
+    width: 280px;
+    height: 42px;
+    margin: 0 0 20px 0;
+
+    @media (min-width: 768px) {
+        width: 250px;
+      }
+}
+
+.content .dataTimePicker:last-child{
+    @media (min-width: 768px) {
+        margin: 0 0 0 40px;
+      }
+}
+
+.dataTimePicker div{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.select{
+    width: 280px;
+    margin: 0 0 32px 0;
+    @media (min-width: 768px) {
+        width: 483px;
+        height: 42px;
+        margin: 0 50px 0 0;
+      }
+}
+
+.tableSelect{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.button{
+    width: 171px;
+    height: 42px;
+    cursor: pointer;
+    margin-bottom: 40px;
+}

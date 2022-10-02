@@ -1,4 +1,4 @@
-import s from './MyGoals.module.css';
+import s from './MyGoals.module.scss';
 
 const MyGoals = () =>{
     return(

@@ -1,11 +1,19 @@
-import { useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { BOOKS_STATUS } from 'redux/books/books-api';
 import LibraryTable from 'components/library/LibraryTable';
+import ReviewModalWindow from 'components/library/ReviewModalWindow';
 import s from './LibraryCatalog.module.scss';
 
 const LibraryCatalog = ({ books = [] }) => {
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [resumeModalValues, setResumeModalValues] = useState({
+    id: null,
+    rating: 0,
+    resume: '',
+  });
+
   const booksByStatus = useMemo(() => {
     return books.reduce(
       (acc, book) => {
@@ -21,15 +29,26 @@ const LibraryCatalog = ({ books = [] }) => {
   }, [books]);
 
   const handleShowResumeBtnClick = id => {
-    const book = booksByStatus[BOOKS_STATUS.finish].find(
+    const selectedBook = booksByStatus[BOOKS_STATUS.finish].find(
       book => book.id === id
     );
-    console.log(`Book id: ${book.id}. Book rating: ${book.rating}`);
-    console.log(`Book resume: ${book.resume}`);
+    setResumeModalValues({
+      id: selectedBook.id,
+      rating: selectedBook.rating,
+      resume: selectedBook.resume,
+    });
+    setShowReviewModal(true);
   };
 
   return (
     <div>
+      {showReviewModal && (
+        <ReviewModalWindow
+          onModalClose={() => setShowReviewModal(false)}
+          startBookValues={{ ...resumeModalValues }}
+        />
+      )}
+
       {booksByStatus[BOOKS_STATUS.finish].length > 0 && (
         <div>
           <h2 className={s.title}>Already read</h2>

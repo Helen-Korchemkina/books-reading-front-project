@@ -6,7 +6,6 @@ const BookList = () =>{
     <>
     <div className={s.container}>
         <div className={s.content}>
-        <h2 className={s.listTitle}>...</h2>
         <ul className={s.list}>
            <Book/>
         </ul>
