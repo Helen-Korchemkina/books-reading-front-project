@@ -17,7 +17,7 @@
 }
 
 .title{
-    width: 280px;
+    width: 100%;
     margin-bottom: 45px;
     padding: 18px 0px;
     font-size: 20px;
@@ -35,7 +35,6 @@
 
 .blockContainer{
     display: flex;
-    width: 280px;
     flex-direction: row; 
 
     @media (min-width: 768px) {
