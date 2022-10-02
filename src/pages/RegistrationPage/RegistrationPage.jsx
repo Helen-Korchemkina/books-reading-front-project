@@ -7,6 +7,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import s from '../LoginPage/LoginPage.module.scss';
 import BooksReadingAdvantages from 'components/BooksReadingAdvantages/BooksReadingAdvantages';
+import { useAddNewUserMutation } from 'redux/auth/auth-api';
+import { useAuth } from 'redux/auth/authSlice';
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
@@ -22,24 +24,46 @@ const SignupSchema = Yup.object().shape({
     .matches(/[a-z]+/, 'One lowercase character')
     .matches(/[A-Z]+/, 'One uppercase character')
     .matches(/\d+/, 'One number'),
-  confirmPassword: Yup.string()
+  confirm_password: Yup.string()
     .label('confirm password')
     .required()
     .oneOf([Yup.ref('password'), null], 'Passwords must match'),
 });
 
 export default function RegstrationPage() {
+  const { credentialsUpdate } = useAuth();
+  const [addNewUser] = useAddNewUserMutation();
+
   const formik = useFormik({
     initialValues: {
       name: '',
       email: '',
       password: '',
-      confirmPassword: '',
+      confirm_password: '',
     },
     validationSchema: SignupSchema,
     onSubmit: (values, actions) => {
       console.log(JSON.stringify(values, null, 2));
       actions.resetForm();
+      const loginFetch = async loginData => {
+        try {
+          const response = await addNewUser(loginData);
+          if (response?.error?.status === 400) {
+            console.log(response?.error?.status);
+            return;
+          } else {
+            credentialsUpdate(response.data);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      loginFetch({
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        confirm_password: values.confirm_password,
+      });
     },
   });
 
@@ -116,7 +140,7 @@ export default function RegstrationPage() {
                 />
                 <FormInput
                   label={{
-                    id: 'confirmPassword',
+                    id: 'confirm_password',
                     text: (
                       <>
                         <span className={s.formText}>Confirm password</span>
@@ -126,13 +150,13 @@ export default function RegstrationPage() {
                   }}
                   input={{
                     type: 'password',
-                    value: formik.values.confirmPassword,
+                    value: formik.values.confirm_password,
                     onChange: formik.handleChange,
                   }}
                   modifClasses={s.inputform}
                   errorMessage={
-                    errors.confirmPassword && touched.confirmPassword
-                      ? errors.confirmPassword
+                    errors.confirm_password && touched.confirm_password
+                      ? errors.confirm_password
                       : ''
                   }
                 />
@@ -143,7 +167,10 @@ export default function RegstrationPage() {
               </form>
             </div>
             <span className={s.loginLink}>
-              Already have an account? <Link className={s.regLink}>Log in</Link>
+              Already have an account?{' '}
+              <Link className={s.regLink} to="/login">
+                Log in
+              </Link>
             </span>
           </div>
         </Container>

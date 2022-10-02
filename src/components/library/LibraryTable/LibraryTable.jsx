@@ -78,7 +78,7 @@ const LibraryTable = ({ books = [], onShowResumeBtnClick }) => {
                   className={s.rating}
                   name="rating"
                   size="small"
-                  defaultValue={book.rating}
+                  value={book.rating}
                   readOnly
                 />
               </td>
