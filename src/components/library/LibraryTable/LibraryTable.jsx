@@ -76,7 +76,7 @@ const LibraryTable = ({ books = [], onShowResumeBtnClick }) => {
                 <span className={s.subtitle}>Rating:</span>
                 <Rating
                   className={s.rating}
-                  name="read-only"
+                  name="rating"
                   size="small"
                   defaultValue={book.rating}
                   readOnly

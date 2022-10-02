@@ -15,15 +15,15 @@ import s from './LibraryPage.module.scss';
 
 const LibraryPage = () => {
   const { data: books = [], isFetching: isBooksFetching } = useGetBooksQuery();
-  const navigate = useNavigate();
-  const [switchComponents, setSwitchComponents] = useState(true);
   const userHasRunnigTraining = true;
+  const [showFormOnMobile, setShowFormOnMobile] = useState(true);
+  const navigate = useNavigate();
   const isMobileScreen = useMediaQuery({ query: '(max-width: 768px)' });
-  const showAddForm = isMobileScreen ? switchComponents : true;
-  const showCatalog = isMobileScreen ? !switchComponents : true;
+  const showAddForm = isMobileScreen ? showFormOnMobile : true;
+  const showCatalog = isMobileScreen ? !showFormOnMobile : true;
 
   useEffect(() => {
-    setSwitchComponents(true);
+    setShowFormOnMobile(true);
   }, [isMobileScreen]);
 
   const hasPendingBook = useMemo(
@@ -34,7 +34,7 @@ const LibraryPage = () => {
   return (
     <Container>
       {isMobileScreen && (
-        <GoBackButton onClick={() => setSwitchComponents(!showAddForm)} />
+        <GoBackButton onClick={() => setShowFormOnMobile(!showAddForm)} />
       )}
 
       {showAddForm && (
@@ -42,7 +42,7 @@ const LibraryPage = () => {
           onFormSubmit={
             isMobileScreen
               ? () => {
-                  setSwitchComponents(false);
+                  setShowFormOnMobile(false);
                   setTimeout(() => {
                     window.scrollTo({
                       top: document.body.scrollHeight + 120,
@@ -61,7 +61,7 @@ const LibraryPage = () => {
             {isBooksFetching && <LoadSpinner />}
             {!isBooksFetching && (
               <EmptyLibraryModal
-                onConfirmBtnClick={() => setSwitchComponents(true)}
+                onConfirmBtnClick={() => setShowFormOnMobile(true)}
               />
             )}
           </>
@@ -83,7 +83,7 @@ const LibraryPage = () => {
             )}
 
             {isMobileScreen && (
-              <PlusButton onClick={() => setSwitchComponents(true)} />
+              <PlusButton onClick={() => setShowFormOnMobile(true)} />
             )}
           </>
         )}
