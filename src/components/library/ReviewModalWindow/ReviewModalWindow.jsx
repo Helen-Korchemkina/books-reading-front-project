@@ -3,8 +3,10 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import classNames from 'classnames';
 import Rating from '@mui/material/Rating';
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 
+import { useUpdateStatusBookMutation } from 'redux/books/books-api';
 import Button from 'components/common/Button';
 import ModalWindow from 'components/common/ModalWindow';
 import s from './ReviewModalWindow.module.scss';
@@ -16,27 +18,42 @@ const VALIDATION_SCHEMA = Yup.object().shape({
 });
 
 const ReviewModalWindow = ({
-  initialRating = 0,
-  initialResume = '',
+  startBookValues = { rating: 0, resume: '' },
   onModalClose,
 }) => {
-  const [rating, setRating] = useState(initialRating);
+  const [rating, setRating] = useState(startBookValues.rating);
+  const [updateStatusBook, { isLoading }] = useUpdateStatusBookMutation();
 
   const formik = useFormik({
     initialValues: {
-      resume: initialResume,
+      resume: startBookValues.resume,
     },
     validationSchema: VALIDATION_SCHEMA,
     onSubmit: async values => {
-      console.log('rating ', rating);
-      console.log(JSON.stringify(values));
+      try {
+        await updateStatusBook({
+          id: startBookValues.id,
+          rating,
+          ...values,
+        }).unwrap();
+
+        toast.dismiss();
+        onModalClose();
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
   const { errors, touched } = formik;
 
+  const handleCloseModal = () => {
+    toast.dismiss();
+    onModalClose();
+  };
+
   return (
-    <ModalWindow onClose={onModalClose} modifClass={s.modal}>
+    <ModalWindow onClose={handleCloseModal} modifClass={s.modal}>
       <form onSubmit={formik.handleSubmit} noValidate autoComplete="off">
         <div className={s.inputWrapper}>
           <p className={s.label}>Choose rating of the book</p>
@@ -74,11 +91,16 @@ const ReviewModalWindow = ({
           <Button
             variant="outline"
             modifClass={classNames(s.button, s.buttonBack)}
-            onClick={onModalClose}
+            onClick={handleCloseModal}
           >
             Back
           </Button>
-          <Button variant="filled" type="submit" modifClass={s.button}>
+          <Button
+            variant="filled"
+            type="submit"
+            modifClass={s.button}
+            isLoading={isLoading}
+          >
             Save
           </Button>
         </div>
@@ -88,9 +110,12 @@ const ReviewModalWindow = ({
 };
 
 ReviewModalWindow.propTypes = {
-  rating: PropTypes.number,
-  resume: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
+  startBookValues: PropTypes.exact({
+    id: PropTypes.string.isRequired,
+    rating: PropTypes.number,
+    resume: PropTypes.string,
+  }).isRequired,
+  onModalClose: PropTypes.func.isRequired,
 };
 
 export default ReviewModalWindow;

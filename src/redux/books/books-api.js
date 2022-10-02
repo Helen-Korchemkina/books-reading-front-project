@@ -43,9 +43,10 @@ export const booksApi = createApi({
       invalidatesTags: ['Books'],
     }),
     updateStatusBook: builder.mutation({
-      query: id => ({
+      query: ({ id, ...patch }) => ({
         url: `/books/${id}`,
         method: 'PUT',
+        body: patch,
       }),
       invalidatesTags: ['Books'],
     }),

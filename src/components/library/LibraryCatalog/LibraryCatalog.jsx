@@ -8,6 +8,11 @@ import s from './LibraryCatalog.module.scss';
 
 const LibraryCatalog = ({ books = [] }) => {
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const [resumeModalValues, setResumeModalValues] = useState({
+    id: null,
+    rating: 0,
+    resume: '',
+  });
 
   const booksByStatus = useMemo(() => {
     return books.reduce(
@@ -24,20 +29,24 @@ const LibraryCatalog = ({ books = [] }) => {
   }, [books]);
 
   const handleShowResumeBtnClick = id => {
-    const book = booksByStatus[BOOKS_STATUS.finish].find(
+    const selectedBook = booksByStatus[BOOKS_STATUS.finish].find(
       book => book.id === id
     );
-
+    setResumeModalValues({
+      id: selectedBook.id,
+      rating: selectedBook.rating,
+      resume: selectedBook.resume,
+    });
     setShowReviewModal(true);
-
-    console.log(`Book id: ${book.id}. Book rating: ${book.rating}`);
-    console.log(`Book resume: ${book.resume}`);
   };
 
   return (
     <div>
       {showReviewModal && (
-        <ReviewModalWindow onModalClose={() => setShowReviewModal(false)} />
+        <ReviewModalWindow
+          onModalClose={() => setShowReviewModal(false)}
+          startBookValues={{ ...resumeModalValues }}
+        />
       )}
 
       {booksByStatus[BOOKS_STATUS.finish].length > 0 && (
