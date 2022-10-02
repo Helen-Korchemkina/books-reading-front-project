@@ -14,21 +14,16 @@ import EmptyLibraryModal from 'components/library/EmptyLibraryModal';
 import s from './LibraryPage.module.scss';
 
 const LibraryPage = () => {
-  const {
-    data: books = [],
-    isSuccess: isBooksSuccess,
-    isLoading: isBooksLoading,
-  } = useGetBooksQuery();
-
-  const navigate = useNavigate();
-  const [switchComponents, setSwitchComponents] = useState(true);
+  const { data: books = [], isFetching: isBooksFetching } = useGetBooksQuery();
   const userHasRunnigTraining = true;
+  const [showFormOnMobile, setShowFormOnMobile] = useState(true);
+  const navigate = useNavigate();
   const isMobileScreen = useMediaQuery({ query: '(max-width: 768px)' });
-  const showAddForm = isMobileScreen ? switchComponents : true;
-  const showCatalog = isMobileScreen ? !switchComponents : true;
+  const showAddForm = isMobileScreen ? showFormOnMobile : true;
+  const showCatalog = isMobileScreen ? !showFormOnMobile : true;
 
   useEffect(() => {
-    setSwitchComponents(true);
+    setShowFormOnMobile(true);
   }, [isMobileScreen]);
 
   const hasPendingBook = useMemo(
@@ -36,67 +31,65 @@ const LibraryPage = () => {
     [books]
   );
 
-  if (isBooksLoading) {
-    return (
-      <Container>
-        <LoadSpinner />
-      </Container>
-    );
-  }
+  return (
+    <Container>
+      {isMobileScreen && (
+        <GoBackButton onClick={() => setShowFormOnMobile(!showAddForm)} />
+      )}
 
-  if (isBooksSuccess) {
-    return (
-      <Container>
-        {isMobileScreen && (
-          <GoBackButton onClick={() => setSwitchComponents(!showAddForm)} />
-        )}
-
-        {showAddForm && (
-          <LibraryForm
-            onFormSubmit={
-              isMobileScreen
-                ? () => {
-                    setSwitchComponents(false);
-                    setTimeout(() => {
-                      window.scrollTo({
-                        top: document.body.scrollHeight,
-                        behavior: 'smooth',
-                      });
+      {showAddForm && (
+        <LibraryForm
+          onFormSubmit={
+            isMobileScreen
+              ? () => {
+                  setShowFormOnMobile(false);
+                  setTimeout(() => {
+                    window.scrollTo({
+                      top: document.body.scrollHeight + 120,
+                      behavior: 'smooth',
                     });
-                  }
-                : null
-            }
-          />
+                  });
+                }
+              : null
+          }
+        />
+      )}
+
+      <div className={s.catalogWrapper}>
+        {showCatalog && books.length === 0 && (
+          <>
+            {isBooksFetching && <LoadSpinner />}
+            {!isBooksFetching && (
+              <EmptyLibraryModal
+                onConfirmBtnClick={() => setShowFormOnMobile(true)}
+              />
+            )}
+          </>
         )}
-        <div className={s.catalogWrapper}>
-          {books.length === 0 && showCatalog && (
-            <EmptyLibraryModal
-              onConfirmBtnClick={() => setSwitchComponents(true)}
-            />
-          )}
 
-          {books.length !== 0 && showCatalog && (
-            <>
-              <LibraryCatalog books={books} />
-              {!hasPendingBook && userHasRunnigTraining && (
-                <Button
-                  variant="filled"
-                  onClick={() => navigate('/training')}
-                  modifClass={s.trainingBtn}
-                >
-                  My training
-                </Button>
-              )}
+        {showCatalog && books.length !== 0 && (
+          <>
+            <LibraryCatalog books={books} />
+            {isBooksFetching && <LoadSpinner />}
 
-              {isMobileScreen && (
-                <PlusButton onClick={() => setSwitchComponents(true)} />
-              )}
-            </>
-          )}
-        </div>
-      </Container>
-    );
-  }
+            {hasPendingBook && userHasRunnigTraining && (
+              <Button
+                variant="filled"
+                onClick={() => navigate('/training')}
+                modifClass={s.trainingBtn}
+              >
+                My training
+              </Button>
+            )}
+
+            {isMobileScreen && (
+              <PlusButton onClick={() => setShowFormOnMobile(true)} />
+            )}
+          </>
+        )}
+      </div>
+    </Container>
+  );
 };
 
 export default LibraryPage;

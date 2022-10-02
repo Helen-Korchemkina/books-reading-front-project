@@ -1,16 +1,18 @@
 @import 'scss-variables.scss';
 
 .container {
-  min-width: $screenSm;
+  min-width: 320px;
+  max-width: $screenSm;
+  margin: 0 auto;
   padding: 0 20px;
 
   @media (min-width: $screenMd) {
+    max-width: $screenMd + 160px;
     padding: 0 32px;
   }
 
   @media (min-width: $screenLg) {
     max-width: $screenLg;
-    margin: 0 auto;
     padding: 0 16px;
   }
 }

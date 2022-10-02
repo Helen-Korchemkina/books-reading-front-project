@@ -1,11 +1,14 @@
-import { useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { BOOKS_STATUS } from 'redux/books/books-api';
 import LibraryTable from 'components/library/LibraryTable';
+import ReviewModalWindow from 'components/library/ReviewModalWindow';
 import s from './LibraryCatalog.module.scss';
 
 const LibraryCatalog = ({ books = [] }) => {
+  const [showReviewModal, setShowReviewModal] = useState(false);
+
   const booksByStatus = useMemo(() => {
     return books.reduce(
       (acc, book) => {
@@ -24,12 +27,19 @@ const LibraryCatalog = ({ books = [] }) => {
     const book = booksByStatus[BOOKS_STATUS.finish].find(
       book => book.id === id
     );
+
+    setShowReviewModal(true);
+
     console.log(`Book id: ${book.id}. Book rating: ${book.rating}`);
     console.log(`Book resume: ${book.resume}`);
   };
 
   return (
     <div>
+      {showReviewModal && (
+        <ReviewModalWindow onModalClose={() => setShowReviewModal(false)} />
+      )}
+
       {booksByStatus[BOOKS_STATUS.finish].length > 0 && (
         <div>
           <h2 className={s.title}>Already read</h2>
