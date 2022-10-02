@@ -7,17 +7,43 @@ import LibraryPage from 'pages/LibraryPage';
 import TrainingPage from 'pages/TrainingPage';
 import GoogleAnswerPage from 'pages/GoogleAnswerPage';
 import InfoPage from 'pages/InfoPageMobile/InfoPageMobile';
+import { useSelector } from 'react-redux';
+import { getToken } from 'redux/auth/authSelectors';
+import { useAuth } from 'redux/auth/authSlice';
+import { useCurrentUserMutation } from 'redux/auth/auth-api';
+import { useEffect } from 'react';
+import { getIsLogin } from 'redux/auth/authSelectors';
 import Media from 'react-media';
 
 const App = () => {
+  const token = useSelector(getToken);
+  const { credentialsUpdate } = useAuth();
+  const [currentUser, { isUninitialized }] = useCurrentUserMutation();
+  const isLogin = useSelector(getIsLogin);
+
+  useEffect(
+    () => {
+      if (token && isUninitialized) {
+        const checkCurrentUser = async () => {
+          const response = await currentUser();
+          if (response.data) {
+            credentialsUpdate({ user: response.data, token, isLogin });
+          }
+        };
+        checkCurrentUser();
+      }
+    },
+    [credentialsUpdate, currentUser, isLogin, isUninitialized, token]
+  );
+
   return (
-    <>
-      <Routes>
-        <Route path="/register" element={<RegistrationPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/answer-google" element={<GoogleAnswerPage />} />
+    <Routes>
+      <Route path="/" element={<AppBar />}>
+        <Route path="register" element={<RegistrationPage />} />
+        <Route path="login" element={<LoginPage />} />
+        <Route path="answer-google" element={<GoogleAnswerPage />} />
         <Route
-          path="/"
+          index
           element={
             <Media
               queries={{
@@ -33,13 +59,12 @@ const App = () => {
               )}
             </Media>
           }
-        >
-          <Route index element={<Library />} />
-          <Route path="/training" element={<TrainingPage />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </>
+        />
+        <Route path="library" element={<LibraryPage />} />
+        <Route path="training" element={<TrainingPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   );
 };
 

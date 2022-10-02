@@ -6,6 +6,9 @@ import GoogleBtn from 'components/GoogleBtn/GoogleBtn';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import s from './LoginPage.module.scss';
+import { useLoginMutation } from 'redux/auth/auth-api';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from 'redux/auth/authSlice';
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
@@ -29,8 +32,24 @@ export default function LoginPage() {
     onSubmit: (values, actions) => {
       console.log(JSON.stringify(values, null, 2));
       actions.resetForm();
+      const loginCheckFetch = async loginData => {
+        const response = await login(loginData);
+        if (response?.error?.status === 400) {
+          return;
+        } else {
+          credentialsUpdate(response.data);
+          navigate('/contacts', { replace: true });
+        }
+      };
+      loginCheckFetch({
+        email: values.email,
+        password: values.password,
+      });
     },
   });
+  const [login] = useLoginMutation();
+  const { credentialsUpdate } = useAuth();
+  const navigate = useNavigate();
 
   const { errors, touched } = formik;
 
