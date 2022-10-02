@@ -8,3 +8,22 @@
     margin-right: 162px;
     color: var(--color-grey);
 }
+
+.listIcon{
+    display: flex;
+    flex-direction: row;
+}
+
+.iconFill {
+    color: var(--color-orange);
+  }
+.icon {
+margin-left:-34px;
+width: 22px;
+height: 17px;
+color: var(--color-light-grey);
+}
+
+.listTitle{
+    margin: 0 0 12px 12px;
+}
