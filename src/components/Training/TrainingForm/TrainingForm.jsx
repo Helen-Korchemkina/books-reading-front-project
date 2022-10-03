@@ -104,7 +104,7 @@ const TrainingForm = () =>{
                 input={<OutlinedInput />}
                 renderValue={(selected) => {
                     if (selected.length === 0) {
-                    return <em>Choose books from the library</em>;
+                    return <em className={s.placeholder}>Choose books from the library</em>;
                     }
 
                     return selected.join(', ');
@@ -112,9 +112,7 @@ const TrainingForm = () =>{
                 MenuProps={MenuProps}
                 inputProps={{ 'aria-label': 'Without label' }}
                 >
-                <MenuItem disabled value="">
-                    <em>Choose books from the library</em>
-                </MenuItem>
+                
                 {books.map((name) => (
                     <MenuItem
                     key={name}

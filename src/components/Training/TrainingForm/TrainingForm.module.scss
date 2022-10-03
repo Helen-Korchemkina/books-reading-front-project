@@ -23,6 +23,7 @@
     @media (min-width: 768px) {
         min-width: 704px;
         height: 60px;
+        margin-bottom: 28px;
       }
     
       @media (min-width: 1024px) {
@@ -57,6 +58,10 @@
         justify-content: left;
         margin-bottom: 24px;
       }
+      @media (min-width: 1024px) {
+        margin-left: auto;
+        margin-right: auto;
+      }
 }
 
 .content .dataTimePicker{
@@ -90,6 +95,21 @@
       }
 }
 
+.select input:focus{
+  background-color: rebeccapurple;
+  border-color: var(--color-orange);
+}
+
+.placeholder{
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #A6ABB9;
+}
+
 .tableSelect{
     display: flex;
     flex-direction: row;
@@ -103,3 +123,4 @@
     cursor: pointer;
     margin-bottom: 40px;
 }
+

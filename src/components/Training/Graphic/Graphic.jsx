@@ -9,7 +9,6 @@ import {
     Legend,
   } from 'chart.js';
   import { Line } from 'react-chartjs-2';
-//   import Options from './Options';
   import s from './Graphic.module.scss';
 
   
@@ -29,6 +28,15 @@ export const options = {
         display: false,
         title: 'Action'
       },
+      title: {
+        display: true,
+        text: `Amont of pages / DA ${0}`,
+        align: 'start',
+        font: {
+          size: 14,
+          weight: 500, 
+      }
+    },
     },
     scales: {
         x: {
@@ -37,8 +45,11 @@ export const options = {
             title: {
                 display: true,
                 text: 'TIME',
-                font: {size:15},
-                textAlign: 'right',
+                align: 'end',
+                font: {
+                  size: 14,
+                  weight: 500, 
+              }
             }
         }
     }
@@ -70,7 +81,7 @@ const Graphic = () => {
   return (
       <>
       <div className={s.container}>
-          <h2>Amont of pages / DA <span>0</span></h2>
+          {/* <h2>Amont of pages / DA <span>0</span></h2> */}
           <div className={s.graphic}>
             <Line options={options} data={data} />
           </div>

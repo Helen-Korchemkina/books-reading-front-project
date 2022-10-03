@@ -1,6 +1,6 @@
 import { MdOutlineMenuBook } from 'react-icons/md';
+import { MdDeleteOutline } from 'react-icons/md';
 import Button from 'components/common/Button';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import classNames from 'classnames';
 import s from './BooksTable.module.scss';
 
