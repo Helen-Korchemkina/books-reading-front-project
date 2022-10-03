@@ -19,6 +19,7 @@ export const booksApi = createApi({
         method: 'GET',
       }),
       providesTags: ['Books'],
+      transformResponse: response => response.data.books,
     }),
     getBook: builder.query({
       query: id => ({

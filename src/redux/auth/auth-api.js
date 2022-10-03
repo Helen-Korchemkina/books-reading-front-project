@@ -1,17 +1,12 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
+
+import { getToken } from 'redux/auth/authSelectors';
+import { authToken } from 'redux/services/utils';
+import { axiosBaseQuery } from 'redux/services/utils';
 
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://books-reading-project.herokuapp.com',
-    prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token;
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  baseQuery: axiosBaseQuery(),
   tagTypes: ['auth'],
   endpoints: builder => ({
     addNewUser: builder.mutation({
@@ -38,12 +33,19 @@ export const authApi = createApi({
       invalidatesTags: ['auth'],
     }),
 
-    currentUser: builder.mutation({
+    currentUser: builder.query({
       query: () => ({
-        url: `/api/users/current`,
+        url: `/users/current`,
         method: 'GET',
       }),
       invalidatesTags: ['auth'],
+      async onQueryStarted(_, { getState }) {
+        const token = getToken(getState());
+
+        if (token) {
+          authToken.set(token);
+        }
+      },
     }),
   }),
 });
