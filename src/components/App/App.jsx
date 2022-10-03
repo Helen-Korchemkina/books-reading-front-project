@@ -36,6 +36,7 @@ const App = () => {
   const [currentUser, { isUninitialized }] = useCurrentUserMutation();
   const isLogin = useSelector(getIsLogin);
 
+
   useEffect(
     () => {
       if (token && isUninitialized) {
@@ -56,12 +57,13 @@ const App = () => {
     [credentialsUpdate, currentUser, isLogin, isUninitialized, token]
   );
 
+
   return (
     <Suspense fallback={<Container>Loading...</Container>}>
       <Routes>
         <Route path="/" element={<AppBar />}>
           <Route path="register" element={<RegistrationPage />} />
-          <Route path="login" element={<LoginPage />} />
+          <Route index element={<LoginPage />} />
           <Route path="answer-google" element={<GoogleAnswerPage />} />
           <Route
             index
