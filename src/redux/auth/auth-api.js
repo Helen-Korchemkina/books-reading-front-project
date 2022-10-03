@@ -30,13 +30,13 @@ export const authApi = createApi({
       }),
       invalidatesTags: ['auth'],
     }),
-    // logout: builder.mutation({
-    //   query: () => ({
-    //     url: `/users/logout`,
-    //     method: 'POST',
-    //   }),
-    //   invalidatesTags: ['auth'],
-    // }),
+    logout: builder.mutation({
+      query: () => ({
+        url: `/users/logout`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['auth'],
+    }),
 
     currentUser: builder.mutation({
       query: () => ({

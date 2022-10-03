@@ -38,7 +38,7 @@ export default function LoginPage() {
           return;
         } else {
           credentialsUpdate(response.data);
-          navigate('/contacts', { replace: true });
+          navigate('/library', { replace: true });
         }
       };
       loginCheckFetch({
