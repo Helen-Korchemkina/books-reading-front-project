@@ -34,7 +34,9 @@ const App = () => {
   const token = useSelector(getToken);
   const isLogin = useSelector(getIsLogin);
   const { credentialsUpdate } = useAuth();
-  const { data: user, isSuccess } = useCurrentUserQuery();
+  const { data: user, isSuccess } = useCurrentUserQuery(null, {
+    skip: !Boolean(token),
+  });
 
   useEffect(() => {
     if (isSuccess) {
