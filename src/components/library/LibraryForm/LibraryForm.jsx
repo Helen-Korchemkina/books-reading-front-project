@@ -50,9 +50,6 @@ const LibraryForm = ({ onFormSubmit }) => {
       try {
         await addBook({
           ...values,
-          status: 'Going to read',
-          rating: 0,
-          resume: '',
         }).unwrap();
 
         toast.dismiss();

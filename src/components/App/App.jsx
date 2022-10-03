@@ -40,7 +40,11 @@ const App = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      credentialsUpdate({ user: user.user.name, token, isLogin });
+      credentialsUpdate({
+        user: { name: user.user.name, email: user.user.email },
+        token,
+        isLogin,
+      });
     }
   }, [credentialsUpdate, isLogin, isSuccess, token, user]);
 
