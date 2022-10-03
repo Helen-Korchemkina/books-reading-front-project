@@ -44,10 +44,7 @@ const App = () => {
           console.log(response.data);
           if (response.data) {
             credentialsUpdate({
-              user: {
-                name: response.data.user.name,
-                email: response.data.user.email,
-              },
+              user: response.data.user,
               token,
               isLogin,
             });
