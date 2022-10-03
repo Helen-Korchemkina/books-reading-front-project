@@ -51,7 +51,7 @@ const BooksTable = () => {
               </td>
               <td className={s.inlineTitle}>
                 {book.title !== '...' && (
-                  <DeleteOutlineIcon
+                  <MdDeleteOutline
                     className={classNames({
                       [s.iconDelete]: true,
                     })}

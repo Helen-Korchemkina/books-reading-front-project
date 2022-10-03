@@ -3,7 +3,7 @@
   margin-right: 14px;
   flex-wrap: nowrap;
   align-content: center;
-  align-items: center;
+  align-items: baseline;
 }
 
 .circleUnderLater {
@@ -12,11 +12,12 @@
   height: 33px;
   background-color: var(--color-super-light-grey);
   border-radius: 50%;
+  margin-right: 12px;
 }
 
 .nameFirstLater {
   margin: 0;
-  margin-top: 5px;
+  margin-top: 3px;
 }
 
 @media (min-width: 768px) {
