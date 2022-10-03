@@ -36,25 +36,27 @@ const App = () => {
   const [currentUser, { isUninitialized }] = useCurrentUserMutation();
   const isLogin = useSelector(getIsLogin);
 
-  useEffect(() => {
-    if (token && isUninitialized) {
-      const checkCurrentUser = async () => {
-        const response = await currentUser();
-        console.log(response.data);
-        if (response.data) {
-          credentialsUpdate({
-            user: {
-              name: response.data.user.name,
-              email: response.data.user.email,
-            },
-            token,
-            isLogin,
-          });
-        }
-      };
-      checkCurrentUser();
-    }
-  }, [credentialsUpdate, currentUser, isLogin, isUninitialized, token]);
+
+  useEffect(
+    () => {
+      if (token && isUninitialized) {
+        const checkCurrentUser = async () => {
+          const response = await currentUser();
+          console.log(response.data);
+          if (response.data) {
+            credentialsUpdate({
+              user: response.data.user,
+              token,
+              isLogin,
+            });
+          }
+        };
+        checkCurrentUser();
+      }
+    },
+    [credentialsUpdate, currentUser, isLogin, isUninitialized, token]
+  );
+
 
   return (
     <Suspense fallback={<Container>Loading...</Container>}>
