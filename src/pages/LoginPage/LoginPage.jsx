@@ -47,7 +47,7 @@ export default function LoginPage() {
             },
             token: response.data.token,
           });
-          navigate('/contacts', { replace: true });
+          navigate('/library', { replace: true });
         }
       };
       loginCheckFetch({
