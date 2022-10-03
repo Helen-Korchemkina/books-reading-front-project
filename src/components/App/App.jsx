@@ -6,7 +6,7 @@ import InfoPage from 'pages/InfoPageMobile/InfoPageMobile';
 import { useSelector } from 'react-redux';
 import { getToken } from 'redux/auth/authSelectors';
 import { useAuth } from 'redux/auth/authSlice';
-import { useCurrentUserMutation } from 'redux/auth/auth-api';
+import { useCurrentUserQuery } from 'redux/auth/auth-api';
 import { useEffect } from 'react';
 import { getIsLogin } from 'redux/auth/authSelectors';
 import Media from 'react-media';
@@ -32,32 +32,15 @@ const NotFoundPage = lazy(() =>
 
 const App = () => {
   const token = useSelector(getToken);
-  const { credentialsUpdate } = useAuth();
-  const [currentUser, { isUninitialized }] = useCurrentUserMutation();
   const isLogin = useSelector(getIsLogin);
+  const { credentialsUpdate } = useAuth();
+  const { data: user, isSuccess } = useCurrentUserQuery();
 
-  useEffect(
-    () => {
-      if (token && isUninitialized) {
-        const checkCurrentUser = async () => {
-          const response = await currentUser();
-          console.log(response.data);
-          if (response.data) {
-            credentialsUpdate({
-              user: {
-                name: response.data.user.name,
-                email: response.data.user.email,
-              },
-              token,
-              isLogin,
-            });
-          }
-        };
-        checkCurrentUser();
-      }
-    },
-    [credentialsUpdate, currentUser, isLogin, isUninitialized, token]
-  );
+  useEffect(() => {
+    if (isSuccess) {
+      credentialsUpdate({ user: user.user.name, token, isLogin });
+    }
+  }, [credentialsUpdate, isLogin, isSuccess, token, user]);
 
   return (
     <Suspense fallback={<Container>Loading...</Container>}>
