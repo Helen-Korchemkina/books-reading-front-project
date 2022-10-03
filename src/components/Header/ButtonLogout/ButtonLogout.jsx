@@ -1,8 +1,9 @@
 import s from './ButtonLogout.module.css';
-import { useLogoutMutation } from 'redux/auth/auth-api';
+import { useLazyLogoutQuery } from 'redux/auth/auth-api';
 import { useAuth } from 'redux/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import ModalWindow from 'components/common/ModalWindow';
 
 const Modal = ({ confirm, togle }) => {
   return (
@@ -29,7 +30,7 @@ const Modal = ({ confirm, togle }) => {
 };
 
 const ButtonLogout = () => {
-  const [logout] = useLogoutMutation();
+  const [logout] = useLazyLogoutQuery();
   const { credentialsUpdate } = useAuth();
   const navigate = useNavigate();
   const [confirm, setConfirm] = useState(false);
@@ -38,7 +39,8 @@ const ButtonLogout = () => {
 
   const handleLogout = () => {
     if (confirm) {
-      logout(credentialsUpdate({ user: null, token: null, isLogin: false }));
+      logout();
+      credentialsUpdate({ user: null, token: null, isLogin: false });
       navigate('/', { replace: true });
       setTogle(false);
     }
@@ -51,7 +53,11 @@ const ButtonLogout = () => {
         Logout
       </button>
 
-      {togle ? <Modal confirm={setConfirm} togle={setTogle} /> : null}
+      {togle ? (
+        <ModalWindow onClose={togle}>
+          <Modal confirm={setConfirm} togle={setTogle} />
+        </ModalWindow>
+      ) : null}
     </>
   );
 };
