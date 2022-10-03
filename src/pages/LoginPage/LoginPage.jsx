@@ -23,6 +23,9 @@ const SignupSchema = Yup.object().shape({
 });
 
 export default function LoginPage() {
+  const [login] = useLoginMutation();
+  const { credentialsUpdate } = useAuth();
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -31,13 +34,19 @@ export default function LoginPage() {
     validationSchema: SignupSchema,
     onSubmit: (values, actions) => {
       console.log(JSON.stringify(values, null, 2));
-      actions.resetForm();
+
       const loginCheckFetch = async loginData => {
         const response = await login(loginData);
         if (response?.error?.status === 400) {
           return;
         } else {
-          credentialsUpdate(response.data);
+          credentialsUpdate({
+            user: {
+              name: response.data.data.name,
+              email: response.data.data.email,
+            },
+            token: response.data.token,
+          });
           navigate('/contacts', { replace: true });
         }
       };
@@ -45,11 +54,9 @@ export default function LoginPage() {
         email: values.email,
         password: values.password,
       });
+      actions.resetForm();
     },
   });
-  const [login] = useLoginMutation();
-  const { credentialsUpdate } = useAuth();
-  const navigate = useNavigate();
 
   const { errors, touched } = formik;
 

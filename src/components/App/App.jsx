@@ -41,8 +41,16 @@ const App = () => {
       if (token && isUninitialized) {
         const checkCurrentUser = async () => {
           const response = await currentUser();
+          console.log(response.data);
           if (response.data) {
-            credentialsUpdate({ user: response.data, token, isLogin });
+            credentialsUpdate({
+              user: {
+                name: response.data.user.name,
+                email: response.data.user.email,
+              },
+              token,
+              isLogin,
+            });
           }
         };
         checkCurrentUser();

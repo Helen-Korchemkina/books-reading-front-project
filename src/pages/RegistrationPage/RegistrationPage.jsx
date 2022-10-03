@@ -52,7 +52,13 @@ export default function RegstrationPage() {
             console.log(response?.error?.status);
             return;
           } else {
-            credentialsUpdate(response.data);
+            credentialsUpdate({
+              user: {
+                name: response.data.data.name,
+                email: response.data.data.email,
+              },
+              token: response.data.token,
+            });
           }
         } catch (error) {
           console.log(error);
