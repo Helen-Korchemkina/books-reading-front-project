@@ -57,7 +57,7 @@ const App = () => {
   }, [credentialsUpdate, isSuccess, isError, token, data]);
 
   if (isLoading) {
-    return <Container>Data synchronization...</Container>;
+    return <Container>Data synchronization....</Container>;
   }
 
   return (
