@@ -27,7 +27,7 @@ export const authApi = createApi({
     }),
     logout: builder.query({
       query: () => ({
-        url: `/api/auth/logout`,
+        url: '/auth/logout',
         method: 'GET',
       }),
       invalidatesTags: ['auth'],
@@ -35,7 +35,7 @@ export const authApi = createApi({
 
     currentUser: builder.query({
       query: () => ({
-        url: `/users/current`,
+        url: '/users/current',
         method: 'GET',
       }),
       providesTags: ['auth'],

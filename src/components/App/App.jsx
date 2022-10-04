@@ -8,7 +8,6 @@ import { getToken } from 'redux/auth/authSelectors';
 import { useAuth } from 'redux/auth/authSlice';
 import { useCurrentUserQuery } from 'redux/auth/auth-api';
 import { useEffect } from 'react';
-import { getIsLogin } from 'redux/auth/authSelectors';
 import Media from 'react-media';
 
 const LoginPage = lazy(() =>
@@ -32,9 +31,12 @@ const NotFoundPage = lazy(() =>
 
 const App = () => {
   const token = useSelector(getToken);
-  const isLogin = useSelector(getIsLogin);
   const { credentialsUpdate } = useAuth();
-  const { data: user, isSuccess } = useCurrentUserQuery(null, {
+  const {
+    data: user,
+    isError,
+    isSuccess,
+  } = useCurrentUserQuery(null, {
     skip: !Boolean(token),
   });
 
@@ -43,10 +45,16 @@ const App = () => {
       credentialsUpdate({
         user: { name: user.user.name, email: user.user.email },
         token,
-        isLogin,
       });
     }
-  }, [credentialsUpdate, isLogin, isSuccess, token, user]);
+
+    if (isError) {
+      credentialsUpdate({
+        user: null,
+        token: null,
+      });
+    }
+  }, [credentialsUpdate, isSuccess, isError, token, user]);
 
   return (
     <Suspense fallback={<Container>Loading...</Container>}>
