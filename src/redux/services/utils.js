@@ -3,9 +3,7 @@ import { isRejectedWithValue } from '@reduxjs/toolkit';
 
 import { toastErrorNotification } from 'utils/utils';
 
-// axios.defaults.baseURL = 'https://books-reading-project.herokuapp.com/api/';
-
-axios.defaults.baseURL = 'http://localhost:3001/api/';
+axios.defaults.baseURL = 'https://books-reading-project.herokuapp.com/api/';
 
 export const authToken = {
   set: token => {
