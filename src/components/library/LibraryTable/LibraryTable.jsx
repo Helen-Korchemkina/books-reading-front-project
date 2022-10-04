@@ -33,7 +33,7 @@ const LibraryTable = ({ books = [], onShowResumeBtnClick }) => {
       </thead>
       <tbody>
         {books.map(book => (
-          <tr key={book.id} className={s.bodyRow}>
+          <tr key={book._id} className={s.bodyRow}>
             <td className={s.bodyRowTitle}>
               <MdOutlineMenuBook
                 className={classNames({
@@ -88,7 +88,7 @@ const LibraryTable = ({ books = [], onShowResumeBtnClick }) => {
                 <Button
                   variant="filled"
                   modifClass={s.button}
-                  onClick={() => onShowResumeBtnClick(book.id)}
+                  onClick={() => onShowResumeBtnClick(book._id)}
                 >
                   Resume
                 </Button>
@@ -104,7 +104,7 @@ const LibraryTable = ({ books = [], onShowResumeBtnClick }) => {
 LibraryTable.propTypes = {
   books: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      _id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       author: PropTypes.string.isRequired,
       releaseDate: PropTypes.number.isRequired,
