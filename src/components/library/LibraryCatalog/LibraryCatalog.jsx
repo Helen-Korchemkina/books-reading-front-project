@@ -9,7 +9,7 @@ import s from './LibraryCatalog.module.scss';
 const LibraryCatalog = ({ books = [] }) => {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [resumeModalValues, setResumeModalValues] = useState({
-    id: null,
+    _id: null,
     rating: 0,
     resume: '',
   });
@@ -30,10 +30,11 @@ const LibraryCatalog = ({ books = [] }) => {
 
   const handleShowResumeBtnClick = id => {
     const selectedBook = booksByStatus[BOOKS_STATUS.finish].find(
-      book => book.id === id
+      book => book._id === id
     );
+
     setResumeModalValues({
-      id: selectedBook.id,
+      _id: selectedBook._id,
       rating: selectedBook.rating,
       resume: selectedBook.resume,
     });
@@ -41,7 +42,7 @@ const LibraryCatalog = ({ books = [] }) => {
   };
 
   return (
-    <div>
+    <div className={s.container}>
       {showReviewModal && (
         <ReviewModalWindow
           onModalClose={() => setShowReviewModal(false)}

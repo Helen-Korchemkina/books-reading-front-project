@@ -3,21 +3,29 @@ import { isRejectedWithValue } from '@reduxjs/toolkit';
 
 import { toastErrorNotification } from 'utils/utils';
 
-const axiosInstance = axios.create({
-  baseURL: 'https://63318028cff0e7bf70eefa81.mockapi.io',
-});
+axios.defaults.baseURL = 'https://books-reading-project.herokuapp.com/api/';
+
+export const authToken = {
+  set: token => {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  },
+  unset: () => (axios.defaults.headers.common['Authorization'] = ''),
+};
 
 export const axiosBaseQuery =
   () =>
   async ({ url, method, body, params }) => {
     try {
-      const result = await axiosInstance({ url, method, data: body, params });
+      const result = await axios({ url, method, data: body, params });
       return { data: result.data };
     } catch (axiosError) {
       return {
         error: {
           status: axiosError.response?.status,
-          data: axiosError.response?.statusText || axiosError.message,
+          data:
+            axiosError.response?.data?.message ||
+            axiosError.response?.statusText ||
+            axiosError.message,
         },
       };
     }

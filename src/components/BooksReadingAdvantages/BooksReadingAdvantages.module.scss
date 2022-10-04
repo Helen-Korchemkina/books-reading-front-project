@@ -20,6 +20,16 @@
     margin: 0 auto;
     margin-top: 48px;
   }
+  @media screen and (min-width: 769px) {
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 48px;
+  }
+  @media screen and (min-width: 946px) {
+    width: 455px;
+    margin: 0 auto;
+    margin-top: 48px;
+  }
 }
 .listTitle {
   font-size: 20px;

@@ -50,9 +50,6 @@ const LibraryForm = ({ onFormSubmit }) => {
       try {
         await addBook({
           ...values,
-          status: 'Going to read',
-          rating: 0,
-          resume: '',
         }).unwrap();
 
         toast.dismiss();
@@ -105,6 +102,8 @@ const LibraryForm = ({ onFormSubmit }) => {
           errorMessage={
             errors.releaseDate && touched.releaseDate ? errors.releaseDate : ''
           }
+          min={1900}
+          max={new Date().getFullYear()}
         />
 
         <FormInput
@@ -120,6 +119,8 @@ const LibraryForm = ({ onFormSubmit }) => {
               ? errors.countOfPages
               : ''
           }
+          min={1}
+          max={9999}
         />
       </div>
 

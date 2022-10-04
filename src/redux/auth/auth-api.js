@@ -1,22 +1,17 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
+
+import { getToken } from 'redux/auth/authSelectors';
+import { authToken } from 'redux/services/utils';
+import { axiosBaseQuery } from 'redux/services/utils';
 
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://books-reading-project.herokuapp.com',
-    prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token;
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  baseQuery: axiosBaseQuery(),
   tagTypes: ['auth'],
   endpoints: builder => ({
     addNewUser: builder.mutation({
       query: ({ name, email, password, confirm_password }) => ({
-        url: '/api/auth/register',
+        url: '/auth/register',
         method: 'POST',
         body: { name, email, password, confirm_password },
       }),
@@ -24,7 +19,7 @@ export const authApi = createApi({
     }),
     login: builder.mutation({
       query: ({ email, password }) => ({
-        url: '/api/auth/login',
+        url: '/auth/login',
         method: 'POST',
         body: { email, password },
       }),
@@ -32,18 +27,24 @@ export const authApi = createApi({
     }),
     logout: builder.query({
       query: () => ({
-        url: `/api/auth/logout`,
+        url: '/auth/logout',
         method: 'GET',
       }),
       invalidatesTags: ['auth'],
     }),
-
-    currentUser: builder.mutation({
+    currentUser: builder.query({
       query: () => ({
-        url: `/api/users/current`,
+        url: '/users/current',
         method: 'GET',
       }),
-      invalidatesTags: ['auth'],
+      providesTags: ['auth'],
+      async onQueryStarted(_, { getState }) {
+        const token = getToken(getState());
+
+        if (token) {
+          authToken.set(token);
+        }
+      },
     }),
   }),
 });
@@ -52,5 +53,5 @@ export const {
   useAddNewUserMutation,
   useLoginMutation,
   useLazyLogoutQuery,
-  useCurrentUserMutation,
+  useCurrentUserQuery,
 } = authApi;

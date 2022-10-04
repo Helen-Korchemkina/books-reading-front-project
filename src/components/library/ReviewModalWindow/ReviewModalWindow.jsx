@@ -6,14 +6,16 @@ import Rating from '@mui/material/Rating';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 
-import { useUpdateStatusBookMutation } from 'redux/books/books-api';
+import { useUpdateReviewBookMutation } from 'redux/books/books-api';
 import Button from 'components/common/Button';
 import ModalWindow from 'components/common/ModalWindow';
 import s from './ReviewModalWindow.module.scss';
 
 const VALIDATION_SCHEMA = Yup.object().shape({
   resume: Yup.string()
+    .min(1, 'Fill in the field')
     .max(1000, 'Maximum characters is 1000')
+    .required('Fill in the input field')
     .matches(/^[^- ]/, 'Field can`t start with a space or hyphen'),
 });
 
@@ -22,19 +24,19 @@ const ReviewModalWindow = ({
   onModalClose,
 }) => {
   const [rating, setRating] = useState(startBookValues.rating);
-  const [updateStatusBook, { isLoading }] = useUpdateStatusBookMutation();
+  const [updateReviewBook, { isLoading }] = useUpdateReviewBookMutation();
 
   const formik = useFormik({
     initialValues: {
       resume: startBookValues.resume,
     },
     validationSchema: VALIDATION_SCHEMA,
-    onSubmit: async values => {
+    onSubmit: async ({ resume }) => {
       try {
-        await updateStatusBook({
-          id: startBookValues.id,
+        await updateReviewBook({
+          id: startBookValues._id,
           rating,
-          ...values,
+          resume,
         }).unwrap();
 
         toast.dismiss();
@@ -111,7 +113,7 @@ const ReviewModalWindow = ({
 
 ReviewModalWindow.propTypes = {
   startBookValues: PropTypes.exact({
-    id: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
     rating: PropTypes.number,
     resume: PropTypes.string,
   }).isRequired,

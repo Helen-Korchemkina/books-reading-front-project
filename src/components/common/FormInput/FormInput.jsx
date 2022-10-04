@@ -8,6 +8,7 @@ const FormInput = ({
   errorMessage = '',
   modifClasses = {},
   children,
+  ...restProps
 }) => {
   return (
     <div className={classNames(s.wrapper, modifClasses.wrapper)}>
@@ -29,6 +30,7 @@ const FormInput = ({
         placeholder={input?.placeholder ?? '...'}
         onChange={input.onChange}
         value={input.value}
+        {...restProps}
       />
       {children}
       {errorMessage ? <span className={s.error}>{errorMessage}</span> : null}

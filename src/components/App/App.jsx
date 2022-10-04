@@ -1,15 +1,15 @@
-import { lazy, Suspense } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Container from 'components/common/Container';
-import AppBar from 'components/Header/AppBar';
-import InfoPage from 'pages/InfoPageMobile/InfoPageMobile';
 import { useSelector } from 'react-redux';
+import Media from 'react-media';
+
 import { getToken } from 'redux/auth/authSelectors';
 import { useAuth } from 'redux/auth/authSlice';
-import { useCurrentUserMutation } from 'redux/auth/auth-api';
-import { useEffect } from 'react';
-import { getIsLogin } from 'redux/auth/authSelectors';
-import Media from 'react-media';
+import { useCurrentUserQuery } from 'redux/auth/auth-api';
+import AppBar from 'components/Header/AppBar';
+import Container from 'components/common/Container';
+import PrivateRoute from 'components/common/PrivateRoute';
+import ProtectedRoute from 'components/common/ProtectedRoute';
 
 const LoginPage = lazy(() =>
   import('pages/LoginPage' /* webpackChunkName: "LoginPage" */)
@@ -26,6 +26,9 @@ const LibraryPage = lazy(() =>
 const TrainingPage = lazy(() =>
   import('pages/TrainingPage' /* webpackChunkName: "TrainingPage" */)
 );
+const InfoPageMobile = lazy(() =>
+  import('pages/InfoPageMobile' /* webpackChunkName: "TrainingPage" */)
+);
 const NotFoundPage = lazy(() =>
   import('pages/NotFoundPage' /* webpackChunkName: "NotFoundPage" */)
 );
@@ -33,56 +36,63 @@ const NotFoundPage = lazy(() =>
 const App = () => {
   const token = useSelector(getToken);
   const { credentialsUpdate } = useAuth();
-  const [currentUser, { isUninitialized }] = useCurrentUserMutation();
-  const isLogin = useSelector(getIsLogin);
+  const { data, isError, isSuccess, isLoading } = useCurrentUserQuery(null, {
+    skip: !Boolean(token),
+  });
 
   useEffect(() => {
-    if (token && isUninitialized) {
-      const checkCurrentUser = async () => {
-        const response = await currentUser();
-        console.log(response.data);
-        if (response.data) {
-          credentialsUpdate({
-            user: {
-              name: response.data.user.name,
-              email: response.data.user.email,
-            },
-            token,
-            isLogin,
-          });
-        }
-      };
-      checkCurrentUser();
+    if (isSuccess) {
+      credentialsUpdate({
+        user: data.user,
+        token,
+      });
     }
-  }, [credentialsUpdate, currentUser, isLogin, isUninitialized, token]);
+
+    if (isError) {
+      credentialsUpdate({
+        user: null,
+        token: null,
+      });
+    }
+  }, [credentialsUpdate, isSuccess, isError, token, data]);
+
+  if (isLoading) {
+    return <Container>Data synchronization....</Container>;
+  }
 
   return (
     <Suspense fallback={<Container>Loading...</Container>}>
       <Routes>
         <Route path="/" element={<AppBar />}>
-          <Route path="register" element={<RegistrationPage />} />
-          <Route index element={<LoginPage />} />
-          <Route path="answer-google" element={<GoogleAnswerPage />} />
-          <Route
-            index
-            element={
-              <Media
-                queries={{
-                  small: '(max-width: 480px)',
-                  medium: '(min-width: 481px)',
-                }}
-              >
-                {matches => (
-                  <>
-                    {matches.small && <InfoPage />}
-                    {matches.medium && <LoginPage />}
-                  </>
-                )}
-              </Media>
-            }
-          />
-          <Route path="library" element={<LibraryPage />} />
-          <Route path="training" element={<TrainingPage />} />
+          <Route element={<ProtectedRoute redirectTo="library" />}>
+            <Route path="register" element={<RegistrationPage />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route
+              index
+              element={
+                <Media
+                  queries={{
+                    small: '(max-width: 480px)',
+                    medium: '(min-width: 481px)',
+                  }}
+                >
+                  {matches => (
+                    <>
+                      {matches.small && <InfoPageMobile />}
+                      {matches.medium && <LoginPage />}
+                    </>
+                  )}
+                </Media>
+              }
+            />
+            <Route path="answer-google" element={<GoogleAnswerPage />} />
+          </Route>
+
+          <Route element={<PrivateRoute redirectTo="login" />}>
+            <Route path="library" element={<LibraryPage />} />
+            <Route path="training" element={<TrainingPage />} />
+          </Route>
+
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
