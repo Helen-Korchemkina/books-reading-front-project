@@ -7,7 +7,7 @@ const Navigation = () => {
   return (
     <div className={s.navWraper}>
       <NavLink
-        to="library"
+        to="/"
         end
         className={({ isActive }) =>
           isActive ? `${s.active} ${s.link}` : s.link
