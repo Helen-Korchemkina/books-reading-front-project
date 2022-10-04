@@ -83,6 +83,33 @@
 .dataTimePicker div{
     display: flex;
     flex-direction: row-reverse;
+    padding: 0;
+}
+
+.dataTimePicker input{
+  padding: 12px 0 12px 12px;
+  color: #A6ABB9;
+}
+
+.dataTimePicker button{
+  padding-left: 6px;
+  color: #A6ABB9;
+}
+
+.dataTimePicker label{
+  color: #A6ABB9;
+  position: absolute;
+  left: 30px;
+  top: -2px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+  transform: translate(14px, 16px) scale(1);
+}
+
+.dataTimePicker .Mui-focused{
+  color: red;
+  // border: 2px solid green;
 }
 
 .select{
@@ -96,12 +123,11 @@
 }
 
 .select input:focus{
-  background-color: rebeccapurple;
+  color: #A6ABB9;
   border-color: var(--color-orange);
 }
 
 .placeholder{
-  font-family: Montserrat;
   font-size: 14px;
   font-weight: 500;
   line-height: 17px;

@@ -1,4 +1,5 @@
 import Container from '../common/Container/Container';
+import { HiArrowNarrowLeft } from 'react-icons/hi';
 import MyGoals from './MyGoals/MyGoals';
 import BookList from './BookList/BookList';
 import Graphic from './Graphic/Graphic';
@@ -14,6 +15,7 @@ const Training = () =>{
         <>
         <Container>
             <MediaQuery minWidth={320} maxWidth={767}>
+                <HiArrowNarrowLeft className={s.icon}/>
                 <MyGoals/>
                 <BookList/>
                 <Graphic/>
