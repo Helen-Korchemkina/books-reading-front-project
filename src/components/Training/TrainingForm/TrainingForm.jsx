@@ -1,6 +1,4 @@
 import {useState} from 'react';
-import MediaQuery from 'react-responsive';
-import { HiArrowNarrowLeft } from 'react-icons/hi';
 import dayjs from 'dayjs';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -34,7 +32,7 @@ const MenuProps = {
 
 
 const TrainingForm = () =>{
-    const [start, setStart] = useState(null);
+    const [start, setStart] = useState(dayjs());
     const [finish, setFinish] = useState(null);
     const [book, setBook] = useState([]);
 
@@ -50,18 +48,12 @@ const TrainingForm = () =>{
           );
     };
 
-    const handleChangeStart = (newValue) => {
-        setStart(newValue);
-    };
-
-    const handleChangeFinish = (newValue) => {
-        setFinish(newValue);
+    const handleChangeStart = (newStart) => {
+        setStart(newStart);
+        console.log(start)
     };
     return(
         <>
-        <MediaQuery minWidth={320} maxWidth={767}>
-            <HiArrowNarrowLeft className={s.icon}/>    
-        </MediaQuery>
         <div className={s.container}>
             <h1 className={s.title}>My Training</h1>
             <form action="" className={s.form}>
@@ -70,8 +62,7 @@ const TrainingForm = () =>{
                 <DateTimePicker
                     renderInput={(props) => 
                     <TextField 
-                        placeholder='Start'
-                        value={start === null ? 'Start' : start} 
+                        value={start} 
                         {...props}
                         />}
                     className={s.dataTimePicker}
@@ -81,14 +72,14 @@ const TrainingForm = () =>{
                 />
                 <DateTimePicker
                     renderInput={(props) => <TextField
-                        placeholder='Finish'
-                        value={finish === null ? 'Finish' : finish} 
                         {...props} 
                          />}
-                    className={s.dataTimePicker}
-                    minDate={dayjs()}
                     value={finish}
-                    onChange={handleChangeFinish}
+                    className={s.dataTimePicker}
+                    label='Finish'
+                    onChange={(newValue) => {
+                        setFinish(newValue);
+                      }}
                 />
             </LocalizationProvider>
             </div>

@@ -62,14 +62,14 @@ export const data = {
   datasets: [
     {
       label: 'ACT',
-      data: [],
+      data: [1,2,3,5,6,8,9,9],
       borderColor: 'rgb(255,107,8)',
       backgroundColor: 'rgba(255, 99, 132, 0.5)',
       tension: 0.2,
     },
     {
       label: 'PLAN',
-      data: [],
+      data: [2,1,5,7,8,9],
       borderColor: 'rgb(9,30,63)',
       backgroundColor: 'rgba(53, 162, 235, 0.5)',
       tension: 0.2,
