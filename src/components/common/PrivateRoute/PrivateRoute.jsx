@@ -2,11 +2,11 @@ import { Outlet, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getIsLogin } from 'redux/auth/authSelectors';
+import { getToken } from 'redux/auth/authSelectors';
 
 function PrivateRoute({ redirectTo = '/' }) {
-  const isLogin = useSelector(getIsLogin);
-  return isLogin ? <Outlet /> : <Navigate to={redirectTo} />;
+  const token = useSelector(getToken);
+  return Boolean(token) ? <Outlet /> : <Navigate to={redirectTo} />;
 }
 
 PrivateRoute.prototype = {

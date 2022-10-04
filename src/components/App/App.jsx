@@ -36,7 +36,7 @@ const NotFoundPage = lazy(() =>
 const App = () => {
   const token = useSelector(getToken);
   const { credentialsUpdate } = useAuth();
-  const { data, isError, isSuccess } = useCurrentUserQuery(null, {
+  const { data, isError, isSuccess, isLoading } = useCurrentUserQuery(null, {
     skip: !Boolean(token),
   });
 
@@ -55,6 +55,10 @@ const App = () => {
       });
     }
   }, [credentialsUpdate, isSuccess, isError, token, data]);
+
+  if (isLoading) {
+    return <Container>Data synchronization...</Container>;
+  }
 
   return (
     <Suspense fallback={<Container>Loading...</Container>}>
