@@ -1,8 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 
 import { BOOKS_STATUS, useGetBooksQuery } from 'redux/books/books-api';
+import { getTraining } from 'redux/auth/authSelectors';
 import Container from 'components/common/Container';
 import Button from 'components/common/Button';
 import GoBackButton from 'components/common/GoBackButton';
@@ -15,7 +17,9 @@ import s from './LibraryPage.module.scss';
 
 const LibraryPage = () => {
   const { data: books = [], isFetching: isBooksFetching } = useGetBooksQuery();
-  const userHasRunnigTraining = true;
+  const userTraning = useSelector(getTraining);
+  const userHasRunnigTraining =
+    userTraning?.date_finish && userTraning.date_finish < Date.now();
   const [showFormOnMobile, setShowFormOnMobile] = useState(true);
   const navigate = useNavigate();
   const isMobileScreen = useMediaQuery({ query: '(max-width: 768px)' });

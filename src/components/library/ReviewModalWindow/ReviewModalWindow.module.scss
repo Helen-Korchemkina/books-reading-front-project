@@ -29,12 +29,12 @@
   border: 1px solid #a6abb9;
   resize: none;
 
-  &.filled {
-    border-color: var(--color-orange);
-  }
-
   &.invalid {
     border-color: #d32f2f;
+  }
+
+  &.filled {
+    border-color: var(--color-orange);
   }
 
   &:focus {

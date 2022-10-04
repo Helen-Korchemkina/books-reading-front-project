@@ -22,7 +22,10 @@ export const axiosBaseQuery =
       return {
         error: {
           status: axiosError.response?.status,
-          data: axiosError.response?.statusText || axiosError.message,
+          data:
+            axiosError.response?.data?.message ||
+            axiosError.response?.statusText ||
+            axiosError.message,
         },
       };
     }
