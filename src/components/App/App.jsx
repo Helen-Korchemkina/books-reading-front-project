@@ -32,18 +32,14 @@ const NotFoundPage = lazy(() =>
 const App = () => {
   const token = useSelector(getToken);
   const { credentialsUpdate } = useAuth();
-  const {
-    data: user,
-    isError,
-    isSuccess,
-  } = useCurrentUserQuery(null, {
+  const { data, isError, isSuccess } = useCurrentUserQuery(null, {
     skip: !Boolean(token),
   });
 
   useEffect(() => {
     if (isSuccess) {
       credentialsUpdate({
-        user: { name: user.user.name, email: user.user.email },
+        user: data.user,
         token,
       });
     }
@@ -54,7 +50,7 @@ const App = () => {
         token: null,
       });
     }
-  }, [credentialsUpdate, isSuccess, isError, token, user]);
+  }, [credentialsUpdate, isSuccess, isError, token, data]);
 
   return (
     <Suspense fallback={<Container>Loading...</Container>}>

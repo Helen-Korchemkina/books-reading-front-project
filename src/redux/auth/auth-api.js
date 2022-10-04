@@ -32,7 +32,6 @@ export const authApi = createApi({
       }),
       invalidatesTags: ['auth'],
     }),
-
     currentUser: builder.query({
       query: () => ({
         url: '/users/current',

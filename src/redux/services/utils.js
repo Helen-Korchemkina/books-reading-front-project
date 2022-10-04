@@ -3,7 +3,9 @@ import { isRejectedWithValue } from '@reduxjs/toolkit';
 
 import { toastErrorNotification } from 'utils/utils';
 
-axios.defaults.baseURL = 'https://books-reading-project.herokuapp.com/api/';
+// axios.defaults.baseURL = 'https://books-reading-project.herokuapp.com/api/';
+
+axios.defaults.baseURL = 'http://localhost:3001/api/';
 
 export const authToken = {
   set: token => {
@@ -22,7 +24,10 @@ export const axiosBaseQuery =
       return {
         error: {
           status: axiosError.response?.status,
-          data: axiosError.response?.statusText || axiosError.message,
+          data:
+            axiosError.response?.data?.message ||
+            axiosError.response?.statusText ||
+            axiosError.message,
         },
       };
     }

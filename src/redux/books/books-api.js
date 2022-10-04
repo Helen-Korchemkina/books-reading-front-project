@@ -21,13 +21,6 @@ export const booksApi = createApi({
       providesTags: ['Books'],
       transformResponse: response => response.data.books,
     }),
-    getBook: builder.query({
-      query: id => ({
-        url: `/book/${id}`,
-        method: 'GET',
-      }),
-      providesTags: ['Books'],
-    }),
     addBook: builder.mutation({
       query: body => ({
         url: '/book',
@@ -64,7 +57,6 @@ export const booksApi = createApi({
 
 export const {
   useGetBooksQuery,
-  useGetBookQuery,
   useAddBookMutation,
   useRemoveBookMutation,
   useUpdateReviewBookMutation,

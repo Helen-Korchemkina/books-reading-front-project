@@ -13,7 +13,9 @@ import s from './ReviewModalWindow.module.scss';
 
 const VALIDATION_SCHEMA = Yup.object().shape({
   resume: Yup.string()
+    .min(1, 'Fill in the field')
     .max(1000, 'Maximum characters is 1000')
+    .required('Fill in the input field')
     .matches(/^[^- ]/, 'Field can`t start with a space or hyphen'),
 });
 
@@ -29,12 +31,12 @@ const ReviewModalWindow = ({
       resume: startBookValues.resume,
     },
     validationSchema: VALIDATION_SCHEMA,
-    onSubmit: async values => {
+    onSubmit: async ({ resume }) => {
       try {
         await updateReviewBook({
-          id: startBookValues.id,
+          id: startBookValues._id,
           rating,
-          ...values,
+          resume,
         }).unwrap();
 
         toast.dismiss();
@@ -111,7 +113,7 @@ const ReviewModalWindow = ({
 
 ReviewModalWindow.propTypes = {
   startBookValues: PropTypes.exact({
-    id: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
     rating: PropTypes.number,
     resume: PropTypes.string,
   }).isRequired,
