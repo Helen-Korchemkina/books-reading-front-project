@@ -102,6 +102,8 @@ const LibraryForm = ({ onFormSubmit }) => {
           errorMessage={
             errors.releaseDate && touched.releaseDate ? errors.releaseDate : ''
           }
+          min={1900}
+          max={new Date().getFullYear()}
         />
 
         <FormInput
@@ -117,6 +119,8 @@ const LibraryForm = ({ onFormSubmit }) => {
               ? errors.countOfPages
               : ''
           }
+          min={1}
+          max={9999}
         />
       </div>
 
