@@ -43,7 +43,6 @@ export default function RegstrationPage() {
     },
     validationSchema: SignupSchema,
     onSubmit: (values, actions) => {
-      console.log(JSON.stringify(values, null, 2));
       actions.resetForm();
       const loginFetch = async loginData => {
         try {

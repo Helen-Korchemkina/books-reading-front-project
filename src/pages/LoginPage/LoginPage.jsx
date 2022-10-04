@@ -7,7 +7,6 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import s from './LoginPage.module.scss';
 import { useLoginMutation } from 'redux/auth/auth-api';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'redux/auth/authSlice';
 
 const SignupSchema = Yup.object().shape({
@@ -25,7 +24,6 @@ const SignupSchema = Yup.object().shape({
 export default function LoginPage() {
   const [login] = useLoginMutation();
   const { credentialsUpdate } = useAuth();
-  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -33,8 +31,6 @@ export default function LoginPage() {
     },
     validationSchema: SignupSchema,
     onSubmit: (values, actions) => {
-      console.log(JSON.stringify(values, null, 2));
-
       const loginCheckFetch = async loginData => {
         const response = await login(loginData);
         if (response?.error?.status === 400) {
@@ -47,7 +43,6 @@ export default function LoginPage() {
             },
             token: response.data.token,
           });
-          navigate('/library', { replace: true });
         }
       };
       loginCheckFetch({
