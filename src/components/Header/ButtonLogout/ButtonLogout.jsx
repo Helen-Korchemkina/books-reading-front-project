@@ -5,22 +5,20 @@ import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import ModalWindow from 'components/common/ModalWindow';
 
-const Modal = ({ confirm, togle }) => {
+const Modal = ({ confirm, reject }) => {
   return (
     <div>
       <p>text</p>
       <button
         onClick={() => {
-          confirm(true);
-          togle(false);
+          confirm();
         }}
       >
         Yes
       </button>
       <button
         onClick={() => {
-          confirm(false);
-          togle(false);
+          reject();
         }}
       >
         No
@@ -33,29 +31,25 @@ const ButtonLogout = () => {
   const [logout] = useLazyLogoutQuery();
   const { credentialsUpdate } = useAuth();
   const navigate = useNavigate();
-  const [confirm, setConfirm] = useState(false);
 
   const [togle, setTogle] = useState(false);
 
-  const handleLogout = () => {
-    if (confirm) {
-      logout();
-      credentialsUpdate({ user: null, token: null, isLogin: false });
-      navigate('/', { replace: true });
-      setTogle(false);
-    }
-    setTogle(true);
+  const handleLogout = async () => {
+    await logout();
+    credentialsUpdate({ user: null, token: null, isLogin: false });
+    navigate('/', { replace: true });
+    setTogle(false);
   };
 
   return (
     <>
-      <button className={s.buttonLogout} onClick={handleLogout}>
+      <button className={s.buttonLogout} onClick={() => setTogle(true)}>
         Logout
       </button>
 
       {togle ? (
-        <ModalWindow onClose={togle}>
-          <Modal confirm={setConfirm} togle={setTogle} />
+        <ModalWindow onClose={() => setTogle(false)}>
+          <Modal confirm={handleLogout} reject={() => setTogle(false)} />
         </ModalWindow>
       ) : null}
     </>

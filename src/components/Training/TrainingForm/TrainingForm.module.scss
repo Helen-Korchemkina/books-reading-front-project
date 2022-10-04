@@ -1,103 +1,103 @@
-.container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    @media (min-width: 768px) {
-        // align-items: flex-start;
-      }
-    
-      @media (min-width: 1024px) {
-        margin-top: 40px;
-      }
+  @media (min-width: 768px) {
+    // align-items: flex-start;
+  }
+
+  @media (min-width: 1024px) {
+    margin-top: 40px;
+  }
 }
 
-.title{
-    width: 100%;
-    margin:0 0 20px 0;
-    padding: 18px 0px;
-    font-size: 20px;
-    text-align: center;
-    color: var(--color-white);
-    background-color: #B1B5C2; 
-    @media (min-width: 768px) {
-        min-width: 704px;
-        height: 60px;
-        margin-bottom: 28px;
-      }
-    
-      @media (min-width: 1024px) {
-        padding: 18px 0 18px 0;
-      }
+.title {
+  width: 100%;
+  margin: 0 0 20px 0;
+  padding: 18px 0px;
+  font-size: 20px;
+  text-align: center;
+  color: var(--color-white);
+  background-color: #b1b5c2;
+  @media (min-width: 768px) {
+    min-width: 704px;
+    height: 60px;
+    margin-bottom: 28px;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 18px 0 18px 0;
+  }
 }
 
-.icon{
-    width: 48px;
-    height: 24px;
-    margin: 24px 0 0 0;
-    color: var(--color-orange);
-    cursor: pointer;
+.icon {
+  width: 48px;
+  height: 24px;
+  margin: 24px 0 0 0;
+  color: var(--color-orange);
+  cursor: pointer;
 }
 
-.form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    @media (min-width: 768px) {
-        align-items: flex-start;
-      }
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media (min-width: 768px) {
+    align-items: flex-start;
+  }
 }
 
-.content{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
-    @media (min-width: 768px) {
-        flex-direction: row;
-        justify-content: left;
-        margin-bottom: 24px;
-      }
-      @media (min-width: 1024px) {
-        margin-left: auto;
-        margin-right: auto;
-      }
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: left;
+    margin-bottom: 24px;
+  }
+  @media (min-width: 1024px) {
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
-.content .dataTimePicker{
-    width: 280px;
-    height: 42px;
-    margin: 0 0 20px 0;
+.content .dataTimePicker {
+  width: 280px;
+  height: 42px;
+  margin: 0 0 20px 0;
 
-    @media (min-width: 768px) {
-        width: 250px;
-      }
+  @media (min-width: 768px) {
+    width: 250px;
+  }
 }
 
-.content .dataTimePicker:last-child{
-    @media (min-width: 768px) {
-        margin: 0 0 0 40px;
-      }
+.content .dataTimePicker:last-child {
+  @media (min-width: 768px) {
+    margin: 0 0 0 40px;
+  }
 }
 
-.dataTimePicker div{
-    display: flex;
-    flex-direction: row-reverse;
-    padding: 0;
+.dataTimePicker div {
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 0;
 }
 
-.dataTimePicker input{
+.dataTimePicker input {
   padding: 12px 0 12px 12px;
-  color: #A6ABB9;
+  color: #a6abb9;
 }
 
-.dataTimePicker button{
+.dataTimePicker button {
   padding-left: 6px;
-  color: #A6ABB9;
+  color: #a6abb9;
 }
 
-.dataTimePicker label{
-  color: #A6ABB9;
+.dataTimePicker label {
+  color: #a6abb9;
   position: absolute;
   left: 30px;
   top: -2px;
@@ -107,46 +107,45 @@
   transform: translate(14px, 16px) scale(1);
 }
 
-.dataTimePicker .Mui-focused{
+.dataTimePicker .Mui-focused {
   color: red;
   // border: 2px solid green;
 }
 
-.select{
-    width: 280px;
-    margin: 0 0 32px 0;
-    @media (min-width: 768px) {
-        width: 483px;
-        height: 42px;
-        margin: 0 50px 0 0;
-      }
+.select {
+  width: 280px;
+  margin: 0 0 32px 0;
+  @media (min-width: 768px) {
+    width: 483px;
+    height: 42px;
+    margin: 0 50px 0 0;
+  }
 }
 
-.select input:focus{
-  color: #A6ABB9;
+.select input:focus {
+  color: #a6abb9;
   border-color: var(--color-orange);
 }
 
-.placeholder{
+.placeholder {
   font-size: 14px;
   font-weight: 500;
   line-height: 17px;
   letter-spacing: 0em;
   text-align: left;
-  color: #A6ABB9;
+  color: #a6abb9;
 }
 
-.tableSelect{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
+.tableSelect {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.button{
-    width: 171px;
-    height: 42px;
-    cursor: pointer;
-    margin-bottom: 40px;
+.button {
+  width: 171px;
+  height: 42px;
+  cursor: pointer;
+  margin-bottom: 40px;
 }
-
