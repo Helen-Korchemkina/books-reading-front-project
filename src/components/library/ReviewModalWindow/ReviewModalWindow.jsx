@@ -6,7 +6,7 @@ import Rating from '@mui/material/Rating';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 
-import { useUpdateStatusBookMutation } from 'redux/books/books-api';
+import { useUpdateReviewBookMutation } from 'redux/books/books-api';
 import Button from 'components/common/Button';
 import ModalWindow from 'components/common/ModalWindow';
 import s from './ReviewModalWindow.module.scss';
@@ -22,7 +22,7 @@ const ReviewModalWindow = ({
   onModalClose,
 }) => {
   const [rating, setRating] = useState(startBookValues.rating);
-  const [updateStatusBook, { isLoading }] = useUpdateStatusBookMutation();
+  const [updateReviewBook, { isLoading }] = useUpdateReviewBookMutation();
 
   const formik = useFormik({
     initialValues: {
@@ -31,7 +31,7 @@ const ReviewModalWindow = ({
     validationSchema: VALIDATION_SCHEMA,
     onSubmit: async values => {
       try {
-        await updateStatusBook({
+        await updateReviewBook({
           id: startBookValues.id,
           rating,
           ...values,

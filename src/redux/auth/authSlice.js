@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 
+import { authToken } from 'redux/services/utils';
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: { user: null, token: null, isLogin: false },
@@ -9,7 +11,12 @@ const authSlice = createSlice({
     setCredentials: (state, { payload: { user, token } }) => {
       state.user = user;
       state.token = token;
-      token ? (state.isLogin = true) : (state.isLogin = false);
+      if (token) {
+        authToken.set(token);
+        state.isLogin = true;
+      } else {
+        state.isLogin = false;
+      }
     },
   },
 });
