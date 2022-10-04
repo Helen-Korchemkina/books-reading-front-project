@@ -64,10 +64,11 @@ const App = () => {
     <Suspense fallback={<Container>Loading...</Container>}>
       <Routes>
         <Route path="/" element={<AppBar />}>
-          <Route element={<ProtectedRoute redirectTo="/" />}>
+          <Route element={<ProtectedRoute redirectTo="library" />}>
             <Route path="register" element={<RegistrationPage />} />
+            <Route path="login" element={<LoginPage />} />
             <Route
-              path="login"
+              index
               element={
                 <Media
                   queries={{
@@ -88,7 +89,7 @@ const App = () => {
           </Route>
 
           <Route element={<PrivateRoute redirectTo="login" />}>
-            <Route index element={<LibraryPage />} />
+            <Route path="library" element={<LibraryPage />} />
             <Route path="training" element={<TrainingPage />} />
           </Route>
 
