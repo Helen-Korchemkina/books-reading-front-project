@@ -53,7 +53,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<AppBar />}>
           <Route path="register" element={<RegistrationPage />} />
-          <Route path="login" element={<LoginPage />} />
+          <Route index element={<LoginPage />} />
           <Route path="answer-google" element={<GoogleAnswerPage />} />
           <Route
             index
