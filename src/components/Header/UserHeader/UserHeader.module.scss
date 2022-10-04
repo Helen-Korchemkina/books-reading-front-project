@@ -3,11 +3,14 @@
   margin-right: 14px;
   flex-wrap: nowrap;
   align-content: center;
-  align-items: baseline;
+  align-items: center;
 }
 
 .circleUnderLater {
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: space-around;
   width: 33px;
   height: 33px;
   background-color: var(--color-super-light-grey);
@@ -16,12 +19,20 @@
 }
 
 .nameFirstLater {
-  margin: 0;
-  margin-top: 3px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.21;
 }
 
 @media (min-width: 768px) {
   .nameWraper {
     margin-right: 25vw;
   }
+}
+
+.user {
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.21;
+  color: var(--color-grey);
 }

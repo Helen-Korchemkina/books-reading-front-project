@@ -30,5 +30,5 @@
 }
 
 .active {
-  background: grey;
+  background: var(--color-super-light-grey);
 }
