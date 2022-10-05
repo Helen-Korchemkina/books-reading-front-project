@@ -13,16 +13,16 @@ const VALIDATION_SCHEMA = Yup.object().shape({
     .min(1, 'Fill in the field')
     .max(50, 'Maximum characters is 50')
     .required('Fill in the input field')
-    .matches(/^[^- ]/, 'Field can`t start with a space or hyphen'),
+    .matches(/^[^- ]/, 'Can`t start with a space or hyphen'),
   author: Yup.string()
     .min(1, 'Fill in the field')
     .max(50, 'Maximum characters is 50')
     .required('Fill in the input field')
-    .matches(/^[^- ]/, 'The field can`t start with a space or hyphen')
-    .matches(/^([^\d]*)$/, 'The field can`t contains digits'),
+    .matches(/^[^- ]/, 'Can`t start with a space or hyphen')
+    .matches(/^([^\d]*)$/, 'Can`t contains digits'),
   releaseDate: Yup.number()
     .integer('Can`t containts "."')
-    .min(1900, 'Minimum year is 1900')
+    .min(1000, 'Minimum year is 1000')
     .max(
       new Date().getFullYear(),
       `Maximum year is ${new Date().getFullYear()}`
@@ -102,7 +102,7 @@ const LibraryForm = ({ onFormSubmit }) => {
           errorMessage={
             errors.releaseDate && touched.releaseDate ? errors.releaseDate : ''
           }
-          min={1900}
+          min={1000}
           max={new Date().getFullYear()}
         />
 

@@ -38,10 +38,10 @@ export default function LoginPage() {
         } else {
           credentialsUpdate({
             user: {
-              name: response.data.data.name,
-              email: response.data.data.email,
+              name: response.data?.data?.name,
+              email: response.data?.data?.email,
             },
-            token: response.data.token,
+            token: response.data?.token,
           });
         }
       };
