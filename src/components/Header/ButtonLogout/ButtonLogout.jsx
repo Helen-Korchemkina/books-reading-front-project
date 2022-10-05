@@ -17,7 +17,11 @@ const ButtonLogout = () => {
       </button>
 
       {togle ? (
-        <ModalWindow onClose={openModal}>
+        <ModalWindow
+          onClose={() => {
+            setTogle(false);
+          }}
+        >
           <CloseModal togle={setTogle} />
         </ModalWindow>
       ) : null}
