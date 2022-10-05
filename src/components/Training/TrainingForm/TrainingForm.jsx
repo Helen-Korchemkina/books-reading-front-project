@@ -1,14 +1,16 @@
 import {useState} from 'react';
 import dayjs from 'dayjs';
-import TextField from '@mui/material/TextField';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+// import { useaddTimerValueMutation } from 'redux/books/books-api';
+import { BsCalendarEvent } from "react-icons/bs";
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import "react-datetime/css/react-datetime.css";
+import Datetime from "react-datetime";
 import s from './TrainingForm.module.scss';
 
 
@@ -30,14 +32,46 @@ const MenuProps = {
     'title4'
 ];
 
+const VALIDATION_SCHEMA = Yup.object().shape({
+    start: Yup.number()
+      .integer('Can`t containts "."')
+      .min(dayjs(), `Minimum year is ${dayjs()}`)
+      .required('Fill in the field'),
+    finish: Yup.number()
+    .integer('Can`t containts "."')
+    .min(dayjs(), `Minimum year is ${dayjs().add(1, 'day')}`)
+    .required('Fill in the field'), 
+  });
+
 
 const TrainingForm = () =>{
-    const [start, setStart] = useState(dayjs());
+    const [start, setStart] = useState(null);
     const [finish, setFinish] = useState(null);
+    // const [addTimerValue, { isLoading }] = useaddTimerValueMutation();
     const [book, setBook] = useState([]);
-
+    
+    const formik = useFormik({
+        initialValues: {
+            start: '',
+            finish: '',
+          },
+        validationSchema: VALIDATION_SCHEMA,
+        onSubmit: async (values, actions) => {
+            try {
+                await console.log(start, finish, 'ONSUBMIT')
+            //   await addTimerValue({
+            //     ...values
+            //   })
+      
+              
+            //   actions.resetForm();
+    
+            } catch (error) {
+              console.log(error);
+            }
+          },
+    });
    
-
     const handleChangeBook = (event) => {
         const {
             target: { value },
@@ -48,40 +82,58 @@ const TrainingForm = () =>{
           );
     };
 
-    const handleChangeStart = (newStart) => {
-        setStart(newStart);
-        console.log(start)
-    };
+    let inputStartProps = {
+        id:"start",
+        placeholder:"Start",
+        name:"start",
+        type:"text",
+        className:`${s.dataTimePicker}`,
+        // onChange:`${formik.handleChange}`,
+        // value:`${formik.values.start}`,        
+    }
+
+    let inputFinishProps = {
+        id:"finish",
+        placeholder:"Finish",
+        name:"finish",
+        type:"text",
+        className:`${s.dataTimePicker}`,
+        // onChange:`${formik.handleChange}`,
+        // value:`${formik.values.start}`,        
+    }
+
+    console.log(start, finish)
+
     return(
         <>
         <div className={s.container}>
             <h1 className={s.title}>My Training</h1>
-            <form action="" className={s.form}>
+            <form 
+                action="" 
+                className={s.form}
+                onSubmit={formik.handleSubmit}
+            >
             <div className={s.content}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateTimePicker
-                    renderInput={(props) => 
-                    <TextField 
-                        value={start} 
-                        {...props}
-                        />}
-                    className={s.dataTimePicker}
-                    minDate={dayjs()}
-                    value={start}
-                    onChange={handleChangeStart}
-                />
-                <DateTimePicker
-                    renderInput={(props) => <TextField
-                        {...props} 
-                         />}
-                    value={finish}
-                    className={s.dataTimePicker}
-                    label='Finish'
-                    onChange={(newValue) => {
-                        setFinish(newValue);
-                      }}
-                />
-            </LocalizationProvider>
+                <div className={s.iconContainer} >    
+                    <BsCalendarEvent className={s.icon}/>
+                    <Datetime 
+                    closeOnClickOutside="true"
+                    closeOnSelect={ true }
+                    inputProps={ inputStartProps }
+                    onChange={(e) => setStart(e._d)}
+                    />
+                </div>        
+                    
+                <div className={s.iconContainer} >    
+                    <BsCalendarEvent className={s.icon}/>
+                    <Datetime 
+                    closeOnClickOutside="true"
+                    closeOnSelect={ true }
+                    inputProps={ inputFinishProps }
+                    onChange={(e) => setFinish(e._d)}
+                    />
+                </div> 
+             
             </div>
             <div className={s.tableSelect}>
             <Box sx={{ minWidth: 120 }} className={s.boxSelect}>
@@ -108,7 +160,6 @@ const TrainingForm = () =>{
                     <MenuItem
                     key={name}
                     value={name}
-                    
                     >
                     {name}
                     </MenuItem>
@@ -125,6 +176,3 @@ const TrainingForm = () =>{
 }
 
 export default TrainingForm;
-
-//86 style={getStyles(name, personName, theme)}
-//90 MenuProps={MenuProps}
