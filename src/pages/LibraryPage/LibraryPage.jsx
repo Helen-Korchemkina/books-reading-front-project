@@ -76,7 +76,7 @@ const LibraryPage = () => {
             <LibraryCatalog books={books} />
             {isFetching && <LoadSpinner />}
 
-            {hasPendingBook && userHasRunnigTraining && (
+            {hasPendingBook  && (
               <Button
                 variant="filled"
                 onClick={() => navigate('/training')}

@@ -1,0 +1,47 @@
+.reswrap{
+    display: flex;
+   
+    justify-content: space-between;
+}
+.container {
+    
+    align-items: center;
+margin: 40px 0 0 32px;
+}
+.btn {
+margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 200px;
+        height: 40px;
+        padding: 10px 0 10px 0;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 20px;
+        text-align: center;
+    
+}
+.title{
+    
+    
+        font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 15px;
+        line-height: 15px;
+        /* identical to box height */
+    
+        text-align: center;
+        text-transform: uppercase;
+    
+        /* deep blue */
+    
+        color: #242A37;
+}
+.titleDateForm{
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+.dataTimePicker{
+    padding: 12px;
+}

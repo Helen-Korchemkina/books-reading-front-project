@@ -1,12 +1,11 @@
-import { MdOutlineMenuBook } from 'react-icons/md';
-import { MdDeleteOutline } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
-import Button from 'components/common/Button';
-import classNames from 'classnames';
+// import { MdOutlineMenuBook } from 'react-icons/md';
+// import { MdDeleteOutline } from 'react-icons/md';
+
+// import classNames from 'classnames';
 import s from './BooksTable.module.scss';
 
 const BooksTable = () => {
-   const navigate = useNavigate();
+  
   const booksDefault = [
     {
       title: 'Scrum. A  revolutionary method...',
@@ -14,12 +13,12 @@ const BooksTable = () => {
       releaseDate: 2022,
       countOfPages: 15,
     },
-    {
-      title: '...',
-      author: '',
-      releaseDate: '',
-      countOfPages: '',
-    },
+    // {
+    //   title: '...',
+    //   author: '',
+    //   releaseDate: '',
+    //   countOfPages: '',
+    // },
   ];
   return (
     <>
@@ -36,11 +35,12 @@ const BooksTable = () => {
           {booksDefault.map(book => (
             <tr key={book.id} className={s.bodyRow}>
               <td className={s.bodyRowTitle}>
-                <MdOutlineMenuBook
+                <input type="checkbox"  className={s.checkbox} />
+                {/* <MdOutlineMenuBook
                   className={classNames({
                     [s.icon]: true,
                   })}
-                />
+                 /> */}
                 <span className={s.title}>{book.title}</span>
               </td>
               <td className={s.inlineTitle}>
@@ -52,13 +52,13 @@ const BooksTable = () => {
                 {book.releaseDate}
               </td>
               <td className={s.inlineTitle}>
-                {book.title !== '...' && (
+                {/* {book.title !== '...' && (
                   <MdDeleteOutline
                     className={classNames({
                       [s.iconDelete]: true,
                     })}
                   />
-                )}
+                )} */}
                 <span className={s.subtitle}>Pages:</span>
                 {book.countOfPages}
               </td>
@@ -66,10 +66,7 @@ const BooksTable = () => {
           ))}
         </tbody>
       </table>
-      <Button variant="filled" modifClass={s.button}
-      onClick={() => navigate('/statistics')}>
-        Start traning
-      </Button>
+     
     </>
   );
 };
