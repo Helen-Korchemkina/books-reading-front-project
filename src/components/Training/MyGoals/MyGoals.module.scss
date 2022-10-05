@@ -1,16 +1,18 @@
+@import 'scss-variables.scss';
+
 .container{
     display: flex;
     flex-direction: column;
     align-items: center;
 
-      @media (min-width: 768px) {
+      @media (min-width: $screenMd) {
         flex-direction:row;
         justify-content: space-between;
         margin: 32px 0 40px 0;
         box-shadow: 0px 2px 3px rgba(9, 30, 63, 0.25);
       }
     
-      @media (min-width: 1024px) {
+      @media (min-width: $screenLg) {
         display: flex;
         flex-direction: column;
         margin: 40px 0 0 32px;
@@ -27,11 +29,11 @@
     color: var(--color-white);
     background-color: #B1B5C2;  
 
-    @media (min-width: 768px) {
+    @media (min-width: $screenMd) {
         width: 275px;
         margin: 23px 0px 22px 28px;
       }
-      @media (min-width: 1024px) {
+      @media (min-width: $screenLg) {
         width: 100%;
         margin:0;
       }
@@ -43,12 +45,12 @@
     padding: 44px 30px;
     box-shadow: 0px 2px 3px rgba(9, 30, 63, 0.1);
 
-    @media (min-width: 768px) {
+    @media (min-width: $screenMd) {
         margin: 20px 52px 8px 0px;
         padding: 0;
         box-shadow: none;
       }
-    @media (min-width: 1024px) {
+    @media (min-width: $screenLg) {
       margin: 28px 34px 48px 34px;
     }
 }
@@ -57,7 +59,7 @@
     display: flex;
     flex-direction: column;
     margin-right: 20px;
-    @media (min-width: 768px) {
+    @media (min-width: $screenMd) {
       margin-right: 40px;
       padding: 0;
       box-shadow: none;
