@@ -4,10 +4,18 @@ import { getToken } from 'redux/auth/authSelectors';
 import { authToken } from 'redux/services/utils';
 import { axiosBaseQuery } from 'redux/services/utils';
 
+const setCredentials = async (_, { getState }) => {
+  const token = getToken(getState());
+
+  if (token) {
+    authToken.set(token);
+  }
+};
+
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: axiosBaseQuery(),
-  tagTypes: ['auth'],
+  tagTypes: ['auth', 'training'],
   endpoints: builder => ({
     addNewUser: builder.mutation({
       query: ({ name, email, password, confirm_password }) => ({
@@ -38,13 +46,24 @@ export const authApi = createApi({
         method: 'GET',
       }),
       providesTags: ['auth'],
-      async onQueryStarted(_, { getState }) {
-        const token = getToken(getState());
-
-        if (token) {
-          authToken.set(token);
-        }
-      },
+      onQueryStarted: setCredentials,
+    }),
+    getUserTraining: builder.query({
+      query: () => ({
+        url: '/users/training',
+        method: 'GET',
+      }),
+      providesTags: ['training'],
+      onQueryStarted: setCredentials,
+    }),
+    updateUserTraining: builder.mutation({
+      query: body => ({
+        url: '/users/training',
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: ['training'],
+      onQueryStarted: setCredentials,
     }),
   }),
 });
@@ -54,4 +73,6 @@ export const {
   useLoginMutation,
   useLazyLogoutQuery,
   useCurrentUserQuery,
+  useGetUserTrainingQuery,
+  useUpdateUserTrainingMutation,
 } = authApi;
