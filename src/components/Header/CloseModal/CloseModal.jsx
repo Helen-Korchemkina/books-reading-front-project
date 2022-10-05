@@ -1,5 +1,5 @@
 import Button from 'components/common/Button';
-import { useEffect, useState } from 'react';
+
 import Media from 'react-media';
 import { useNavigate } from 'react-router-dom';
 import { useLazyLogoutQuery } from 'redux/auth/auth-api';
