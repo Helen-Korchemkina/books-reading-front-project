@@ -4,52 +4,24 @@ import { useAuth } from 'redux/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import ModalWindow from 'components/common/ModalWindow';
-
-const Modal = ({ confirm, reject }) => {
-  return (
-    <div>
-      <p>text</p>
-      <button
-        onClick={() => {
-          confirm();
-        }}
-      >
-        Yes
-      </button>
-      <button
-        onClick={() => {
-          reject();
-        }}
-      >
-        No
-      </button>
-    </div>
-  );
-};
+import CloseModal from '../CloseModal';
 
 const ButtonLogout = () => {
-  const [logout] = useLazyLogoutQuery();
-  const { credentialsUpdate } = useAuth();
-  const navigate = useNavigate();
-
   const [togle, setTogle] = useState(false);
 
-  const handleLogout = async () => {
-    await logout();
-    credentialsUpdate({ user: null, token: null, isLogin: false });
-    navigate('/', { replace: true });
-    setTogle(false);
+  const openModal = () => {
+    setTogle(true);
   };
 
   return (
     <>
-      <button className={s.buttonLogout} onClick={() => setTogle(true)}>
+      <button className={s.buttonLogout} onClick={openModal}>
         Logout
       </button>
 
       {togle ? (
-        <ModalWindow onClose={() => setTogle(false)}>
-          <Modal confirm={handleLogout} reject={() => setTogle(false)} />
+        <ModalWindow onClose={openModal}>
+          <CloseModal togle={setTogle} />
         </ModalWindow>
       ) : null}
     </>

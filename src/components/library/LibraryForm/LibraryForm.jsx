@@ -22,7 +22,8 @@ const VALIDATION_SCHEMA = Yup.object().shape({
     .matches(/^([^\d]*)$/, 'The field can`t contains digits'),
   releaseDate: Yup.number()
     .integer('Can`t containts "."')
-    .min(1900, 'Minimum year is 1900')
+    .positive('Can`t be negative')
+    .min(1000, 'Minimum year is 1000')
     .max(
       new Date().getFullYear(),
       `Maximum year is ${new Date().getFullYear()}`
@@ -32,6 +33,9 @@ const VALIDATION_SCHEMA = Yup.object().shape({
     .integer('Can`t containts "."')
     .min(1, 'Minimum pages is 1')
     .max(9999, 'Maximum pages is 9999')
+    .test('isValidStart', 'Can`t start with "0"', (value, context) =>
+      String(value).startsWith('0')
+    )
     .required('Fill in the field'),
 });
 
@@ -102,7 +106,7 @@ const LibraryForm = ({ onFormSubmit }) => {
           errorMessage={
             errors.releaseDate && touched.releaseDate ? errors.releaseDate : ''
           }
-          min={1900}
+          min={1000}
           max={new Date().getFullYear()}
         />
 
