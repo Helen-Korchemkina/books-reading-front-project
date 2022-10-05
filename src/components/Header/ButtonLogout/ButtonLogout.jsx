@@ -1,7 +1,4 @@
 import s from './ButtonLogout.module.css';
-import { useLazyLogoutQuery } from 'redux/auth/auth-api';
-import { useAuth } from 'redux/auth/authSlice';
-import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import ModalWindow from 'components/common/ModalWindow';
 import CloseModal from '../CloseModal';

@@ -1,1 +1,1 @@
-export { default } from './CloseModal';
+export { default } from './CloseModal.jsx';
