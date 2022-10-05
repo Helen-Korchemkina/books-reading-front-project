@@ -41,7 +41,7 @@ export default function LoginPage() {
               name: response.data?.data?.name,
               email: response.data?.data?.email,
             },
-            token: response.data.token,
+            token: response.data?.token,
           });
         }
       };
