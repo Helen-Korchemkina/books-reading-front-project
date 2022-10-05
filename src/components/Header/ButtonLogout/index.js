@@ -1,1 +1,1 @@
-export { default } from './ButtonLogout.jsx';
+export { default } from './ButtonLogout';
