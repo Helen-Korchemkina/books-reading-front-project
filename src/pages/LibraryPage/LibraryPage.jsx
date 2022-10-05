@@ -16,10 +16,10 @@ import EmptyLibraryModal from 'components/library/EmptyLibraryModal';
 import s from './LibraryPage.module.scss';
 
 const LibraryPage = () => {
-  const { data: books = [], isFetching: isBooksFetching } = useGetBooksQuery();
-  const userTraning = useSelector(getTraining);
+  const { currentData: books = [], isFetching } = useGetBooksQuery();
+  const userTraining = useSelector(getTraining);
   const userHasRunnigTraining =
-    userTraning?.date_finish && userTraning.date_finish < Date.now();
+    userTraining?.date_finish && userTraining.date_finish < Date.now();
   const [showFormOnMobile, setShowFormOnMobile] = useState(true);
   const navigate = useNavigate();
   const isMobileScreen = useMediaQuery({ query: '(max-width: 768px)' });
@@ -62,8 +62,8 @@ const LibraryPage = () => {
       <div className={s.catalogWrapper}>
         {showCatalog && books.length === 0 && (
           <>
-            {isBooksFetching && <LoadSpinner />}
-            {!isBooksFetching && (
+            {isFetching && <LoadSpinner />}
+            {!isFetching && (
               <EmptyLibraryModal
                 onConfirmBtnClick={() => setShowFormOnMobile(true)}
               />
@@ -74,7 +74,7 @@ const LibraryPage = () => {
         {showCatalog && books.length !== 0 && (
           <>
             <LibraryCatalog books={books} />
-            {isBooksFetching && <LoadSpinner />}
+            {isFetching && <LoadSpinner />}
 
             {hasPendingBook && userHasRunnigTraining && (
               <Button

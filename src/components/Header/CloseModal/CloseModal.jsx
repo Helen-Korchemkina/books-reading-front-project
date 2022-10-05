@@ -2,18 +2,22 @@ import Button from 'components/common/Button';
 
 import Media from 'react-media';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { useLazyLogoutQuery } from 'redux/auth/auth-api';
 import { useAuth } from 'redux/auth/authSlice';
+import { booksApi } from 'redux/books/books-api';
 import s from './CloseModal.module.scss';
 
 const CloseModal = ({ togle }) => {
   const [logout] = useLazyLogoutQuery();
   const { credentialsUpdate } = useAuth();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
     credentialsUpdate({ user: null, token: null, isLogin: false });
+    dispatch(booksApi.util.resetApiState());
     navigate('/', { replace: true });
     togle(false);
   };
