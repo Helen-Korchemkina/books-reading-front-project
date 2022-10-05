@@ -1,3 +1,5 @@
+@import 'scss-variables.scss';
+
 .table {
     position: relative;
     width: 100%;
@@ -9,7 +11,7 @@
     border-bottom: 1px solid #E0E5EB;
     color: var(--color-grey);
   
-    @media (min-width: 768px) {
+    @media (min-width: $screenMd) {
       border-collapse: separate;
       border-spacing: 0 12px;
       font-size: 14px;
@@ -28,14 +30,14 @@
   }
 
   .bodyRowTitle {
-    @media (min-width: 768px) {
+    @media (min-width: $screenMd) {
       display: flex;
       align-items: center;
     }
   }
 
   .bodyRow td{
-    @media (min-width: 768px) {
+    @media (min-width: $screenMd) {
         padding-top: 12px;
         border-top: 1px solid #E0E5EB;
         font-weight: 500;
@@ -48,7 +50,7 @@
     display: grid;
     grid-template-columns: 80px 1fr;
   
-    @media (min-width: 768px) {
+    @media (min-width: $screenMd) {
       display: table-cell;
     }
   }
@@ -56,7 +58,7 @@
   .subtitle {
     color: #898f9f;
   
-    @media (min-width: 768px) {
+    @media (min-width: $screenMd) {
       display: none;
     }
   }

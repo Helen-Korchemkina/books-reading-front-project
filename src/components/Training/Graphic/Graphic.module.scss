@@ -1,3 +1,5 @@
+@import 'scss-variables.scss';
+
 .container{
     display: flex;
     flex-direction: column;
@@ -9,7 +11,7 @@
 .graphic{
     width: 100%;
     padding: 25px 22px 39px 22px;
-    @media (min-width: 768px) {
+    @media (min-width: $screenMd) {
         padding: 75px 51px 50px 46px;
     }
 }

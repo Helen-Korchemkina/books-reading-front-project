@@ -1,1 +1,1 @@
-export { default } from './LoadSpinner';
+export { default } from './BooksTable';
