@@ -8,7 +8,7 @@ const UserHeader = () => {
     <div className={s.nameWraper}>
       <div className={s.circleUnderLater}>
         <span className={s.nameFirstLater}>
-          {user.slice(0, 1).toUpperCase()}
+          {user?.slice(0, 1).toUpperCase()}
         </span>
       </div>
 
