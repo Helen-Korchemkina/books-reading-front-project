@@ -1,0 +1,13 @@
+.desctopContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.icon{
+    width: 48px;
+    height: 24px;
+    margin: 24px 0 32px 0;
+    color: var(--color-orange);
+    cursor: pointer;
+}
