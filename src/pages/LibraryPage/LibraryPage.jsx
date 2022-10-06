@@ -66,7 +66,7 @@ const LibraryPage = () => {
               onCloseMobileModal={() => setShowFormOnMobile(true)}
             />
 
-            {hasPendingBook && userHasRunnigTraining && (
+            {hasPendingBook  && (
               <Button
                 variant="filled"
                 onClick={() => navigate('/training')}
