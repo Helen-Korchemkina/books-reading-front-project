@@ -67,9 +67,9 @@ const App = () => {
     <Suspense fallback={<Container>Loading...</Container>}>
       <Routes>
         <Route path="/" element={<AppBar />}>
-          <Route element={<ProtectedRoute redirectTo="/library" />}>
-            <Route path="/register" element={<RegistrationPage />} />
-            <Route path="/login" element={<LoginPage />} />
+          <Route element={<ProtectedRoute redirectTo="library" />}>
+            <Route path="register" element={<RegistrationPage />} />
+            <Route path="login" element={<LoginPage />} />
             <Route
               index
               element={
@@ -88,12 +88,12 @@ const App = () => {
                 </Media>
               }
             />
-            <Route path="/answer-google" element={<GoogleAnswerPage />} />
+            <Route path="answer-google" element={<GoogleAnswerPage />} />
           </Route>
 
-          <Route element={<PrivateRoute redirectTo="/login" />}>
-            <Route path="/library" element={<LibraryPage />} />
-            <Route path="/training" element={<TrainingPage />} />
+          <Route element={<PrivateRoute redirectTo="login" />}>
+            <Route path="library" element={<LibraryPage />} />
+            <Route path="training" element={<TrainingPage />} />
           </Route>
 
           <Route path="*" element={<NotFoundPage />} />
