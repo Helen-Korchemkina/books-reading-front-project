@@ -1,93 +1,108 @@
 import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend,
-  } from 'chart.js';
-  import { Line } from 'react-chartjs-2';
-  import s from './Graphic.module.scss';
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+import { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
-  
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-export const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: false,
-        title: 'Action'
-      },
-      title: {
-        display: true,
-        text: `Amont of pages / DA ${0}`,
-        align: 'start',
-        font: {
-          size: 14,
-          weight: 500, 
-      }
-    },
-    },
-    scales: {
-        x: {
-            
-            stacked: true,
-            title: {
-                display: true,
-                text: 'TIME',
-                align: 'end',
-                font: {
-                  size: 14,
-                  weight: 500, 
-              }
-            }
-        }
-    }
-  };
+import { useGetUserTrainingQuery } from 'redux/auth/auth-api';
+import { useGetBooksQuery } from 'redux/books/books-api';
+import { useGetStatisticsQuery } from 'redux/statistics/statistics-api';
+import { getTraining } from 'redux/auth/authSelectors';
+import { getReadingBooks } from 'redux/books/books-selectors';
+import {
+  getGraphOptions,
+  getGraphData,
+  getPlanningGraphData,
+  getFactGraphData,
+} from './utils';
+import s from './Graphic.module.scss';
 
-  const labels = [];
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'ACT',
-      data: [1,2,3,5,6,8,9,9],
-      borderColor: 'rgb(255,107,8)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      tension: 0.2,
-    },
-    {
-      label: 'PLAN',
-      data: [2,1,5,7,8,9],
-      borderColor: 'rgb(9,30,63)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      tension: 0.2,
-    },
+const mockStatistics = {
+  _id: '633e7200d32d2c2b6c188dd3',
+  readDate: [
+    '2022-10-8',
+    '2022-10-8',
+    '2022-10-9',
+    '2022-10-10',
+    '2022-10-12',
+    '2022-10-13',
+    '2022-10-15',
+    '2022-10-18',
+    '2022-10-18',
+    '2022-10-18',
+    '2022-10-20',
+  ],
+  readTime: [],
+  numberOfPagesRead: [
+    '5',
+    '20',
+    '30',
+    '33',
+    '50',
+    '21',
+    '44',
+    '30',
+    '35',
+    '18',
+    '37',
   ],
 };
 
 const Graphic = () => {
-  return (
-      <>
-      <div className={s.container}>
-          {/* <h2>Amont of pages / DA <span>0</span></h2> */}
-          <div className={s.graphic}>
-            <Line options={options} data={data} />
-          </div>
-      </div>
-      </>
+  useGetBooksQuery();
+  useGetUserTrainingQuery();
+  const { data: statistics = [] } = useGetStatisticsQuery();
+
+  const readingBooks = useSelector(getReadingBooks);
+  const currentTraining = useSelector(getTraining);
+
+  const { labels, pagesData: planningData } = useMemo(
+    () =>
+      getPlanningGraphData(
+        currentTraining.startMillisecond,
+        currentTraining.finishMillisecond,
+        readingBooks
+      ),
+    [
+      currentTraining.finishMillisecond,
+      currentTraining.startMillisecond,
+      readingBooks,
+    ]
   );
-}
+
+  const factData = useMemo(
+    () => getFactGraphData(mockStatistics),
+    [statistics]
+  );
+
+  return (
+    <div className={s.container}>
+      <div className={s.graphic}>
+        <Line
+          options={getGraphOptions(labels.length)}
+          data={getGraphData(labels, planningData, factData)}
+        />
+      </div>
+    </div>
+  );
+};
 
 export default Graphic;
