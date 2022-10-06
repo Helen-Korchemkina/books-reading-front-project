@@ -69,39 +69,48 @@ const mockStatistics = {
 const Graphic = () => {
   useGetBooksQuery();
   useGetUserTrainingQuery();
-  const { data: statistics = [] } = useGetStatisticsQuery();
+  const { data: statistics = [], isSuccess } = useGetStatisticsQuery();
 
   const readingBooks = useSelector(getReadingBooks);
   const currentTraining = useSelector(getTraining);
+  console.log('currentTraining', currentTraining);
 
-  const { labels, pagesData: planningData } = useMemo(
-    () =>
-      getPlanningGraphData(
+  const { labels, pagesData: planningData = [] } = useMemo(() => {
+    if (isSuccess && mockStatistics && currentTraining?.finishMillisecond) {
+      return getPlanningGraphData(
         currentTraining.startMillisecond,
         currentTraining.finishMillisecond,
         readingBooks
-      ),
-    [
-      currentTraining.finishMillisecond,
-      currentTraining.startMillisecond,
-      readingBooks,
-    ]
-  );
+      );
+    }
+    return { labels: [], pagesData: [] };
+  }, [
+    currentTraining.finishMillisecond,
+    currentTraining.startMillisecond,
+    isSuccess,
+    readingBooks,
+  ]);
 
-  const factData = useMemo(
-    () => getFactGraphData(mockStatistics),
-    [statistics]
-  );
+  const factData = useMemo(() => {
+    if (isSuccess && mockStatistics && currentTraining?.finishMillisecond) {
+      return getFactGraphData(mockStatistics);
+    }
+    return [];
+  }, [statistics]);
 
   return (
-    <div className={s.container}>
-      <div className={s.graphic}>
-        <Line
-          options={getGraphOptions(labels.length)}
-          data={getGraphData(labels, planningData, factData)}
-        />
-      </div>
-    </div>
+    <>
+      {isSuccess && currentTraining?.finishMillisecond && (
+        <div className={s.container}>
+          <div className={s.graphic}>
+            <Line
+              options={getGraphOptions(labels.length)}
+              data={getGraphData(labels, planningData, factData)}
+            />
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
