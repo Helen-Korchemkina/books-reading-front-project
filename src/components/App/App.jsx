@@ -26,6 +26,9 @@ const LibraryPage = lazy(() =>
 const TrainingPage = lazy(() =>
   import('pages/TrainingPage' /* webpackChunkName: "TrainingPage" */)
 );
+const StatisticsPage = lazy(() =>
+  import('pages/StatisticsPage' /* webpackChunkName: "StatisticsPage" */)
+);
 const InfoPageMobile = lazy(() =>
   import('pages/InfoPageMobile' /* webpackChunkName: "TrainingPage" */)
 );
@@ -94,6 +97,7 @@ const App = () => {
           <Route element={<PrivateRoute redirectTo="login" />}>
             <Route path="library" element={<LibraryPage />} />
             <Route path="training" element={<TrainingPage />} />
+             <Route path="statistics" element={<StatisticsPage />} />
           </Route>
 
           <Route path="*" element={<NotFoundPage />} />
