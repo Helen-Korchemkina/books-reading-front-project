@@ -9,6 +9,7 @@ import s from '../LoginPage/LoginPage.module.scss';
 import BooksReadingAdvantages from 'components/BooksReadingAdvantages/BooksReadingAdvantages';
 import { useAddNewUserMutation } from 'redux/auth/auth-api';
 import { useAuth } from 'redux/auth/authSlice';
+import Media from 'react-media';
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
@@ -182,7 +183,13 @@ export default function RegstrationPage() {
       </div>
 
       <div className={s.regTextWrapper}>
-        <BooksReadingAdvantages />
+        <Media
+          queries={{
+            small: '(min-width: 768px)',
+          }}
+        >
+          {matches => <>{matches.small && <BooksReadingAdvantages />}</>}
+        </Media>
       </div>
     </div>
   );

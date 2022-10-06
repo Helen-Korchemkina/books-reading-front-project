@@ -2,10 +2,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  @media screen and (min-width: 769px) {
-    flex-direction: row;
-  }
   @media (min-width: 1280px) {
+    flex-direction: row;
     max-width: 1280px;
     margin: 0 auto;
   }
@@ -32,7 +30,7 @@
       ),
       url('../../images/login_picture/loginpicx2.jpg');
   }
-  @media screen and (min-width: 481px) {
+  @media screen and (min-width: 768px) {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,27 +52,7 @@
         url('../../images/login_picture/loginpic_x2_768.jpg');
     }
   }
-  @media screen and (min-width: 769px) {
-    min-height: 850px;
-    background-image: linear-gradient(
-        to right,
-        rgba(9, 30, 63, 0.8),
-        rgba(9, 30, 63, 0.8)
-      ),
-      url('../../images/login_picture/loginpicture1280.jpg');
-    @media (min-device-pixel-ratio: 2),
-      (min-resolution: 192dpi),
-      (min-resolution: 2dppx) {
-      background-image: linear-gradient(
-          to right,
-          rgba(9, 30, 63, 0.8),
-          rgba(9, 30, 63, 0.8)
-        ),
-        url('../../images/login_picture/loginpic_x2_1280.jpg');
-    }
-  }
-  @media screen and (min-width: 946px) {
-    width: 549px;
+  @media screen and (min-width: 1280px) {
     min-height: 850px;
     background-image: linear-gradient(
         to right,
@@ -95,10 +73,10 @@
   }
 }
 .pictureRegister.pictureWrapper {
-  @media screen and (min-width: 481px) {
+  @media screen and (min-width: 768px) {
     min-height: 737px;
   }
-  @media screen and (min-width: 769px) {
+  @media screen and (min-width: 1280px) {
     min-height: 850px;
   }
 }
@@ -107,14 +85,9 @@
   flex-direction: column;
   justify-content: center;
   padding-bottom: 32px;
-  @media screen and (min-width: 481px) {
-    width: 400px;
-    height: 430px;
-    padding: 40px;
-    margin: 0 auto;
-    background-color: var(--color-white);
-  }
-  @media screen and (min-width: 769px) {
+  width: 320px;
+  margin: 0 auto;
+  @media screen and (min-width: 768px) {
     width: 400px;
     height: 430px;
     padding: 40px;
@@ -127,14 +100,7 @@
   flex-direction: column;
   justify-content: center;
   padding-bottom: 32px;
-  @media screen and (min-width: 481px) {
-    width: 400px;
-    height: 609px;
-    padding: 40px;
-    margin: 0 auto;
-    background-color: var(--color-white);
-  }
-  @media screen and (min-width: 769px) {
+  @media screen and (min-width: 768px) {
     width: 400px;
     height: 609px;
     padding: 40px;
@@ -142,13 +108,17 @@
     background-color: var(--color-white);
   }
 }
+
 .formWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   margin-top: 28px;
 }
 
 .formText {
   color: var(--color-white);
-  @media screen and (min-width: 481px) {
+  @media screen and (min-width: 768px) {
     color: var(--color-light-grey);
   }
 }
@@ -158,7 +128,7 @@
   height: 60px;
   margin: 0 auto;
   margin-top: 32px;
-  @media screen and (min-width: 481px) {
+  @media screen and (min-width: 768px) {
     width: 320px;
   }
 }
@@ -169,7 +139,7 @@
   color: var(--color-orange);
   margin: 0 auto;
   margin-top: 16px;
-  @media screen and (min-width: 481px) {
+  @media screen and (min-width: 768px) {
     margin-top: 20px;
   }
 }
@@ -179,7 +149,7 @@
   font-size: 13px;
   line-height: 1.219;
   color: var(--color-light-grey);
-  @media screen and (min-width: 481px) {
+  @media screen and (min-width: 768px) {
     margin-top: 20px;
   }
 }
@@ -197,7 +167,7 @@
   position: relative;
   margin-top: 49px;
   text-align: center;
-  @media screen and (min-width: 481px) {
+  @media screen and (min-width: 768px) {
     margin-top: 129px;
   }
 }
@@ -210,7 +180,7 @@
   font-family: var(--second-font);
   color: var(--color-orange);
   transform: translate(-50%);
-  @media screen and (min-width: 481px) {
+  @media screen and (min-width: 768px) {
     top: -63px;
     font-size: 69px;
   }
@@ -222,17 +192,12 @@
   font-weight: 500;
   line-height: 1.219;
   color: var(--color-grey);
-  @media screen and (min-width: 481px) {
+  @media screen and (min-width: 768px) {
     min-width: 397px;
     font-size: 24px;
     line-height: 1.583;
   }
-  @media screen and (min-width: 768px) {
-    min-width: 219px;
-    font-size: 16px;
-    line-height: 1.583;
-  }
-  @media screen and (min-width: 946px) {
+  @media screen and (min-width: 1280px) {
     min-width: 397px;
     font-size: 24px;
     line-height: 1.583;
@@ -248,7 +213,7 @@
   line-height: 1.219;
   color: #898f9f;
   border-top: solid 1px #898f9f;
-  @media screen and (min-width: 481px) {
+  @media screen and (min-width: 768px) {
     width: 150px;
     margin-top: 20px;
     font-size: 20px;

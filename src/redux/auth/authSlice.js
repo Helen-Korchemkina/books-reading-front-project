@@ -18,6 +18,15 @@ const authSlice = createSlice({
         state.isLogin = false;
       }
     },
+    addToken: (state, { payload }) => {
+      state.token = payload;
+      if (payload) {
+        authToken.set(payload);
+        state.isLogin = true;
+      } else {
+        state.isLogin = false;
+      }
+    },
   },
 });
 
@@ -26,5 +35,5 @@ export const useAuth = () => {
   const credentialsUpdate = loginData => dispatch(setCredentials(loginData));
   return { credentialsUpdate };
 };
-export const { setCredentials } = authSlice.actions;
+export const { setCredentials, addToken} = authSlice.actions;
 export default authSlice.reducer;

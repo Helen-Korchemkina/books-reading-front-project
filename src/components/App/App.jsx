@@ -40,21 +40,24 @@ const App = () => {
     skip: !Boolean(token),
   });
 
-  useEffect(() => {
-    if (isSuccess) {
-      credentialsUpdate({
-        user: data.user,
-        token,
-      });
-    }
+  useEffect(
+    () => {
+      if (isSuccess) {
+        credentialsUpdate({
+          user: data.user,
+          token,
+        });
+      }
 
-    if (isError) {
-      credentialsUpdate({
-        user: null,
-        token: null,
-      });
-    }
-  }, [credentialsUpdate, isSuccess, isError, token, data]);
+      if (isError) {
+        credentialsUpdate({
+          user: null,
+          token: null,
+        });
+      }
+    },
+    [credentialsUpdate, isSuccess, isError, token, data]
+  );
 
   if (isLoading) {
     return <Container>Data synchronization....</Container>;
@@ -72,8 +75,8 @@ const App = () => {
               element={
                 <Media
                   queries={{
-                    small: '(max-width: 480px)',
-                    medium: '(min-width: 481px)',
+                    small: '(max-width: 767px)',
+                    medium: '(min-width: 768px)',
                   }}
                 >
                   {matches => (
