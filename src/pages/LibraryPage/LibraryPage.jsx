@@ -18,6 +18,7 @@ const LibraryPage = () => {
   const [showFormOnMobile, setShowFormOnMobile] = useState(true);
   const navigate = useNavigate();
   const { data, isSuccess } = useGetUserTrainingQuery();
+  console.log(data);
   const userHasRunnigTraining =
     data?.training?.finishMillisecond &&
     data.training.finishMillisecond > Date.now();
@@ -66,7 +67,7 @@ const LibraryPage = () => {
               onCloseMobileModal={() => setShowFormOnMobile(true)}
             />
 
-            {hasPendingBook  && (
+            {hasPendingBook && userHasRunnigTraining && (
               <Button
                 variant="filled"
                 onClick={() => navigate('/training')}
