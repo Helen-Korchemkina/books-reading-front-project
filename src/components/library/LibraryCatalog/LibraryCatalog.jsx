@@ -1,43 +1,30 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { BOOKS_STATUS } from 'redux/books/books-api';
+import {
+  getPendingBooks,
+  getReadingBooks,
+  getFinishBooks,
+} from 'redux/books/books-selectors';
+import { useGetBooksQuery } from 'redux/books/books-api';
+import LoadSpinner from 'components/common/LoadSpinner';
 import LibraryTable from 'components/library/LibraryTable';
+import EmptyLibraryModal from 'components/library/EmptyLibraryModal';
 import ReviewModalWindow from 'components/library/ReviewModalWindow';
 import s from './LibraryCatalog.module.scss';
 
-const LibraryCatalog = ({ books = [] }) => {
+const LibraryCatalog = ({ onCloseMobileModal }) => {
   const [showReviewModal, setShowReviewModal] = useState(false);
-  const [resumeModalValues, setResumeModalValues] = useState({
-    _id: null,
-    rating: 0,
-    resume: '',
-  });
+  const [reviewBookId, setReviewBookId] = useState(null);
 
-  const booksByStatus = useMemo(() => {
-    return books.reduce(
-      (acc, book) => {
-        acc[book.status].push(book);
-        return acc;
-      },
-      {
-        [BOOKS_STATUS.pending]: [],
-        [BOOKS_STATUS.reading]: [],
-        [BOOKS_STATUS.finish]: [],
-      }
-    );
-  }, [books]);
+  const { data: books = [], isFetching } = useGetBooksQuery();
+  const pendingBooks = useSelector(getPendingBooks);
+  const readingBooks = useSelector(getReadingBooks);
+  const finishBooks = useSelector(getFinishBooks);
 
   const handleShowResumeBtnClick = id => {
-    const selectedBook = booksByStatus[BOOKS_STATUS.finish].find(
-      book => book._id === id
-    );
-
-    setResumeModalValues({
-      _id: selectedBook._id,
-      rating: selectedBook.rating,
-      resume: selectedBook.resume,
-    });
+    setReviewBookId(id);
     setShowReviewModal(true);
   };
 
@@ -45,40 +32,51 @@ const LibraryCatalog = ({ books = [] }) => {
     <div className={s.container}>
       {showReviewModal && (
         <ReviewModalWindow
+          bookId={reviewBookId}
           onModalClose={() => setShowReviewModal(false)}
-          startBookValues={{ ...resumeModalValues }}
         />
       )}
 
-      {booksByStatus[BOOKS_STATUS.finish].length > 0 && (
+      {books.length === 0 && (
+        <>
+          {isFetching && <LoadSpinner />}
+          {!isFetching && (
+            <EmptyLibraryModal onConfirmBtnClick={onCloseMobileModal} />
+          )}
+        </>
+      )}
+
+      {finishBooks.length > 0 && (
         <div>
           <h2 className={s.title}>Already read</h2>
           <LibraryTable
-            books={booksByStatus[BOOKS_STATUS.finish]}
+            books={finishBooks}
             onShowResumeBtnClick={handleShowResumeBtnClick}
           />
         </div>
       )}
 
-      {booksByStatus[BOOKS_STATUS.reading].length > 0 && (
+      {readingBooks.length > 0 && (
         <div>
           <h2 className={s.title}>Reading now</h2>
-          <LibraryTable books={booksByStatus[BOOKS_STATUS.reading]} />
+          <LibraryTable books={readingBooks} />
         </div>
       )}
 
-      {booksByStatus[BOOKS_STATUS.pending].length > 0 && (
+      {pendingBooks.length > 0 && (
         <div>
           <h2 className={s.title}>Going to read</h2>
-          <LibraryTable books={booksByStatus[BOOKS_STATUS.pending]} />
+          <LibraryTable books={pendingBooks} />
         </div>
       )}
+
+      {books.length !== 0 && isFetching && <LoadSpinner />}
     </div>
   );
 };
 
 LibraryCatalog.propTypes = {
-  books: PropTypes.array.isRequired,
+  onCloseMobileModal: PropTypes.func.isRequired,
 };
 
 export default LibraryCatalog;

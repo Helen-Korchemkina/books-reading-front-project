@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import classNames from 'classnames';
@@ -7,6 +8,7 @@ import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 
 import { useUpdateReviewBookMutation } from 'redux/books/books-api';
+import { getFinishBooks } from 'redux/books/books-selectors';
 import Button from 'components/common/Button';
 import ModalWindow from 'components/common/ModalWindow';
 import s from './ReviewModalWindow.module.scss';
@@ -19,22 +21,25 @@ const VALIDATION_SCHEMA = Yup.object().shape({
     .matches(/^[^- ]/, 'Field can`t start with a space or hyphen'),
 });
 
-const ReviewModalWindow = ({
-  startBookValues = { rating: 0, resume: '' },
-  onModalClose,
-}) => {
-  const [rating, setRating] = useState(startBookValues.rating);
+const ReviewModalWindow = ({ bookId, onModalClose }) => {
+  const finishBooks = useSelector(getFinishBooks);
+  const { rating: initRating = 0, resume: initResume = '' } = useMemo(
+    () => finishBooks.find(book => book._id === bookId),
+    [bookId, finishBooks]
+  );
+
+  const [rating, setRating] = useState(initRating);
   const [updateReviewBook, { isLoading }] = useUpdateReviewBookMutation();
 
   const formik = useFormik({
     initialValues: {
-      resume: startBookValues.resume,
+      resume: initResume,
     },
     validationSchema: VALIDATION_SCHEMA,
     onSubmit: async ({ resume }) => {
       try {
         await updateReviewBook({
-          id: startBookValues._id,
+          id: bookId,
           rating,
           resume,
         }).unwrap();
@@ -112,11 +117,7 @@ const ReviewModalWindow = ({
 };
 
 ReviewModalWindow.propTypes = {
-  startBookValues: PropTypes.exact({
-    _id: PropTypes.string.isRequired,
-    rating: PropTypes.number,
-    resume: PropTypes.string,
-  }).isRequired,
+  bookId: PropTypes.string.isRequired,
   onModalClose: PropTypes.func.isRequired,
 };
 
