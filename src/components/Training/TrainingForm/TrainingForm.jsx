@@ -1,9 +1,8 @@
 import {useState} from 'react';
-import dayjs from 'dayjs';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-// import { useaddTimerValueMutation } from 'redux/books/books-api';
+import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 import { BsCalendarEvent } from "react-icons/bs";
+import { useUpdateUserTrainingMutation } from 'redux/auth/auth-api';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -32,108 +31,87 @@ const MenuProps = {
     'title4'
 ];
 
-const VALIDATION_SCHEMA = Yup.object().shape({
-    start: Yup.number()
-      .integer('Can`t containts "."')
-      .min(dayjs(), `Minimum year is ${dayjs()}`)
-      .required('Fill in the field'),
-    finish: Yup.number()
-    .integer('Can`t containts "."')
-    .min(dayjs(), `Minimum year is ${dayjs().add(1, 'day')}`)
-    .required('Fill in the field'), 
-  });
-
-
 const TrainingForm = () =>{
-    const [start, setStart] = useState(null);
-    const [finish, setFinish] = useState(null);
-    // const [addTimerValue, { isLoading }] = useaddTimerValueMutation();
-    const [book, setBook] = useState([]);
-    
-    const formik = useFormik({
-        initialValues: {
-            start: '',
-            finish: '',
-          },
-        validationSchema: VALIDATION_SCHEMA,
-        onSubmit: async (values, actions) => {
-            try {
-                await console.log(start, finish, 'ONSUBMIT')
-            //   await addTimerValue({
-            //     ...values
-            //   })
-      
-              
-            //   actions.resetForm();
-    
-            } catch (error) {
-              console.log(error);
-            }
-          },
-    });
-   
-    const handleChangeBook = (event) => {
-        const {
-            target: { value },
-          } = event;
-          setBook(
-            // On autofill we get a stringified value.
-            typeof value === 'string' ? value.split(',') : value,
-          );
-    };
+  const dispatch = useDispatch();
+  const [addTimerValue, { isLoading }] = useUpdateUserTrainingMutation();
+  const [book, setBook] = useState('');
+  const [start, setStart] = useState('');
+  const [finish, setFinish] = useState('');
 
-    let inputStartProps = {
+    const handleSubmit = (e) =>{
+      e.preventDefault();
+      dispatch(addTimerValue({ start, finish }));
+    };
+  
+
+    // const handleChangeBook = (event) => {
+    //     const {
+    //         target: { value },
+    //       } = event;
+    //       setBook(
+    //         // On autofill we get a stringified value.
+    //         typeof value === 'string' ? value.split(',') : value,
+    //       );
+    // };
+
+    let inputPropsStart = {
         id:"start",
         placeholder:"Start",
         name:"start",
         type:"text",
-        className:`${s.dataTimePicker}`,
-        // onChange:`${formik.handleChange}`,
-        // value:`${formik.values.start}`,        
+        className:`${s.dataTimePicker}`,      
     }
 
-    let inputFinishProps = {
+    let inputPropsFinish = {
         id:"finish",
         placeholder:"Finish",
         name:"finish",
         type:"text",
-        className:`${s.dataTimePicker}`,
-        // onChange:`${formik.handleChange}`,
-        // value:`${formik.values.start}`,        
+        className:`${s.dataTimePicker}`,         
     }
-
-    console.log(start, finish)
-
+console.log(start, finish)
     return(
         <>
         <div className={s.container}>
             <h1 className={s.title}>My Training</h1>
             <form 
-                action="" 
                 className={s.form}
-                onSubmit={formik.handleSubmit}
+                onSubmit={handleSubmit}
+                autoComplete="off"
             >
+      
             <div className={s.content}>
                 <div className={s.iconContainer} >    
                     <BsCalendarEvent className={s.icon}/>
-                    <Datetime 
-                    closeOnClickOutside="true"
-                    closeOnSelect={ true }
-                    inputProps={ inputStartProps }
-                    onChange={(e) => setStart(e._d)}
+                    <Datetime
+                        selected={start}
+                        onChange={(date) => setStart(Date.parse(date))}
+                        selectsStart
+                        start={start}
+                        finish={finish}
+                        closeOnClickOutside="true"
+                        closeOnSelect={ true }
+                        inputProps={ inputPropsStart }
+                        isValidDate={(current) => current.isAfter(moment().add(-1,'days'))}
+                        
                     />
                 </div>        
                     
                 <div className={s.iconContainer} >    
                     <BsCalendarEvent className={s.icon}/>
-                    <Datetime 
-                    closeOnClickOutside="true"
-                    closeOnSelect={ true }
-                    inputProps={ inputFinishProps }
-                    onChange={(e) => setFinish(e._d)}
+                    <Datetime
+                        selected={finish}
+                        onChange={(date) => setFinish(Date.parse(date))}
+                        selectsFinish
+                        start={start}
+                        finish={finish}
+                        minDate={start}
+                        closeOnClickOutside="true"
+                        closeOnSelect={ true }
+                        isValidDate={(current) => current.isAfter(moment().add(1,'days'))}
+                        inputProps={ inputPropsFinish }
                     />
-                </div> 
-             
+                </div>  
             </div>
             <div className={s.tableSelect}>
             <Box sx={{ minWidth: 120 }} className={s.boxSelect}>
@@ -143,7 +121,7 @@ const TrainingForm = () =>{
                 multiple
                 displayEmpty
                 value={book}
-                onChange={handleChangeBook}
+                // onChange={handleChangeBook}
                 input={<OutlinedInput />}
                 renderValue={(selected) => {
                     if (selected.length === 0) {
@@ -156,14 +134,14 @@ const TrainingForm = () =>{
                 inputProps={{ 'aria-label': 'Without label' }}
                 >
                 
-                {books.map((name) => (
+                {/* {books.map((name) => (
                     <MenuItem
                     key={name}
                     value={name}
                     >
                     {name}
                     </MenuItem>
-                ))}
+                ))} */}
                 </Select>
             </FormControl>
             </Box>

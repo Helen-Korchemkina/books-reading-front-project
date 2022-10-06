@@ -1,6 +1,5 @@
 import { MdOutlineMenuBook } from 'react-icons/md';
 import { MdDeleteOutline } from 'react-icons/md';
-import Button from 'components/common/Button';
 import classNames from 'classnames';
 import s from './BooksTable.module.scss';
 
@@ -64,9 +63,6 @@ const BooksTable = () => {
           ))}
         </tbody>
       </table>
-      <Button variant="filled" modifClass={s.button}>
-        Start traning
-      </Button>
     </>
   );
 };
