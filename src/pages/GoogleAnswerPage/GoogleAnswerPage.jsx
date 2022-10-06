@@ -12,7 +12,7 @@ const GoogleAnswerPage = () => {
         dispatch(addToken(token));
     }, [dispatch, searchParams]);
 
-    return( <Navigate to="/library" replace="true" />)
+    return( <Navigate to="/" replace="true" />)
 };
 
 export default GoogleAnswerPage;
