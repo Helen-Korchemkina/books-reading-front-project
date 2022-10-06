@@ -2,6 +2,7 @@ import {useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { BsCalendarEvent } from "react-icons/bs";
+import {} from 'redux/auth/auth-api'
 import { useUpdateUserTrainingMutation } from 'redux/auth/auth-api';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
@@ -24,25 +25,28 @@ const MenuProps = {
   },
 };
 
-  const books = [
-    'title1',
-    'title2',
-    'title3',
-    'title4'
-];
 
 const TrainingForm = () =>{
-  const dispatch = useDispatch();
-  const [addTimerValue, { isLoading }] = useUpdateUserTrainingMutation();
-  const [book, setBook] = useState('');
-  const [start, setStart] = useState('');
-  const [finish, setFinish] = useState('');
+//   const dispatch = useDispatch();
+//   const [addTimerValue] = useUpdateUserTrainingMutation();
+//   const {date} = useGetUserTrainingQuery();
+  const [date_start, setDate_start] = useState('');
+  const [date_finish, setDate_finish] = useState('');
 
-    const handleSubmit = (e) =>{
-      e.preventDefault();
-      dispatch(addTimerValue({ start, finish }));
-    };
-  
+//   console.log(date)
+
+//   async function handleSubmit(e){
+//     e.preventDefault();
+//     // console.log({date_start, date_finish})
+     
+//     try {
+//         dispatch(
+//             await addTimerValue({date_start, date_finish})
+//         );
+//     } catch (error) {
+//        console.log(error) 
+//     }
+//     };
 
     // const handleChangeBook = (event) => {
     //     const {
@@ -69,14 +73,13 @@ const TrainingForm = () =>{
         type:"text",
         className:`${s.dataTimePicker}`,         
     }
-console.log(start, finish)
     return(
         <>
         <div className={s.container}>
             <h1 className={s.title}>My Training</h1>
             <form 
                 className={s.form}
-                onSubmit={handleSubmit}
+                // onSubmit={handleSubmit}
                 autoComplete="off"
             >
       
@@ -84,11 +87,9 @@ console.log(start, finish)
                 <div className={s.iconContainer} >    
                     <BsCalendarEvent className={s.icon}/>
                     <Datetime
-                        selected={start}
-                        onChange={(date) => setStart(Date.parse(date))}
+                        selected={date_start}
+                        onChange={(date) => setDate_start(Date.parse(date).toString())}
                         selectsStart
-                        start={start}
-                        finish={finish}
                         closeOnClickOutside="true"
                         closeOnSelect={ true }
                         inputProps={ inputPropsStart }
@@ -100,15 +101,13 @@ console.log(start, finish)
                 <div className={s.iconContainer} >    
                     <BsCalendarEvent className={s.icon}/>
                     <Datetime
-                        selected={finish}
-                        onChange={(date) => setFinish(Date.parse(date))}
+                        selected={date_finish}
+                        onChange={(date) => setDate_finish(Date.parse(date).toString())}
                         selectsFinish
-                        start={start}
-                        finish={finish}
-                        minDate={start}
+                        minDate={date_start}
                         closeOnClickOutside="true"
                         closeOnSelect={ true }
-                        isValidDate={(current) => current.isAfter(moment().add(1,'days'))}
+                        isValidDate={(current) => current.isAfter()}
                         inputProps={ inputPropsFinish }
                     />
                 </div>  
@@ -120,16 +119,16 @@ console.log(start, finish)
                 className={s.select}
                 multiple
                 displayEmpty
-                value={book}
+                // value={book}
                 // onChange={handleChangeBook}
-                input={<OutlinedInput />}
-                renderValue={(selected) => {
-                    if (selected.length === 0) {
-                    return <em className={s.placeholder}>Choose books from the library</em>;
-                    }
+                // input={<OutlinedInput />}
+                // renderValue={(selected) => {
+                //     if (selected.length === 0) {
+                //     return <em className={s.placeholder}>Choose books from the library</em>;
+                //     }
 
-                    return selected.join(', ');
-                }}
+                //     return selected.join(', ');
+                // }}
                 MenuProps={MenuProps}
                 inputProps={{ 'aria-label': 'Without label' }}
                 >

@@ -1,4 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
+import { ModalBody } from 'react-bootstrap';
 
 import { getToken } from 'redux/auth/authSelectors';
 import { authToken } from 'redux/services/utils';
@@ -57,10 +58,10 @@ export const authApi = createApi({
       onQueryStarted: setCredentials,
     }),
     updateUserTraining: builder.mutation({
-      query: ({start, finish}) => ({
+      query: body => ({
         url: '/users/training',
         method: 'PATCH',
-        body: {start, finish},
+        body,
       }),
       invalidatesTags: ['training'],
       onQueryStarted: setCredentials,
