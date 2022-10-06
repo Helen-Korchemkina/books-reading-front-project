@@ -99,18 +99,14 @@ const Graphic = () => {
   }, [statistics]);
 
   return (
-    <>
-      {isSuccess && currentTraining?.finishMillisecond && (
-        <div className={s.container}>
-          <div className={s.graphic}>
-            <Line
-              options={getGraphOptions(labels.length)}
-              data={getGraphData(labels, planningData, factData)}
-            />
-          </div>
-        </div>
-      )}
-    </>
+    <div className={s.container}>
+      <div className={s.graphic}>
+        <Line
+          options={getGraphOptions(labels.length)}
+          data={getGraphData(labels, planningData, factData)}
+        />
+      </div>
+    </div>
   );
 };
 
