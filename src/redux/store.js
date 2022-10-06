@@ -1,8 +1,9 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import authReducer from './auth/authSlice';
 import { authApi } from './auth/auth-api';
+import { booksApi } from './books/books-api';
+import { statisticsApi } from './statistics/statistics-api';
 import { rtkQueryErrorLogger } from 'redux/services/utils';
-import { booksApi } from 'redux/books/books-api';
 import {
   persistStore,
   persistReducer,
@@ -24,8 +25,9 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, authReducer);
 
 const rootReducer = combineReducers({
-  [booksApi.reducerPath]: booksApi.reducer,
   [authApi.reducerPath]: authApi.reducer,
+  [booksApi.reducerPath]: booksApi.reducer,
+  [statisticsApi.reducerPath]: statisticsApi.reducer,
   auth: persistedReducer,
 });
 
@@ -39,6 +41,7 @@ const store = configureStore({
     }),
     authApi.middleware,
     booksApi.middleware,
+    statisticsApi.middleware,
     rtkQueryErrorLogger,
   ],
   devTools: process.env.NODE_ENV !== 'production',
