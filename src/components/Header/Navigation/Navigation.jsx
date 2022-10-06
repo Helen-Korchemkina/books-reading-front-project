@@ -23,6 +23,14 @@ const Navigation = () => {
       >
         <MdOutlineMenuBook className={s.icons} />
       </NavLink>
+        {/* <NavLink
+        to="statistics"
+        className={({ isActive }) =>
+          isActive ? `${s.active} ${s.link}` : s.link
+        }
+      >
+        <MdOutlineMenuBook className={s.icons} />
+      </NavLink> */}
 
       <div className={s.vertical}></div>
     </div>

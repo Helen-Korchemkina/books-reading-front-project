@@ -57,10 +57,10 @@ export const authApi = createApi({
       onQueryStarted: setCredentials,
     }),
     updateUserTraining: builder.mutation({
-      query: body => ({
+      query: ({start, finish}) => ({
         url: '/users/training',
         method: 'PATCH',
-        body,
+        body: {start, finish},
       }),
       invalidatesTags: ['training'],
       onQueryStarted: setCredentials,
