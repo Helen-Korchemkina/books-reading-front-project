@@ -73,7 +73,7 @@ const Graphic = () => {
 
   const readingBooks = useSelector(getReadingBooks);
   const currentTraining = useSelector(getTraining);
-  console.log('currentTraining', currentTraining);
+  // console.log('currentTraining', currentTraining);
 
   const { labels, pagesData: planningData = [] } = useMemo(() => {
     if (isSuccess && mockStatistics && currentTraining?.finishMillisecond) {
