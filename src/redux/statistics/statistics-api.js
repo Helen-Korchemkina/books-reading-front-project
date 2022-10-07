@@ -16,8 +16,8 @@ export const statisticsApi = createApi({
       transformResponse: response => response.data.statistics,
     }),
     updateStatistics: builder.mutation({
-      query: ({ id, ...patch }) => ({
-        url: `/statistics/${id}`,
+      query: ({ ...patch }) => ({
+        url: `/statistics`,
         method: 'PATCH',
         body: patch,
       }),

@@ -1,47 +1,94 @@
-.reswrap{
-    display: flex;
-   
-    justify-content: space-between;
+.containerResult {
+  width: 280px;
+  background-color: #ffffff;
+  padding: 20px 20px 22px;
+
+  @media (min-width: 768px) {
+    width: 704px;
+  }
+
+  @media (min-width: 1280px) {
+    padding: 20px 24px 22px;
+    width: 288px;
+    margin-top: 40px;
+    margin-left: 32px;
+  }
 }
-.container {
-    
+
+.resultTitle {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 15px;
+  color: #242a37;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 12px;
+
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
     align-items: center;
-margin: 40px 0 0 32px;
+    padding-left: 76px;
+    margin-bottom: 20px;
+  }
+
+  @media (min-width: 1280px) {
+    padding-left: 0;
+    flex-direction: column;
+    margin-bottom: 24px;
+  }
 }
-.btn {
-margin-left: auto;
-    margin-right: auto;
-    display: block;
-    width: 200px;
-        height: 40px;
-        padding: 10px 0 10px 0;
-        font-size: 16px;
-        font-weight: 600;
-        line-height: 20px;
-        text-align: center;
-    
+
+.inputWrap {
+  display: flex;
+  align-items: baseline;
+  @media (min-width: 768px) {
+    margin-right: 32px;
+  }
+
+  @media (min-width: 1280px) {
+    margin-right: 0;
+  }
 }
-.title{
-    
-    
-        font-family: 'Montserrat';
-        font-style: normal;
-        font-weight: 600;
-        font-size: 15px;
-        line-height: 15px;
-        /* identical to box height */
-    
-        text-align: center;
-        text-transform: uppercase;
-    
-        /* deep blue */
-    
-        color: #242A37;
+
+.inputMargin {
 }
-.titleDateForm{
-    margin-top: 0px;
-    margin-bottom: 5px;
+
+.titleDateForm {
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  color: var(--color-light-grey);
 }
-.dataTimePicker{
-    padding: 12px;
+
+.dataTimePicker {
+  width: 110px;
+  margin-right: 20px;
+  padding: 12px;
+  background-color: #f6f7fb;
+  border: 1px solid #a6abb9;
+
+  &:focus-within {
+    background-color: #ffffff;
+  }
 }
+
+.formInput {
+  width: 110px;
+}
+
+.buttonRes {
+  width: 240px;
+}
+
+//----------------------------------------------------//

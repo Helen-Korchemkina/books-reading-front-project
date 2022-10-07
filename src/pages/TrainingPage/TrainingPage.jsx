@@ -81,7 +81,6 @@ const TrainingPage = () => {
                   setDate_start={setDate_start} 
                   setDate_finish={setDate_finish} 
                 />
-                <BooksTable/>
                 {date_start && date_finish && 
                           <Button variant="filled" modifClass={s.button}
                           onClick={() => navigate('/statistics')}>
@@ -100,7 +99,6 @@ const TrainingPage = () => {
                           setDate_start={setDate_start} 
                           setDate_finish={setDate_finish} 
                         />
-                        <BooksTable/>
                         {date_start && date_finish && 
                           <Button variant="filled" modifClass={s.button}
                           onClick={() => navigate('/statistics')}>
