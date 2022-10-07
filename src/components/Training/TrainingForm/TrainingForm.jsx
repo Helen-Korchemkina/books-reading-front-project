@@ -1,9 +1,5 @@
 import {useState} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import moment from 'moment';
-import { BsCalendarEvent } from "react-icons/bs";
-import {} from 'redux/auth/auth-api'
-import { useUpdateUserTrainingMutation } from 'redux/auth/auth-api';
+import TimerForm from './TimerForm/TimerForm';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -26,7 +22,9 @@ const MenuProps = {
   },
 };
 
-const TrainingForm = () =>{
+
+    
+const TrainingForm = ({date_start, date_finish, setDate_start, setDate_finish}) =>{
   const dispatch = useDispatch();
   const [addTimerValue, { isLoading }] = useUpdateUserTrainingMutation();
   const [book, setBook] = useState('');
@@ -51,40 +49,7 @@ const TrainingForm = () =>{
     const booksArrInfo = data.filter(book => book.title === selectedBook);
     setBooksListArr([booksArrInfo, ...booksListArr].flat());
           console.log(booksListArr);
-  }
 
-
-//   console.log(date)
-
-//   async function handleSubmit(e){
-//     e.preventDefault();
-//     // console.log({date_start, date_finish})
-     
-//     try {
-//         dispatch(
-//             await addTimerValue({date_start, date_finish})
-//         );
-//     } catch (error) {
-//        console.log(error) 
-//     }
-//     };
-
-  
-    let inputPropsStart = {
-        id:"start",
-        placeholder:"Start",
-        name:"start",
-        type:"text",
-        className:`${s.dataTimePicker}`,      
-    }
-
-    let inputPropsFinish = {
-        id:"finish",
-        placeholder:"Finish",
-        name:"finish",
-        type:"text",
-        className:`${s.dataTimePicker}`,         
-    }
     return(
         <>
         <div className={s.container}>
@@ -94,36 +59,9 @@ const TrainingForm = () =>{
                 // onSubmit={handleSubmit}
                 autoComplete="off"
             >
-      
-            <div className={s.content}>
-                <div className={s.iconContainer} >    
-                    <BsCalendarEvent className={s.icon}/>
-                    <Datetime
-                        selected={date_start}
-                        onChange={(date) => setDate_start(Date.parse(date).toString())}
-                        selectsStart
-                        closeOnClickOutside="true"
-                        closeOnSelect={ true }
-                        inputProps={ inputPropsStart }
-                        isValidDate={(current) => current.isAfter(moment().add(-1,'days'))}
-                        
-                    />
-                </div>        
-                    
-                <div className={s.iconContainer} >    
-                    <BsCalendarEvent className={s.icon}/>
-                    <Datetime
-                        selected={date_finish}
-                        onChange={(date) => setDate_finish(Date.parse(date).toString())}
-                        selectsFinish
-                        minDate={date_start}
-                        closeOnClickOutside="true"
-                        closeOnSelect={ true }
-                        isValidDate={(current) => current.isAfter()}
-                        inputProps={ inputPropsFinish }
-                    />
-                </div>  
-            </div>
+
+            <TimerForm date_start={date_start} date_finish={date_finish} setDate_start={setDate_start} setDate_finish={setDate_finish}/>
+
             <div className={s.tableSelect}>
             <Box sx={{ minWidth: 120 }} className={s.boxSelect}>
             <FormControl>
@@ -162,6 +100,6 @@ const TrainingForm = () =>{
        {booksListArr.length > 0 && <BooksTable books={booksListArr} /> } 
         </>
     );
-}
+}}
 
 export default TrainingForm;

@@ -42,6 +42,7 @@ const Graphic = () => {
 
   const readingBooks = useSelector(getReadingBooks);
   const currentTraining = useSelector(getTraining);
+  // console.log('currentTraining', currentTraining);
 
   const { labels, planningPoints = [] } = useMemo(
     () =>
