@@ -9,7 +9,7 @@ const GoogleAnswerPage = () => {
 
     useEffect(() => {
         const token = searchParams.get('token');
-        dispatch(addToken(token));
+        if (token) { dispatch(addToken(token)) };
     }, [dispatch, searchParams]);
 
     return( <Navigate to="/" replace="true" />)
