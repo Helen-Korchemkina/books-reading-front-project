@@ -32,6 +32,8 @@ const TrainingForm = () =>{
   const [book, setBook] = useState('');
   const [start, setStart] = useState('');
   const [finish, setFinish] = useState('');
+  const [date_start, setDate_start] = useState('');
+  const [date_finish, setDate_finish] = useState('');
   const [selectedBook, setSelectedBook] = useState([]);
   const [booksListArr, setBooksListArr] = useState([]);
 

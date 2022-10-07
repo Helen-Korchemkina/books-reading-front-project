@@ -6,7 +6,7 @@ import s from './BooksTable.module.scss';
 import {useRemoveBookMutation} from '../../../redux/books/books-api';
 
 const BooksTable = ({books}) => {
-   const navigate = useNavigate();
+  //  const navigate = useNavigate();
    const [removeBook] = useRemoveBookMutation();
   return (
     <>
