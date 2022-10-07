@@ -64,10 +64,10 @@ const TrainingPage = () => {
             <MediaQuery minWidth={768} maxWidth={1279}>
                 <MyGoals/>
                 <TrainingForm/>
-                <BooksTable/>
-                <Button variant="filled" modifClass={s.button}
+                {/* <BooksTable/> */}
+              <Button variant="filled" modifClass={s.button}
                   onClick={() => navigate('/statistics')}>
-                    Start traning
+                Start traning
                   </Button>
                 <Graphic/>
             </MediaQuery>
@@ -75,10 +75,11 @@ const TrainingPage = () => {
                 <div className={s.desctopContainer}>
                     <div className={s.left}>
                         <TrainingForm/>
-                        <BooksTable/>
+                        {/* <BooksTable/> */}
                         <Button variant="filled" modifClass={s.button}
                         onClick={() => navigate('/statistics')}>
                           Start traning
+
                         </Button>
                         <Graphic/>
                     </div>
