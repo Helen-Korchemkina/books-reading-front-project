@@ -40,22 +40,28 @@ export const getGraphData = (labels, planningData, factData) => ({
     {
       label: 'PLAN',
       data: planningData,
-      borderColor: 'rgb(9,30,63)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      tension: 0.8,
+      borderColor: '#091E3F',
+      backgroundColor: '#091E3F',
+      tension: 0.3,
     },
     {
       label: 'ACT',
       data: factData,
-      borderColor: 'rgb(255,107,8)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      tension: 0.8,
+      borderColor: '#FF6B08',
+      backgroundColor: '#FF6B08',
+      tension: 0.4,
     },
   ],
 });
 
 export const getPlanningGraphData = (start, finish, books) => {
-  const countDays = (new Date(+finish) - new Date(+start)) / (1000 * 3600 * 24);
+  if (!start || !finish || finish < start || books.length === 0) {
+    return { labels: [], planningPoints: [] };
+  }
+
+  const countDays = Math.ceil(
+    (new Date(+finish) - new Date(+start)) / (1000 * 3600 * 24)
+  );
   const pages = books.reduce((summ, book) => (summ += book.countOfPages), 0);
   const pagePerDay = Math.ceil(pages / countDays);
   const lastDayPages = pages % pagePerDay;
@@ -63,21 +69,42 @@ export const getPlanningGraphData = (start, finish, books) => {
   const labels = Array(countDays)
     .fill()
     .map((_, i) => i + 1);
-  const pagesData = Array(countDays).fill(pagePerDay);
-  pagesData[pagesData.length - 1] = lastDayPages;
+  const planningPoints = Array(countDays).fill(pagePerDay);
+  planningPoints[planningPoints.length - 1] = lastDayPages;
 
-  return { labels, pagesData };
+  return { labels, planningPoints };
 };
 
-export const getFactGraphData = statistics => {
-  const dayToPage = statistics.readDate.reduce((acc, date, index) => {
-    if (acc[date]) {
-      acc[date] += Number(statistics.numberOfPagesRead[index]);
-    } else {
-      acc[date] = Number(statistics.numberOfPagesRead[index]);
-    }
+export const getFactPoints = (start, labels, statistics) => {
+  const startDate = new Date(+start);
+
+  const daysToStatistics = labels.reduce((acc, _, index) => {
+    const hash = new Date(
+      startDate.getFullYear(),
+      startDate.getMonth(),
+      startDate.getDate() + index
+    ).toLocaleDateString();
+    acc[hash] = 0;
     return acc;
   }, {});
 
-  return Object.values(dayToPage);
+  statistics.readDate.forEach((date, index) => {
+    const factDate = new Date(+date).toLocaleDateString();
+    daysToStatistics[factDate] += Number(statistics.numberOfPagesRead[index]);
+  });
+
+  const lastDate = new Date(
+    +[...statistics.readDate].sort()[statistics.readDate.length - 1]
+  ).toLocaleDateString();
+  const lastDayIndex = Object.keys(daysToStatistics).findIndex(
+    day => day === lastDate
+  );
+
+  if (lastDayIndex === -1) {
+    return [];
+  }
+
+  const points = Object.values(daysToStatistics).slice(0, lastDayIndex + 1);
+
+  return points;
 };

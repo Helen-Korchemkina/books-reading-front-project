@@ -1,26 +1,13 @@
 import { MdOutlineMenuBook } from 'react-icons/md';
 import { MdDeleteOutline } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
 import Button from 'components/common/Button';
 import classNames from 'classnames';
 import s from './BooksTable.module.scss';
+import {useRemoveBookMutation} from '../../../redux/books/books-api';
 
-const BooksTable = () => {
-   const navigate = useNavigate();
-  const booksDefault = [
-    {
-      title: 'Scrum. A  revolutionary method...',
-      author: 'Jeff Sutherland',
-      releaseDate: 2022,
-      countOfPages: 15,
-    },
-    {
-      title: '...',
-      author: '',
-      releaseDate: '',
-      countOfPages: '',
-    },
-  ];
+const BooksTable = ({books}) => {
+  //  const navigate = useNavigate();
+   const [removeBook] = useRemoveBookMutation();
   return (
     <>
       <table className={s.table}>
@@ -33,43 +20,40 @@ const BooksTable = () => {
           </tr>
         </thead>
         <tbody>
-          {booksDefault.map(book => (
-            <tr key={book.id} className={s.bodyRow}>
+          {books.map(({ _id, title, author, countOfPages, releaseDate }) => (
+            <tr key={_id} className={s.bodyRow}>
               <td className={s.bodyRowTitle}>
                 <MdOutlineMenuBook
                   className={classNames({
                     [s.icon]: true,
                   })}
                 />
-                <span className={s.title}>{book.title}</span>
+                <span className={s.title}>{title}</span>
               </td>
               <td className={s.inlineTitle}>
                 <span className={s.subtitle}>Author:</span>
-                {book.author}
+                {author}
               </td>
               <td className={s.inlineTitle}>
                 <span className={s.subtitle}>Year:</span>
-                {book.releaseDate}
+                {releaseDate}
               </td>
               <td className={s.inlineTitle}>
-                {book.title !== '...' && (
+                {title !== '...' && (
                   <MdDeleteOutline
                     className={classNames({
                       [s.iconDelete]: true,
-                    })}
+                    })} onClick={() => removeBook(_id)}
                   />
                 )}
                 <span className={s.subtitle}>Pages:</span>
-                {book.countOfPages}
+                {countOfPages}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <Button variant="filled" modifClass={s.button}
-      onClick={() => navigate('/statistics')}>
-        Start traning
-      </Button>
+      
     </>
   );
 };

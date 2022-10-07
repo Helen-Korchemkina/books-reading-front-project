@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
@@ -18,9 +18,15 @@ const LibraryPage = () => {
   const [showFormOnMobile, setShowFormOnMobile] = useState(true);
   const navigate = useNavigate();
   const { data, isSuccess } = useGetUserTrainingQuery();
-  const userHasRunnigTraining =
-    data?.training?.finishMillisecond &&
-    data.training.finishMillisecond > Date.now();
+
+  const userHasRunnigTraining = useMemo(
+    () =>
+      isSuccess &&
+      data?.training?.finishMillisecond &&
+      data.training.finishMillisecond > Date.now(),
+    [isSuccess, data]
+  );
+
   const hasPendingBook = !!useSelector(getPendingBooks);
   const isMobileScreen = useMediaQuery({ query: '(max-width: 768px)' });
   const hideAddForm = isMobileScreen ? !showFormOnMobile : false;
@@ -66,7 +72,7 @@ const LibraryPage = () => {
               onCloseMobileModal={() => setShowFormOnMobile(true)}
             />
 
-            {hasPendingBook  && (
+            {hasPendingBook && userHasRunnigTraining && (
               <Button
                 variant="filled"
                 onClick={() => navigate('/training')}
