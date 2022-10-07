@@ -14,20 +14,37 @@ import Media from 'react-media';
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
     .required('Please enter your name')
-    .matches(/^\p{L}+$/u, 'Please use only letters'),
+    .matches(
+      /^(?:[0-9][a-zA-Z0-9 ]*)?[a-zA-Z0-9 ][a-zA-Z0-9 !@#$%^&*(),.?":{}|<>]*$/,
+      'Please use only latin letters and numbers'
+    )
+    .min(3, 'Must be 3 characters or more')
+    .max(100, 'Must be no more than 100 characters '),
   email: Yup.string()
     .email('Invalid email')
-    .required('Please enter your email'),
+    .required('Please enter your email')
+    .min(10, 'Must be 10 characters or more')
+    .max(63, 'Must be no more than 63 characters ')
+    .matches(
+      /[a-z0-9!#$%&'*+/=?^_`{|}~-]{2,}(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
+      'Invalid email'
+    ),
   password: Yup.string()
     .required('Please Enter your password')
     .min(5, 'Must be 8 characters or more')
     .max(30, 'Must be no more than 30 characters ')
-    .matches(/[a-z]+/, 'One lowercase character')
-    .matches(/[A-Z]+/, 'One uppercase character')
-    .matches(/\d+/, 'One number'),
+    .matches(/[a-z]+/, 'Must contain one lowercase character')
+    .matches(/[A-Z]+/, 'Must contain one uppercase character')
+    .matches(/\d+/, 'Must contain one number')
+    .matches(
+      /^(?![.-]+)(?!.* )(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,30}/,
+      'Must not contain spaces, and starts with - or .'
+    ),
   confirm_password: Yup.string()
     .label('confirm password')
     .required()
+    .min(5, 'Must be 8 characters or more')
+    .max(30, 'Must be no more than 30 characters ')
     .oneOf([Yup.ref('password'), null], 'Passwords must match'),
 });
 
@@ -145,6 +162,7 @@ export default function RegstrationPage() {
                   }
                 />
                 <FormInput
+                  onPaste={e => e.preventDefault()}
                   label={{
                     id: 'confirm_password',
                     text: (
