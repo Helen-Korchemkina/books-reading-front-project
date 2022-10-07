@@ -1,47 +1,47 @@
-// import Container from '../common/Container/Container';
-// import { HiArrowNarrowLeft } from 'react-icons/hi';
-// import MyGoals from './MyGoals/MyGoals';
-// import BookList from './BookList/BookList';
-// import Graphic from './Graphic/Graphic';
-// import BooksTable from './BooksTable/BooksTable';
-// import TrainingForm from './TrainingForm/TrainingForm';
-// import MediaQuery from 'react-responsive';
-// import PlusButton from 'components/common/PlusButton';
-// import s from './Training.module.css';
+import Container from '../common/Container/Container';
+import { HiArrowNarrowLeft } from 'react-icons/hi';
+import MyGoals from './MyGoals/MyGoals';
+import BookList from './BookList/BookList';
+import Graphic from './Graphic/Graphic';
+import BooksTable from './BooksTable/BooksTable';
+import TrainingForm from './TrainingForm/TrainingForm';
+import MediaQuery from 'react-responsive';
+import PlusButton from 'components/common/PlusButton';
+import s from './Training.module.css';
 
 
-// const Training = () =>{
-//     return(
-//         <>
-//         <Container>
-//             <MediaQuery maxWidth={767}>
-//                 <HiArrowNarrowLeft className={s.icon}/>
-//                 <MyGoals/>
-//                 <BookList/>
-//                 <Graphic/>
-//                 <PlusButton/>
-//             </MediaQuery>
-//             <MediaQuery minWidth={768} maxWidth={1279}>
-//                 <MyGoals/>
-//                 <TrainingForm/>
-//                 <BooksTable/>
-//                 <Graphic/>
-//             </MediaQuery>
-//             <MediaQuery minWidth={1280}>
-//                 <div className={s.desctopContainer}>
-//                     <div className={s.left}>
-//                         <TrainingForm/>
-//                         <BooksTable/>
-//                         <Graphic/>
-//                     </div>
-//                     <div className={s.right}>
-//                         <MyGoals/>
-//                     </div>
-//                 </div>
-//             </MediaQuery>
-//         </Container>
-//         </>
-//     )
-// }
+const Training = () =>{
+    return(
+        <>
+        <Container>
+            <MediaQuery maxWidth={767}>
+                <HiArrowNarrowLeft className={s.icon}/>
+                <MyGoals/>
+                <BookList/>
+                <Graphic/>
+                <PlusButton/>
+            </MediaQuery>
+            <MediaQuery minWidth={768} maxWidth={1279}>
+                <MyGoals/>
+                <TrainingForm/>
+                {/* <BooksTable/> */}
+                <Graphic/>
+            </MediaQuery>
+            <MediaQuery minWidth={1280}>
+                <div className={s.desctopContainer}>
+                    <div className={s.left}>
+                        <TrainingForm/>
+                        {/* <BooksTable/> */}
+                        <Graphic/>
+                    </div>
+                    <div className={s.right}>
+                        <MyGoals/>
+                    </div>
+                </div>
+            </MediaQuery>
+        </Container>
+        </>
+    )
+}
 
-// export default Training;
+export default Training;

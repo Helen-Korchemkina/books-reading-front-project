@@ -10,7 +10,10 @@ import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import "react-datetime/css/react-datetime.css";
 import Datetime from "react-datetime";
+import {useGetBooksQuery} from '../../../redux/books/books-api';
+import BooksTable from '../BooksTable';
 import s from './TrainingForm.module.scss';
+import {getReadingBooks} from 'redux/books/books-selectors';
 
 
 const ITEM_HEIGHT = 48;
@@ -24,19 +27,35 @@ const MenuProps = {
   },
 };
 
-  const books = [
-    'title1',
-    'title2',
-    'title3',
-    'title4'
-];
-
 const TrainingForm = () =>{
   const dispatch = useDispatch();
   const [addTimerValue, { isLoading }] = useUpdateUserTrainingMutation();
   const [book, setBook] = useState('');
   const [start, setStart] = useState('');
   const [finish, setFinish] = useState('');
+  const [selectedBook, setSelectedBook] = useState([]);
+  const [booksListArr, setBooksListArr] = useState([]);
+
+ const {data} = useGetBooksQuery();
+//  const readingBooks = useSelector(getReadingBooks);
+//  console.log(readingBooks);
+
+
+
+
+  const handleChangeBook = (event) => {
+    event.preventDefault();
+    setSelectedBook(event.target.value);
+    console.log(selectedBook);
+      };
+
+  const handleAddBook = (e) => {
+    e.preventDefault();
+    
+    const booksArrInfo = data.filter(book => book.title === selectedBook);
+    setBooksListArr([booksArrInfo, ...booksListArr].flat());
+          console.log(booksListArr);
+  }
 
     const handleSubmit = (e) =>{
       e.preventDefault();
@@ -44,16 +63,7 @@ const TrainingForm = () =>{
     };
   
 
-    // const handleChangeBook = (event) => {
-    //     const {
-    //         target: { value },
-    //       } = event;
-    //       setBook(
-    //         // On autofill we get a stringified value.
-    //         typeof value === 'string' ? value.split(',') : value,
-    //       );
-    // };
-
+  
     let inputPropsStart = {
         id:"start",
         placeholder:"Start",
@@ -118,37 +128,38 @@ console.log(start, finish)
             <FormControl>
                 <Select
                 className={s.select}
-                multiple
                 displayEmpty
-                value={book}
-                // onChange={handleChangeBook}
+                value={selectedBook}
+                onChange={handleChangeBook}
+                // label="Choose book from library"
                 input={<OutlinedInput />}
                 renderValue={(selected) => {
                     if (selected.length === 0) {
                     return <em className={s.placeholder}>Choose books from the library</em>;
                     }
 
-                    return selected.join(', ');
+                    return selected + "";
                 }}
                 MenuProps={MenuProps}
                 inputProps={{ 'aria-label': 'Without label' }}
                 >
                 
-                {/* {books.map((name) => (
+                {data.map((book) => (
                     <MenuItem
-                    key={name}
-                    value={name}
+                    key={book._id}
+                    value={book.title + ""}
                     >
-                    {name}
+                   {book.title}
                     </MenuItem>
-                ))} */}
+                ))}
                 </Select>
             </FormControl>
             </Box>
-            <button type="submit" className={s.button}>Add</button>
+            <button type="submit" className={s.button} onClick={handleAddBook}>Add</button>
             </div>
             </form>
         </div>
+       {booksListArr.length > 0 && <BooksTable books={booksListArr} /> } 
         </>
     );
 }
