@@ -59,9 +59,6 @@
   }
 }
 
-.inputMargin {
-}
-
 .titleDateForm {
   font-weight: 500;
   font-size: 11px;
@@ -83,6 +80,11 @@
   }
 }
 
+.formDateInput {
+  width: 110px;
+  margin-right: 20px;
+}
+
 .formInput {
   width: 110px;
 }
@@ -90,5 +92,3 @@
 .buttonRes {
   width: 240px;
 }
-
-//----------------------------------------------------//

@@ -1,10 +1,7 @@
 import { useGetStatisticsQuery } from 'redux/statistics/statistics-api';
+import { millisecondsToDate, millisecondsToTime } from 'helpers/date';
 
 import s from './ResultsList.module.scss';
-
-const addLeadingZero = d => {
-  return d < 10 ? '0' + d : d;
-};
 
 const ResultsList = () => {
   const { data: statistics = {} } = useGetStatisticsQuery();
@@ -12,24 +9,6 @@ const ResultsList = () => {
   if (statistics.readDate?.length === 0) {
     classIsNoEmptyArray = s.hidden;
   }
-
-  const millisecondsToDate = mls => {
-    const date = new Date(Number(mls));
-    const Y = date.getFullYear();
-    const M = addLeadingZero(date.getMonth() + 1);
-    const D = addLeadingZero(date.getDate());
-
-    return `${D}.${M}.${Y}`;
-  };
-  const millisecondsToTime = mls => {
-    const date = new Date(Number(mls));
-
-    const H = addLeadingZero(date.getHours());
-    const M = addLeadingZero(date.getMinutes());
-    const S = addLeadingZero(date.getSeconds());
-
-    return `${H}:${M}:${S}`;
-  };
 
   return (
     <div className={classIsNoEmptyArray}>
