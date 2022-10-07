@@ -12,13 +12,24 @@ import { useAuth } from 'redux/auth/authSlice';
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
     .email('Invalid email')
-    .required('Please enter your email'),
+    .required('Please enter your email')
+    .min(10, 'Must be 10 characters or more')
+    .max(63, 'Must be no more than 63 characters ')
+    .matches(
+      /[a-z0-9!#$%&'*+/=?^_`{|}~-]{2,}(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
+      'Invalid email'
+    ),
   password: Yup.string()
     .required('Please Enter your password')
-    .min(8, 'Must be 8 characters or more')
-    .matches(/[a-z]+/, 'One lowercase character')
-    .matches(/[A-Z]+/, 'One uppercase character')
-    .matches(/\d+/, 'One number'),
+    .min(5, 'Must be 8 characters or more')
+    .max(30, 'Must be no more than 30 characters ')
+    .matches(/[a-z]+/, 'Must contain one lowercase character')
+    .matches(/[A-Z]+/, 'Must contain one uppercase character')
+    .matches(/\d+/, 'Must contain one number')
+    .matches(
+      /^(?![.-]+)(?!.* )(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,30}/,
+      'Must not contain spaces, and starts with - or .'
+    ),
 });
 
 export default function LoginPage() {
