@@ -1,6 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { ModalBody } from 'react-bootstrap';
 
+import { booksApi } from 'redux/books/books-api';
+import { statisticsApi } from 'redux/statistics/statistics-api';
 import { getToken } from 'redux/auth/authSelectors';
 import { authToken } from 'redux/services/utils';
 import { axiosBaseQuery } from 'redux/services/utils';
@@ -40,6 +41,11 @@ export const authApi = createApi({
         method: 'GET',
       }),
       invalidatesTags: ['auth'],
+      async onQueryStarted(_, { dispatch }) {
+        dispatch(booksApi.util.resetApiState());
+        dispatch(statisticsApi.util.resetApiState());
+        dispatch(authApi.util.resetApiState());
+      },
     }),
     currentUser: builder.query({
       query: () => ({

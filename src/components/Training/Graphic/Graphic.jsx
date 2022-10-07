@@ -21,7 +21,7 @@ import {
   getGraphOptions,
   getGraphData,
   getPlanningGraphData,
-  getFactGraphData,
+  getFactPoints,
 } from './utils';
 import s from './Graphic.module.scss';
 
@@ -35,37 +35,6 @@ ChartJS.register(
   Legend
 );
 
-const mockStatistics = {
-  _id: '633e7200d32d2c2b6c188dd3',
-  readDate: [
-    '2022-10-8',
-    '2022-10-8',
-    '2022-10-9',
-    '2022-10-10',
-    '2022-10-12',
-    '2022-10-13',
-    '2022-10-15',
-    '2022-10-18',
-    '2022-10-18',
-    '2022-10-18',
-    '2022-10-20',
-  ],
-  readTime: [],
-  numberOfPagesRead: [
-    '5',
-    '20',
-    '30',
-    '33',
-    '50',
-    '21',
-    '44',
-    '30',
-    '35',
-    '18',
-    '37',
-  ],
-};
-
 const Graphic = () => {
   useGetBooksQuery();
   useGetUserTrainingQuery();
@@ -73,37 +42,38 @@ const Graphic = () => {
 
   const readingBooks = useSelector(getReadingBooks);
   const currentTraining = useSelector(getTraining);
-  console.log('currentTraining', currentTraining);
 
-  const { labels, pagesData: planningData = [] } = useMemo(() => {
-    if (isSuccess && mockStatistics && currentTraining?.finishMillisecond) {
-      return getPlanningGraphData(
+  const { labels, planningPoints = [] } = useMemo(
+    () =>
+      getPlanningGraphData(
         currentTraining.startMillisecond,
         currentTraining.finishMillisecond,
         readingBooks
+      ),
+    [
+      currentTraining.finishMillisecond,
+      currentTraining.startMillisecond,
+      readingBooks,
+    ]
+  );
+
+  const factPoints = useMemo(() => {
+    if (isSuccess && currentTraining?.startMillisecond && labels.length > 0) {
+      return getFactPoints(
+        currentTraining.startMillisecond,
+        labels,
+        statistics
       );
     }
-    return { labels: [], pagesData: [] };
-  }, [
-    currentTraining.finishMillisecond,
-    currentTraining.startMillisecond,
-    isSuccess,
-    readingBooks,
-  ]);
-
-  const factData = useMemo(() => {
-    if (isSuccess && mockStatistics && currentTraining?.finishMillisecond) {
-      return getFactGraphData(mockStatistics);
-    }
     return [];
-  }, [statistics]);
+  }, [isSuccess, statistics, currentTraining.startMillisecond, labels]);
 
   return (
     <div className={s.container}>
       <div className={s.graphic}>
         <Line
           options={getGraphOptions(labels.length)}
-          data={getGraphData(labels, planningData, factData)}
+          data={getGraphData(labels, planningPoints, factPoints)}
         />
       </div>
     </div>
