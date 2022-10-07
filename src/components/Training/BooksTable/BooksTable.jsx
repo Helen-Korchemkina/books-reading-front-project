@@ -1,6 +1,5 @@
 import { MdOutlineMenuBook } from 'react-icons/md';
 import { MdDeleteOutline } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
 import Button from 'components/common/Button';
 import classNames from 'classnames';
 import s from './BooksTable.module.scss';
@@ -54,10 +53,7 @@ const BooksTable = ({books}) => {
           ))}
         </tbody>
       </table>
-      <Button variant="filled" modifClass={s.button}
-      onClick={() => navigate('/statistics')}>
-        Start traning
-      </Button>
+      
     </>
   );
 };

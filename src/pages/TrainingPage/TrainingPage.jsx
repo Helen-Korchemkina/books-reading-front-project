@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Container from 'components/common/Container';
+import { useNavigate } from 'react-router-dom';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
 import { useMediaQuery } from 'react-responsive';
 import MyGoals from 'components/Training/MyGoals';
@@ -15,10 +16,10 @@ import s from './TrainingPage.module.scss';
 
 
 const TrainingPage = () => {
+    const navigate = useNavigate();
     const [showMobileForm, setShowMobileForm] = useState(true);
     const isMobileScreen = useMediaQuery({ query: '(max-width: 767px)' });
     const showAddForm = isMobileScreen ? showMobileForm : true;
-
     useEffect(() => {
         setShowMobileForm(true);
       }, [isMobileScreen]);
@@ -49,9 +50,10 @@ const TrainingPage = () => {
                 <>
                  <MyGoals/>
                 <BookList/>
-                <Button variant="filled" modifClass={s.button}>
+                <Button variant="filled" modifClass={s.button}
+                  onClick={() => navigate('/statistics')}>
                     Start traning
-                </Button>
+                  </Button>
                 <Graphic/>
                 {isMobileScreen && (
               <PlusButton onClick={() => setShowMobileForm(true)} />
@@ -63,9 +65,10 @@ const TrainingPage = () => {
                 <MyGoals/>
                 <TrainingForm/>
                 {/* <BooksTable/> */}
-                <Button variant="filled" modifClass={s.button}>
-                    Start traning
-                </Button>
+              <Button variant="filled" modifClass={s.button}
+                  onClick={() => navigate('/statistics')}>
+                Start traning
+                  </Button>
                 <Graphic/>
             </MediaQuery>
             <MediaQuery minWidth={1280}>
@@ -73,8 +76,10 @@ const TrainingPage = () => {
                     <div className={s.left}>
                         <TrainingForm/>
                         {/* <BooksTable/> */}
-                        <Button variant="filled" modifClass={s.button}>
-                            Start traning
+                        <Button variant="filled" modifClass={s.button}
+                        onClick={() => navigate('/statistics')}>
+                          Start traning
+
                         </Button>
                         <Graphic/>
                     </div>
