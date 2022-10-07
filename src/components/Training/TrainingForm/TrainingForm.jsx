@@ -5,10 +5,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import "react-datetime/css/react-datetime.css";
-import Datetime from "react-datetime";
 import {useGetBooksQuery} from '../../../redux/books/books-api';
-import BooksTable from '../BooksTable';
+import BooksTable from '../BooksTable/BooksTable';
 import s from './TrainingForm.module.scss';
 
 const ITEM_HEIGHT = 48;
@@ -21,17 +19,8 @@ const MenuProps = {
     },
   },
 };
-
-
-    
+   
 const TrainingForm = ({date_start, date_finish, setDate_start, setDate_finish}) =>{
-  const dispatch = useDispatch();
-  const [addTimerValue, { isLoading }] = useUpdateUserTrainingMutation();
-  const [book, setBook] = useState('');
-  const [start, setStart] = useState('');
-  const [finish, setFinish] = useState('');
-  const [date_start, setDate_start] = useState('');
-  const [date_finish, setDate_finish] = useState('');
   const [selectedBook, setSelectedBook] = useState([]);
   const [booksListArr, setBooksListArr] = useState([]);
 
@@ -41,7 +30,7 @@ const TrainingForm = ({date_start, date_finish, setDate_start, setDate_finish}) 
     event.preventDefault();
     setSelectedBook(event.target.value);
     console.log(selectedBook);
-      };
+    };
 
   const handleAddBook = (e) => {
     e.preventDefault();
@@ -49,6 +38,7 @@ const TrainingForm = ({date_start, date_finish, setDate_start, setDate_finish}) 
     const booksArrInfo = data.filter(book => book.title === selectedBook);
     setBooksListArr([booksArrInfo, ...booksListArr].flat());
           console.log(booksListArr);
+        }
 
     return(
         <>
@@ -60,7 +50,12 @@ const TrainingForm = ({date_start, date_finish, setDate_start, setDate_finish}) 
                 autoComplete="off"
             >
 
-            <TimerForm date_start={date_start} date_finish={date_finish} setDate_start={setDate_start} setDate_finish={setDate_finish}/>
+            <TimerForm 
+              date_start={date_start} 
+              date_finish={date_finish} 
+              setDate_start={setDate_start} 
+              setDate_finish={setDate_finish}
+            />
 
             <div className={s.tableSelect}>
             <Box sx={{ minWidth: 120 }} className={s.boxSelect}>
@@ -97,9 +92,9 @@ const TrainingForm = ({date_start, date_finish, setDate_start, setDate_finish}) 
             </div>
             </form>
         </div>
-       {booksListArr.length > 0 && <BooksTable books={booksListArr} /> } 
+        {booksListArr.length > 0 &&  <BooksTable books={booksListArr} />}     
         </>
     );
-}}
+}
 
 export default TrainingForm;

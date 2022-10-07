@@ -17,9 +17,8 @@ import s from './TrainingPage.module.scss';
 
 
 const TrainingPage = () => {
-    const [date_start, setDate_start] = useState('');
-    const [date_finish, setDate_finish] = useState('');
-
+    const [date_start, setDate_start] = useState(null);
+    const [date_finish, setDate_finish] = useState(null);
     const navigate = useNavigate();
     const [showMobileForm, setShowMobileForm] = useState(true);
     const isMobileScreen = useMediaQuery({ query: '(max-width: 767px)' });
@@ -28,9 +27,6 @@ const TrainingPage = () => {
         setShowMobileForm(true);
       }, [isMobileScreen]);
       
-
-
-
   return (
         <Container>
             <MediaQuery maxWidth={767}>
@@ -56,7 +52,7 @@ const TrainingPage = () => {
       )}
                 {!showAddForm &&
                 <>
-                  <Timer/>
+                <Timer/>
                  <MyGoals/>
                 <BookList/>
                 {date_start && date_finish && 

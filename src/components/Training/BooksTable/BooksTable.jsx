@@ -6,8 +6,8 @@ import s from './BooksTable.module.scss';
 import {useRemoveBookMutation} from '../../../redux/books/books-api';
 
 const BooksTable = ({books}) => {
-  //  const navigate = useNavigate();
-   const [removeBook] = useRemoveBookMutation();
+  const [removeBook] = useRemoveBookMutation();
+  console.log(books)
   return (
     <>
       <table className={s.table}>
@@ -60,4 +60,3 @@ const BooksTable = ({books}) => {
 
 export default BooksTable;
 
-// onClick={() => onStartЕraningBtnClick(book.id)}
