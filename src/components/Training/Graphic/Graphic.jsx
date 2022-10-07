@@ -73,10 +73,13 @@ const Graphic = () => {
 
   const readingBooks = useSelector(getReadingBooks);
   const currentTraining = useSelector(getTraining);
-  console.log('currentTraining', currentTraining);
 
   const { labels, pagesData: planningData = [] } = useMemo(() => {
-    if (isSuccess && mockStatistics && currentTraining?.finishMillisecond) {
+    if (
+      isSuccess &&
+      currentTraining?.startMillisecond &&
+      currentTraining?.finishMillisecond
+    ) {
       return getPlanningGraphData(
         currentTraining.startMillisecond,
         currentTraining.finishMillisecond,
