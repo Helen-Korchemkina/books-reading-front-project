@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Container from 'components/common/Container';
-import { useNavigate } from 'react-router-dom';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
 import { useMediaQuery } from 'react-responsive';
 import MyGoals from 'components/Training/MyGoals';
@@ -17,18 +16,20 @@ import s from './TrainingPage.module.scss';
 import Results from 'components/Training/Results';
 
 const TrainingPage = () => {
-  const [date_start, setDate_start] = useState(null);
-  const [date_finish, setDate_finish] = useState(null);
-  const [isShowStatistics, setIsShowStatistics] = useState(false);
-  const navigate = useNavigate();
-  const [showMobileForm, setShowMobileForm] = useState(true);
-  const isMobileScreen = useMediaQuery({ query: '(max-width: 767px)' });
-  const showAddForm = isMobileScreen ? showMobileForm : true;
+    const [date_start, setDate_start] = useState(null);
+    const [date_finish, setDate_finish] = useState(null);
+    const [timerIsActive, setTimerIsActive] = useState(false);
+    const [showMobileForm, setShowMobileForm] = useState(true);
+    const isMobileScreen = useMediaQuery({ query: '(max-width: 767px)' });
+    const showAddForm = isMobileScreen ? showMobileForm : true;
+    useEffect(() => {
+        setShowMobileForm(true);
+      }, [isMobileScreen]);
 
-  useEffect(() => {
-    setShowMobileForm(true);
-  }, [isMobileScreen]);
-
+      const handleSubmitTrainingStart = (e) =>{
+        setTimerIsActive(true);
+      }
+     
   return (
     <Container>
       <MediaQuery maxWidth={767}>
@@ -86,6 +87,7 @@ const TrainingPage = () => {
           setDate_start={setDate_start}
           setDate_finish={setDate_finish}
         />
+
         {date_start && date_finish && isShowStatistics && (
           <Button
             variant="filled"
@@ -130,3 +132,5 @@ const TrainingPage = () => {
 };
 
 export default TrainingPage;
+
+// onClick={() => navigate('/statistics')}
