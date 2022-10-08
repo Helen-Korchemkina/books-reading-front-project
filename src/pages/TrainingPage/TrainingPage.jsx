@@ -18,7 +18,7 @@ import s from './TrainingPage.module.scss';
 import Results from 'components/Training/Results';
 
 const TrainingPage = () => {
-  const { data, isSuccess } = useGetUserTrainingQuery();
+  const { data = {}, isSuccess } = useGetUserTrainingQuery();
   const [date_start, setDate_start] = useState(null);
   const [date_finish, setDate_finish] = useState(null);
   const [timerIsActive, setTimerIsActive] = useState(false);
@@ -27,10 +27,10 @@ const TrainingPage = () => {
   const isMobileScreen = useMediaQuery({ query: '(max-width: 767px)' });
   const showAddForm = isMobileScreen ? showMobileForm : true;
 
-  
+  console.log(data)
 
   useEffect(()=>{
-    if(data){
+    if(JSON.stringify(data) !== '{}'){
       setDate_start(data.training.startMillisecond);
       setDate_finish(data.training.finishMillisecond);
       setTimerIsActive(true);
@@ -48,6 +48,21 @@ const TrainingPage = () => {
       data.training.finishMillisecond > Date.now(),
     [isSuccess, data]
   );
+
+  // console.log(data)
+  
+  // const checkUserData = (data) =>{
+  //   console.log(data, JSON.stringify(data) === '{}', data.length > 0)
+  //   if(JSON.stringify(data) !== '{}' || data.length > 0){
+  //     setDate_start(data.training.startMillisecond);
+  //     setDate_finish(data.training.finishMillisecond);
+  //     setTimerIsActive(true);
+  //   }
+  // }
+
+  // checkUserData(data);
+  
+  // console.log(date_start, date_finish)
 
   async function handleSubmitTrainingStart(e){
     setTimerIsActive(true);

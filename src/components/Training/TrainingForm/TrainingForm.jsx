@@ -40,7 +40,6 @@ const TrainingForm = ({
 
   const handleAddBook = e => {
     e.preventDefault();
-
     const booksArrInfo = data.filter(book => book.title === selectedBook);
     setBooksListArr([booksArrInfo, ...booksListArr].flat());
     console.log(booksListArr);
