@@ -21,6 +21,7 @@ const MenuProps = {
 };
 
 const TrainingForm = ({
+  isShow,
   date_start,
   date_finish,
   setDate_start,
@@ -29,7 +30,7 @@ const TrainingForm = ({
   const [selectedBook, setSelectedBook] = useState([]);
   const [booksListArr, setBooksListArr] = useState([]);
 
-  const { data } = useGetBooksQuery();
+  const { data = [] } = useGetBooksQuery();
 
   const handleChangeBook = event => {
     event.preventDefault();
@@ -51,15 +52,14 @@ const TrainingForm = ({
         <h1 className={s.title}>My Training</h1>
         <form
           className={s.form}
-          // onSubmit={handleSubmit}
           autoComplete="off"
         >
-          <TimerForm
+          {!isShow && <TimerForm
             date_start={date_start}
             date_finish={date_finish}
             setDate_start={setDate_start}
             setDate_finish={setDate_finish}
-          />
+          />}
 
           <div className={s.tableSelect}>
             <Box sx={{ minWidth: 120 }} className={s.boxSelect}>

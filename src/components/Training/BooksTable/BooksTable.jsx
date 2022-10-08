@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import s from './BooksTable.module.scss';
 import {useRemoveBookMutation} from '../../../redux/books/books-api';
 
-const BooksTable = ({books}) => {
+const BooksTable = ({books = []}) => {
   const [removeBook] = useRemoveBookMutation();
   console.log(books)
   return (
