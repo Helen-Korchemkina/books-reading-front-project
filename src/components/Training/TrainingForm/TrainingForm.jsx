@@ -29,7 +29,7 @@ const TrainingForm = ({
   const [selectedBook, setSelectedBook] = useState([]);
   const [booksListArr, setBooksListArr] = useState([]);
 
-  const { data } = useGetBooksQuery();
+  const { data = [] } = useGetBooksQuery();
 
   const handleChangeBook = event => {
     event.preventDefault();
