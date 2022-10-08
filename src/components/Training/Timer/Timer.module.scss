@@ -4,9 +4,14 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    margin-bottom: 40px;
     @media (min-width: $screenMd) {
         flex-direction: row;
         margin-top: 28px;
+        margin-bottom: 36px;
+      }
+      @media (min-width: $screenLg) {
+        margin-bottom: 44px;
       }
 }
 .titleContainer{

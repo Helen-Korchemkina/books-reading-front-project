@@ -1,6 +1,5 @@
 import moment from 'moment';
 import { BsCalendarEvent } from 'react-icons/bs';
-import {} from 'redux/auth/auth-api';
 import 'react-datetime/css/react-datetime.css';
 import Datetime from 'react-datetime';
 import s from '../TrainingForm.module.scss';
@@ -11,6 +10,7 @@ const TimerForm = ({
   setDate_start,
   setDate_finish,
 }) => {
+
   let inputPropsStart = {
     id: 'start',
     placeholder: 'Start',
