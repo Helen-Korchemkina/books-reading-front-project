@@ -58,9 +58,9 @@ const TrainingPage = () => {
         {!showAddForm && (
           <>
             <Timer />
-            <MyGoals isShow={isShowStatistics} />
+            <MyGoals isShow={isShowStatistics} time={date_finish} />
             <BookList />
-            {date_start && date_finish && (
+            {date_start && date_finish && isShowStatistics && (
               <Button
                 variant="filled"
                 modifClass={s.button}
@@ -79,14 +79,14 @@ const TrainingPage = () => {
       </MediaQuery>
       <MediaQuery minWidth={768} maxWidth={1279}>
         <Timer />
-        <MyGoals isShow={isShowStatistics} />
+        <MyGoals isShow={isShowStatistics} time={date_finish} />
         <TrainingForm
           date_start={date_start}
           date_finish={date_finish}
           setDate_start={setDate_start}
           setDate_finish={setDate_finish}
         />
-        {date_start && date_finish && (
+        {date_start && date_finish && isShowStatistics && (
           <Button
             variant="filled"
             modifClass={s.button}
@@ -108,7 +108,7 @@ const TrainingPage = () => {
               setDate_start={setDate_start}
               setDate_finish={setDate_finish}
             />
-            {date_start && date_finish && (
+            {date_start && date_finish && !isShowStatistics && (
               <Button
                 variant="filled"
                 modifClass={s.button}
@@ -120,7 +120,7 @@ const TrainingPage = () => {
             <Graphic />
           </div>
           <div className={s.right}>
-            <MyGoals isShow={isShowStatistics} />
+            <MyGoals isShow={isShowStatistics} time={date_finish} />
             {isShowStatistics && <Results />}
           </div>
         </div>
