@@ -1,11 +1,9 @@
 import Button from 'components/common/Button';
-
 import Media from 'react-media';
 import { useNavigate } from 'react-router-dom';
 import { useLazyLogoutQuery } from 'redux/auth/auth-api';
 import { useAuth } from 'redux/auth/authSlice';
 import s from './CloseModal.module.scss';
-
 const CloseModal = ({ togle }) => {
   const [logout] = useLazyLogoutQuery();
   const { credentialsUpdate } = useAuth();
