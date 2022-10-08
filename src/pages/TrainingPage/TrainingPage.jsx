@@ -70,7 +70,7 @@ const TrainingPage = () => {
               </Button>
             )}
             <Graphic />
-            <Results />
+            {isShowStatistics && <Results />}
             {isMobileScreen && (
               <PlusButton onClick={() => setShowMobileForm(true)} />
             )}
@@ -96,7 +96,7 @@ const TrainingPage = () => {
           </Button>
         )}
         <Graphic />
-        <Results />
+        {isShowStatistics && <Results />}
       </MediaQuery>
       <MediaQuery minWidth={1280}>
         <div className={s.desctopContainer}>
@@ -121,7 +121,7 @@ const TrainingPage = () => {
           </div>
           <div className={s.right}>
             <MyGoals isShow={isShowStatistics} />
-            <Results />
+            {isShowStatistics && <Results />}
           </div>
         </div>
       </MediaQuery>
