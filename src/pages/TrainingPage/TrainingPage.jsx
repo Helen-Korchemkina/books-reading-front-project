@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Container from 'components/common/Container';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
 import { useMediaQuery } from 'react-responsive';
+import { useGetUserTrainingQuery } from 'redux/auth/auth-api';
 import { useUpdateUserTrainingMutation } from 'redux/auth/auth-api';
 import MyGoals from 'components/Training/MyGoals';
 import BookList from 'components/Training/BookList';
@@ -17,6 +18,7 @@ import s from './TrainingPage.module.scss';
 import Results from 'components/Training/Results';
 
 const TrainingPage = () => {
+  const { data, isSuccess } = useGetUserTrainingQuery();
   const [date_start, setDate_start] = useState(null);
   const [date_finish, setDate_finish] = useState(null);
   const [timerIsActive, setTimerIsActive] = useState(false);
@@ -24,11 +26,28 @@ const TrainingPage = () => {
   const [addTimerValue] = useUpdateUserTrainingMutation();
   const isMobileScreen = useMediaQuery({ query: '(max-width: 767px)' });
   const showAddForm = isMobileScreen ? showMobileForm : true;
+
+  
+
+  useEffect(()=>{
+    if(data){
+      setDate_start(data.training.startMillisecond);
+      setDate_finish(data.training.finishMillisecond);
+      setTimerIsActive(true);
+    }
+  },[data])
+
   useEffect(() => {
     setShowMobileForm(true);
   }, [isMobileScreen]);
 
-  console.log(date_start)
+  const userHasRunnigTraining = useMemo(
+    () =>
+      isSuccess &&
+      data?.training?.finishMillisecond &&
+      data.training.finishMillisecond > Date.now(),
+    [isSuccess, data]
+  );
 
   async function handleSubmitTrainingStart(e){
     setTimerIsActive(true);
