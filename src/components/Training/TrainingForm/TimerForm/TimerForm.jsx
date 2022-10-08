@@ -15,10 +15,6 @@ import s from '../TrainingForm.module.scss';
 
 
 const TimerForm = ({date_start, date_finish, setDate_start, setDate_finish}) =>{
-//   const [date_start, setDate_start] = useState('');
-//   const [date_finish, setDate_finish] = useState('');
-    console.log(date_start, date_finish)
-
     let inputPropsStart = {
         id:"start",
         placeholder:"Start",
