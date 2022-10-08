@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Container from 'components/common/Container';
-import { useNavigate } from 'react-router-dom';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
 import { useMediaQuery } from 'react-responsive';
 import MyGoals from 'components/Training/MyGoals';
@@ -14,13 +13,12 @@ import TrainingForm from 'components/Training/TrainingForm';
 import MediaQuery from 'react-responsive';
 import PlusButton from 'components/common/PlusButton';
 import s from './TrainingPage.module.scss';
-
+import Results from 'components/Training/Results';
 
 const TrainingPage = () => {
     const [date_start, setDate_start] = useState(null);
     const [date_finish, setDate_finish] = useState(null);
     const [timerIsActive, setTimerIsActive] = useState(false);
-    const navigate = useNavigate();
     const [showMobileForm, setShowMobileForm] = useState(true);
     const isMobileScreen = useMediaQuery({ query: '(max-width: 767px)' });
     const showAddForm = isMobileScreen ? showMobileForm : true;
@@ -31,28 +29,63 @@ const TrainingPage = () => {
       const handleSubmitTrainingStart = (e) =>{
         setTimerIsActive(true);
       }
-      
+     
   return (
-        <Container>
-            <MediaQuery maxWidth={767}>
-            {isMobileScreen && (
-                <HiArrowNarrowLeft className={s.icon} onClick={() => setShowMobileForm(!showAddForm)} />
-            )}
-            {showAddForm && (
-        <MobileForm
-          onFormSubmit={
-            isMobileScreen
-              ? () => {
-                setShowMobileForm(false);
-                  setTimeout(() => {
-                    window.scrollTo({
-                      top: document.body.scrollHeight + 120,
-                      behavior: 'smooth',
+    <Container>
+      <MediaQuery maxWidth={767}>
+        {isMobileScreen && (
+          <HiArrowNarrowLeft
+            className={s.icon}
+            onClick={() => setShowMobileForm(!showAddForm)}
+          />
+        )}
+        {showAddForm && (
+          <MobileForm
+            onFormSubmit={
+              isMobileScreen
+                ? () => {
+                    setShowMobileForm(false);
+                    setTimeout(() => {
+                      window.scrollTo({
+                        top: document.body.scrollHeight + 120,
+                        behavior: 'smooth',
+                      });
                     });
-                  });
-                }
-              : null
-          }
+                  }
+                : null
+            }
+          />
+        )}
+        {!showAddForm && (
+          <>
+            <Timer />
+            <MyGoals isShow={isShowStatistics} />
+            <BookList />
+            {date_start && date_finish && (
+              <Button
+                variant="filled"
+                modifClass={s.button}
+                onClick={() => navigate('/statistics')}
+              >
+                Start traning
+              </Button>
+            )}
+            <Graphic />
+            {isShowStatistics && <Results />}
+            {isMobileScreen && (
+              <PlusButton onClick={() => setShowMobileForm(true)} />
+            )}
+          </>
+        )}
+      </MediaQuery>
+      <MediaQuery minWidth={768} maxWidth={1279}>
+        <Timer />
+        <MyGoals isShow={isShowStatistics} />
+        <TrainingForm
+          date_start={date_start}
+          date_finish={date_finish}
+          setDate_start={setDate_start}
+          setDate_finish={setDate_finish}
         />
       )}
                 {!showAddForm &&

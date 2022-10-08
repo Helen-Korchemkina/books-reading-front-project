@@ -11,6 +11,8 @@ import Container from 'components/common/Container';
 import PrivateRoute from 'components/common/PrivateRoute';
 import ProtectedRoute from 'components/common/ProtectedRoute';
 
+import MyGoals from 'components/Training/MyGoals';
+
 const LoginPage = lazy(() =>
   import('pages/LoginPage' /* webpackChunkName: "LoginPage" */)
 );
@@ -43,30 +45,28 @@ const App = () => {
     skip: !Boolean(token),
   });
 
-  useEffect(
-    () => {
-      if (isSuccess) {
-        credentialsUpdate({
-          user: data.user,
-          token,
-        });
-      }
+  useEffect(() => {
+    if (isSuccess) {
+      credentialsUpdate({
+        user: data.user,
+        token,
+      });
+    }
 
-      if (isError) {
-        credentialsUpdate({
-          user: null,
-          token: null,
-        });
-      }
-    },
-    [credentialsUpdate, isSuccess, isError, token, data]
-  );
+    if (isError) {
+      credentialsUpdate({
+        user: null,
+        token: null,
+      });
+    }
+  }, [credentialsUpdate, isSuccess, isError, token, data]);
 
   if (isLoading) {
     return <Container>Data synchronization....</Container>;
   }
 
   return (
+    // <MyGoals />
     <Suspense fallback={<Container>Loading...</Container>}>
       <Routes>
         <Route path="/" element={<AppBar />}>
@@ -97,7 +97,7 @@ const App = () => {
           <Route element={<PrivateRoute redirectTo="login" />}>
             <Route path="library" element={<LibraryPage />} />
             <Route path="training" element={<TrainingPage />} />
-             <Route path="statistics" element={<StatisticsPage />} />
+            <Route path="statistics" element={<StatisticsPage />} />
           </Route>
 
           <Route path="*" element={<NotFoundPage />} />

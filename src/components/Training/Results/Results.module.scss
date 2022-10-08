@@ -10,8 +10,6 @@
   @media (min-width: 1280px) {
     padding: 20px 24px 22px;
     width: 288px;
-    margin-top: 40px;
-    margin-left: 32px;
   }
 }
 
@@ -59,9 +57,6 @@
   }
 }
 
-.inputMargin {
-}
-
 .titleDateForm {
   font-weight: 500;
   font-size: 11px;
@@ -83,6 +78,11 @@
   }
 }
 
+.formDateInput {
+  width: 110px;
+  margin-right: 20px;
+}
+
 .formInput {
   width: 110px;
 }
@@ -90,5 +90,3 @@
 .buttonRes {
   width: 240px;
 }
-
-//----------------------------------------------------//
