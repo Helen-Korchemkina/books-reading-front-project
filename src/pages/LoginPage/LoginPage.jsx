@@ -8,6 +8,8 @@ import * as Yup from 'yup';
 import s from './LoginPage.module.scss';
 import { useLoginMutation } from 'redux/auth/auth-api';
 import { useAuth } from 'redux/auth/authSlice';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
@@ -35,6 +37,11 @@ const SignupSchema = Yup.object().shape({
 export default function LoginPage() {
   const [login] = useLoginMutation();
   const { credentialsUpdate } = useAuth();
+  const defaultQuote = `Books are the ships of thoughts, wandering through the waves of
+            time.`;
+  const defaultAuthor = `Francis Bacon`;
+  const [quote, setQuote] = useState(defaultQuote);
+  const [author, setAuthor] = useState(defaultAuthor);
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -65,6 +72,22 @@ export default function LoginPage() {
   });
 
   const { errors, touched } = formik;
+
+  useEffect(() => {
+    async function getRandomQuote() {
+      try {
+        const response = await axios.get(
+          'https://books-reading-project.herokuapp.com/api/quote/random'
+        );
+        console.log(response.data.random);
+        setQuote(response.data.random.quote);
+        setAuthor(response.data.random.author);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getRandomQuote();
+  }, []);
 
   return (
     <div className={s.wrapper}>
@@ -135,11 +158,8 @@ export default function LoginPage() {
       <div className={s.positionWrapper}>
         <div className={s.textWrapper}>
           <span className={s.decorationItem}>“</span>
-          <p className={s.textQuote}>
-            Books are the ships of thoughts, wandering through the waves of
-            time.
-          </p>
-          <p className={s.textAuthor}>Francis Bacon</p>
+          <p className={s.textQuote}>{quote}</p>
+          <p className={s.textAuthor}>{author}</p>
         </div>
       </div>
     </div>
