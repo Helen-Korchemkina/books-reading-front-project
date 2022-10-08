@@ -1,45 +1,49 @@
-import {useEffect, useState, useCallback} from 'react';
-import { getTraining } from 'redux/auth/authSelectors';
-import { useSelector } from 'react-redux';
+import {useEffect, useState } from 'react';
 import s from './Timer.module.scss';
 
 
-const Timer = () =>{ 
-    const {startMillisecond, finishMillisecond} = useSelector(getTraining);
+const Timer = ({date_finish, timerIsActive}) =>{ 
     const [timerGoals, setTimerGoals] = useState('');
     const [timerYears, setTimerYears] = useState('');
 
     const convertMS = (t) =>{
         const data = new Date(t);
-        const seconds = data.getSeconds();
-        const minutes =  data.getMinutes();
-        const hours = data.getHours(); 
+        const seconds = pad(data.getSeconds());
+        const minutes = pad(data.getMinutes());
+        const hours = pad(data.getHours()); 
         const month = data.getMonth();
-        const days = data.getDate() + (month * 30);
+        const days = pad(data.getDate() + (month * 30));
         
         return {seconds, minutes , hours, days};
     }
+
+    function pad (value){
+      return String(value).padStart(2 , '0');
+    }
     
     useEffect(() => {
-        if(finishMillisecond){
+        if(timerIsActive){
+          if(date_finish){
             setTimeout(() =>{
-                const deltaGoals = new Date(+finishMillisecond) - Date.now();
+                const deltaGoals = new Date(+date_finish) - Date.now();
                 setTimerGoals(convertMS(deltaGoals));
             }, 1000);
-        
         }
-      }, [timerGoals, finishMillisecond]);
+        }
+      }, [timerGoals, date_finish, timerIsActive]);
 
       useEffect(() => {
-        setTimeout(() =>{
+        if(timerIsActive){
+          setTimeout(() =>{
             const curYear = '1672441200';
             const deltaYears = new Date(+curYear) - Date.now();
             setTimerYears(convertMS(deltaYears));
         }, 1000);
-        
-        
-
-      }, [timerYears]);
+        }
+        else{
+          
+        }
+      }, [timerYears,timerIsActive]);
 
     return(
     <>

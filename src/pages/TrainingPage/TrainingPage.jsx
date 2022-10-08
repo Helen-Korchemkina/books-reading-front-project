@@ -19,6 +19,7 @@ import s from './TrainingPage.module.scss';
 const TrainingPage = () => {
     const [date_start, setDate_start] = useState(null);
     const [date_finish, setDate_finish] = useState(null);
+    const [timerIsActive, setTimerIsActive] = useState(false);
     const navigate = useNavigate();
     const [showMobileForm, setShowMobileForm] = useState(true);
     const isMobileScreen = useMediaQuery({ query: '(max-width: 767px)' });
@@ -26,6 +27,10 @@ const TrainingPage = () => {
     useEffect(() => {
         setShowMobileForm(true);
       }, [isMobileScreen]);
+
+      const handleSubmitTrainingStart = (e) =>{
+        setTimerIsActive(true);
+      }
       
   return (
         <Container>
@@ -52,12 +57,13 @@ const TrainingPage = () => {
       )}
                 {!showAddForm &&
                 <>
-                <Timer/>
+                {timerIsActive && <Timer date_finish={date_finish} timerIsActive={timerIsActive}/>}
                  <MyGoals/>
                 <BookList/>
                 {date_start && date_finish && 
                           <Button variant="filled" modifClass={s.button}
-                          onClick={() => navigate('/statistics')}>
+                          onClick={handleSubmitTrainingStart}
+                          >
                             Start traning
                           </Button>
                         }
@@ -69,7 +75,7 @@ const TrainingPage = () => {
                 
             </MediaQuery>
             <MediaQuery minWidth={768} maxWidth={1279}>
-                <Timer/>
+              {timerIsActive && <Timer date_finish={date_finish} timerIsActive={timerIsActive}/>}
                 <MyGoals/>
                 <TrainingForm
                   date_start={date_start} 
@@ -79,7 +85,7 @@ const TrainingPage = () => {
                 />
                 {date_start && date_finish && 
                           <Button variant="filled" modifClass={s.button}
-                          onClick={() => navigate('/statistics')}>
+                          onClick={handleSubmitTrainingStart}>
                             Start traning
                           </Button>
                         }
@@ -88,16 +94,16 @@ const TrainingPage = () => {
             <MediaQuery minWidth={1280}>
                 <div className={s.desctopContainer}>
                     <div className={s.left}>
-                        <Timer/>
+                    {timerIsActive && <Timer date_finish={date_finish} timerIsActive={timerIsActive}/>}
                         <TrainingForm 
-                          date_start={date_start} 
+                          date_start={date_start}   
                           date_finish={date_finish} 
                           setDate_start={setDate_start} 
                           setDate_finish={setDate_finish} 
                         />
                         {date_start && date_finish && 
                           <Button variant="filled" modifClass={s.button}
-                          onClick={() => navigate('/statistics')}>
+                          onClick={handleSubmitTrainingStart}>
                             Start traning
                           </Button>
                         }
@@ -113,3 +119,5 @@ const TrainingPage = () => {
 }
 
 export default TrainingPage;
+
+// onClick={() => navigate('/statistics')}
