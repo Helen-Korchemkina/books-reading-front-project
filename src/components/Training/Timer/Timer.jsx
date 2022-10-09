@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import s from './Timer.module.scss';
 
 const convertMS = t => {
@@ -12,35 +12,51 @@ const convertMS = t => {
   return { seconds, minutes, hours, days };
 };
 
-const pad = (value) => {
+const pad = value => {
   return String(value).padStart(2, '0');
-}
-
+};
 
 const Timer = ({ date_finish, timerIsActive }) => {
-  const [timerGoals, setTimerGoals] = useState('');
-  const [timerYears, setTimerYears] = useState('');
+  const [timerGoals, setTimerGoals] = useState({
+    seconds: 0,
+    minutes: 0,
+    hours: 0,
+    month: 0,
+    days: 0,
+  });
+  const [timerYears, setTimerYears] = useState({
+    seconds: 0,
+    minutes: 0,
+    hours: 0,
+    month: 0,
+    days: 0,
+  });
+  const timer1Id = useRef(null);
+  const timer2Id = useRef(null);
 
   useEffect(() => {
-    if (timerIsActive) {
-      if (date_finish) {
-        setTimeout(() => {
-          const deltaGoals = new Date(+date_finish) - Date.now();
-          setTimerGoals(convertMS(deltaGoals));
-        }, 1000);
-      }
+    if (timerIsActive && date_finish) {
+      timer1Id.current = setTimeout(() => {
+        const deltaGoals = new Date(+date_finish) - Date.now();
+        setTimerGoals(convertMS(deltaGoals));
+      }, 1000);
     }
+
+    return () => clearTimeout(timer1Id.current);
   }, [timerGoals, date_finish, timerIsActive]);
 
   useEffect(() => {
     if (timerIsActive) {
-      setTimeout(() => {
-        const curYear = '1672441200';
+      timer2Id.current = setTimeout(() => {
+        const curYear = new Date(
+          (new Date().getFullYear() + 1).toString()
+        ).getTime();
         const deltaYears = new Date(+curYear) - Date.now();
         setTimerYears(convertMS(deltaYears));
       }, 1000);
-    } else {
     }
+
+    return () => clearTimeout(timer2Id.current);
   }, [timerYears, timerIsActive]);
 
   return (
@@ -76,7 +92,7 @@ const Timer = ({ date_finish, timerIsActive }) => {
               </span>
               <span className={s.label}>SECS</span>
             </div>
-          </div>  
+          </div>
         </div>
 
         <div className={s.titleContainer}>
