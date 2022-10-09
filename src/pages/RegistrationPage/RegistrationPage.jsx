@@ -42,7 +42,7 @@ const SignupSchema = Yup.object().shape({
     ),
   confirm_password: Yup.string()
     .label('confirm password')
-    .required()
+    .required('Please confirm your password')
     .min(5, 'Must be 8 characters or more')
     .max(30, 'Must be no more than 30 characters ')
     .oneOf([Yup.ref('password'), null], 'Passwords must match'),
@@ -61,7 +61,6 @@ export default function RegstrationPage() {
     },
     validationSchema: SignupSchema,
     onSubmit: (values, actions) => {
-      actions.resetForm();
       const loginFetch = async loginData => {
         try {
           const response = await addNewUser(loginData);
@@ -87,6 +86,7 @@ export default function RegstrationPage() {
         password: values.password,
         confirm_password: values.confirm_password,
       });
+      actions.resetForm();
     },
   });
 

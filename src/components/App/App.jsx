@@ -19,6 +19,12 @@ const LoginPage = lazy(() =>
 const RegistrationPage = lazy(() =>
   import('pages/RegistrationPage' /* webpackChunkName: "RegistrationPage" */)
 );
+const ForgotPassword = lazy(() =>
+  import('pages/ForgotPassword' /* webpackChunkName: "ForgotPassword" */)
+);
+const NewPassword = lazy(() =>
+  import('pages/NewPassword' /* webpackChunkName: "NewPassword" */)
+);
 const GoogleAnswerPage = lazy(() =>
   import('pages/GoogleAnswerPage' /* webpackChunkName: "GoogleAnswerPage" */)
 );
@@ -45,21 +51,24 @@ const App = () => {
     skip: !Boolean(token),
   });
 
-  useEffect(() => {
-    if (isSuccess) {
-      credentialsUpdate({
-        user: data.user,
-        token,
-      });
-    }
+  useEffect(
+    () => {
+      if (isSuccess) {
+        credentialsUpdate({
+          user: data.user,
+          token,
+        });
+      }
 
-    if (isError) {
-      credentialsUpdate({
-        user: null,
-        token: null,
-      });
-    }
-  }, [credentialsUpdate, isSuccess, isError, token, data]);
+      if (isError) {
+        credentialsUpdate({
+          user: null,
+          token: null,
+        });
+      }
+    },
+    [credentialsUpdate, isSuccess, isError, token, data]
+  );
 
   if (isLoading) {
     return <Container>Data synchronization....</Container>;
@@ -73,6 +82,8 @@ const App = () => {
           <Route element={<ProtectedRoute redirectTo="library" />}>
             <Route path="register" element={<RegistrationPage />} />
             <Route path="login" element={<LoginPage />} />
+            <Route path="forgot-password" element={<ForgotPassword />} />
+            <Route path="new-password" element={<NewPassword />} />
             <Route
               index
               element={

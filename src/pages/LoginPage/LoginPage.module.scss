@@ -89,7 +89,7 @@
   margin: 0 auto;
   @media screen and (min-width: 768px) {
     width: 400px;
-    height: 430px;
+    height: 467px;
     padding: 40px;
     margin: 0 auto;
     background-color: var(--color-white);
@@ -103,6 +103,19 @@
   @media screen and (min-width: 768px) {
     width: 400px;
     height: 609px;
+    padding: 40px;
+    margin: 0 auto;
+    background-color: var(--color-white);
+  }
+}
+.forgotPasswordWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 32px;
+  @media screen and (min-width: 768px) {
+    width: 400px;
+    height: 360px;
     padding: 40px;
     margin: 0 auto;
     background-color: var(--color-white);
@@ -221,4 +234,9 @@
 }
 .isRequiredField {
   color: #f25137;
+}
+.ForgotPasswordModal {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }
