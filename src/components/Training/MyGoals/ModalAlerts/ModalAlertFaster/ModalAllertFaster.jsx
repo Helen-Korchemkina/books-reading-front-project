@@ -5,11 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import { getReadingBooks } from 'redux/books/books-selectors';
 import { useSelector } from 'react-redux';
 import { useUpdateStatusBookMutation } from 'redux/books/books-api';
+import { useUpdateStatisticsMutation } from 'redux/statistics/statistics-api';
+import { useUpdateUserTrainingMutation } from 'redux/auth/auth-api';
 
 function ModalAllertFaster({ click }) {
   const navigate = useNavigate();
   const readingBooks = useSelector(getReadingBooks);
   const [updateStatusBook] = useUpdateStatusBookMutation();
+  const [updateStatistics] = useUpdateStatisticsMutation();
+  const [updateUserTraining] = useUpdateUserTrainingMutation();
 
   const handleNewTraining = () => {
     navigate('/library', { replace: true });
@@ -21,6 +25,11 @@ function ModalAllertFaster({ click }) {
         isReadBook: false,
       })
     );
+    updateStatistics({ numberOfPagesRead: null, readDate: null });
+    updateUserTraining({
+      date_start: '0',
+      date_finish: '0',
+    });
   };
 
   return (

@@ -22,6 +22,7 @@ export const millisecondsToTime = mls => {
 };
 
 export const millisecondsToDay = mls => {
+  if (Number(mls) === 0) return 0;
   const milliseconds = Number(mls) - Date.now();
 
   const days = Math.ceil(milliseconds / 1000 / 60 / 60 / 24);
