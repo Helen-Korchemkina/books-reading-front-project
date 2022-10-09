@@ -8,5 +8,12 @@ const getReadingBooks = state =>
   getBooks(state)?.filter(book => book.status === BOOKS_STATUS.reading);
 const getFinishBooks = state =>
   getBooks(state)?.filter(book => book.status === BOOKS_STATUS.finish);
-
-export { getBooks, getPendingBooks, getReadingBooks, getFinishBooks };
+const getBooksOfTranning = state =>
+  getBooks(state)?.filter(book => book.isReadBook);
+export {
+  getBooks,
+  getPendingBooks,
+  getReadingBooks,
+  getFinishBooks,
+  getBooksOfTranning,
+};

@@ -44,7 +44,7 @@ const TrainingForm = ({
   const handleAddBook = e => {
     e.preventDefault();
 
-    [...data].filter(book => {
+    [...data].forEach(book => {
       if (book.title === selectedBook) {
         try {
           updateStatusBook({
@@ -60,7 +60,9 @@ const TrainingForm = ({
   };
 
   useEffect(() => {
-    const sortBook = [...data].filter(book => book.status === 'Reading now');
+    const sortBook = [...data].filter(
+      book => book.status === 'Reading now' || book.isReadBook
+    );
     setBooksListArr(sortBook);
   }, [data]);
 
