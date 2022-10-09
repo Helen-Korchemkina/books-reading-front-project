@@ -10,7 +10,6 @@ const TimerForm = ({
   setDate_start,
   setDate_finish,
 }) => {
-
   let inputPropsStart = {
     id: 'start',
     placeholder: 'Start',
@@ -39,7 +38,12 @@ const TimerForm = ({
             closeOnClickOutside="true"
             closeOnSelect={true}
             inputProps={inputPropsStart}
-            isValidDate={current => current.isAfter(moment().add(-1, 'days'))}
+            isValidDate={current =>
+              date_finish
+                ? current.isAfter(moment().add(-1, 'days')) &&
+                  current.isBefore(Number(date_finish))
+                : current.isAfter(moment().add(-1, 'days'))
+            }
           />
         </div>
 
