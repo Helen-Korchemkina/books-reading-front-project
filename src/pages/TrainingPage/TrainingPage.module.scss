@@ -1,23 +1,33 @@
-.desctopContainer{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+@import 'scss-variables.scss';
+
+.desctopContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.icon{
-    width: 48px;
-    height: 24px;
-    margin: 24px 0 32px 0;
-    color: var(--color-orange);
-    cursor: pointer;
+.icon {
+  width: 48px;
+  height: 24px;
+  margin: 24px 0 32px 0;
+  color: var(--color-orange);
+  cursor: pointer;
 }
 
-.button{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 171px;
-    height: 42px;
-    cursor: pointer;
-    margin-bottom: 40px;   
+.button {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 171px;
+  height: 42px;
+  cursor: pointer;
+  margin-bottom: 40px;
+}
+
+// add---------------------------
+
+.left {
+  @media (min-width: $screenLg) {
+    width: 928px;
   }
+}

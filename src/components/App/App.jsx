@@ -11,8 +11,6 @@ import Container from 'components/common/Container';
 import PrivateRoute from 'components/common/PrivateRoute';
 import ProtectedRoute from 'components/common/ProtectedRoute';
 
-import MyGoals from 'components/Training/MyGoals';
-
 const LoginPage = lazy(() =>
   import('pages/LoginPage' /* webpackChunkName: "LoginPage" */)
 );
@@ -66,7 +64,6 @@ const App = () => {
   }
 
   return (
-    // <MyGoals />
     <Suspense fallback={<Container>Loading...</Container>}>
       <Routes>
         <Route path="/" element={<AppBar />}>
