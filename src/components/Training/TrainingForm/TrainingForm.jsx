@@ -44,7 +44,7 @@ const TrainingForm = ({
   const handleAddBook = e => {
     e.preventDefault();
 
-    [...data].filter(book => {
+    [...data].forEach(book => {
       if (book.title === selectedBook) {
         try {
           updateStatusBook({
