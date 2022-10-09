@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Container from 'components/common/Container';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
 import { useMediaQuery } from 'react-responsive';
+import { useGetUserTrainingQuery } from 'redux/auth/auth-api';
+import { useUpdateUserTrainingMutation } from 'redux/auth/auth-api';
 import MyGoals from 'components/Training/MyGoals';
 import BookList from 'components/Training/BookList';
 import MobileForm from 'components/Training/MobileForm';
@@ -11,23 +13,68 @@ import Timer from 'components/Training/Timer';
 import TrainingForm from 'components/Training/TrainingForm';
 import MediaQuery from 'react-responsive';
 import PlusButton from 'components/common/PlusButton';
+import { toast } from 'react-toastify';
 import s from './TrainingPage.module.scss';
 import Results from 'components/Training/Results';
 
 const TrainingPage = () => {
+  const { data = {}, isSuccess } = useGetUserTrainingQuery();
   const [date_start, setDate_start] = useState(null);
   const [date_finish, setDate_finish] = useState(null);
   const [timerIsActive, setTimerIsActive] = useState(false);
   const [showMobileForm, setShowMobileForm] = useState(true);
+  const [addTimerValue] = useUpdateUserTrainingMutation();
   const isMobileScreen = useMediaQuery({ query: '(max-width: 767px)' });
   const showAddForm = isMobileScreen ? showMobileForm : true;
+
+  useEffect(() => {
+    if (JSON.stringify(data) !== '{}') {
+      setDate_start(data.training.startMillisecond);
+      setDate_finish(data.training.finishMillisecond);
+      setTimerIsActive(true);
+    }
+  }, [data]);
+
   useEffect(() => {
     setShowMobileForm(true);
   }, [isMobileScreen]);
 
-  const handleSubmitTrainingStart = e => {
+  const userHasRunnigTraining = useMemo(
+    () =>
+      isSuccess &&
+      data?.training?.finishMillisecond &&
+      data.training.finishMillisecond > Date.now(),
+    [isSuccess, data]
+  );
+
+  // console.log(data)
+
+  // const checkUserData = (data) =>{
+  //   console.log(data, JSON.stringify(data) === '{}', data.length > 0)
+  //   if(JSON.stringify(data) !== '{}' || data.length > 0){
+  //     setDate_start(data.training.startMillisecond);
+  //     setDate_finish(data.training.finishMillisecond);
+  //     setTimerIsActive(true);
+  //   }
+  // }
+
+  // checkUserData(data);
+
+  // console.log(date_start, date_finish)
+
+  async function handleSubmitTrainingStart(e) {
     setTimerIsActive(true);
-  };
+    try {
+      await addTimerValue({
+        date_start: date_start,
+        date_finish: date_finish,
+      }).unwrap();
+
+      toast.dismiss();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <Container>
@@ -40,6 +87,10 @@ const TrainingPage = () => {
         )}
         {showAddForm && (
           <MobileForm
+            date_start={date_start}
+            date_finish={date_finish}
+            setDate_start={setDate_start}
+            setDate_finish={setDate_finish}
             onFormSubmit={
               isMobileScreen
                 ? () => {
@@ -57,7 +108,9 @@ const TrainingPage = () => {
         )}
         {!showAddForm && (
           <>
-            <Timer />
+            {timerIsActive && (
+              <Timer date_finish={date_finish} timerIsActive={timerIsActive} />
+            )}
             <MyGoals isShow={timerIsActive} time={date_finish} />
             <BookList />
             {date_start && date_finish && !timerIsActive && (
@@ -83,6 +136,7 @@ const TrainingPage = () => {
         )}
         <MyGoals isShow={timerIsActive} time={date_finish} />
         <TrainingForm
+          isShow={timerIsActive}
           date_start={date_start}
           date_finish={date_finish}
           setDate_start={setDate_start}
@@ -107,6 +161,7 @@ const TrainingPage = () => {
               <Timer date_finish={date_finish} timerIsActive={timerIsActive} />
             )}
             <TrainingForm
+              isShow={timerIsActive}
               date_start={date_start}
               date_finish={date_finish}
               setDate_start={setDate_start}

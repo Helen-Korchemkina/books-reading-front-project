@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TimerForm from './TimerForm/TimerForm';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import { useGetBooksQuery } from '../../../redux/books/books-api';
+import {
+  useGetBooksQuery,
+  useUpdateStatusBookMutation,
+} from '../../../redux/books/books-api';
 import BooksTable from '../BooksTable/BooksTable';
 import s from './TrainingForm.module.scss';
 
@@ -21,6 +24,7 @@ const MenuProps = {
 };
 
 const TrainingForm = ({
+  isShow,
   date_start,
   date_finish,
   setDate_start,
@@ -29,37 +33,50 @@ const TrainingForm = ({
   const [selectedBook, setSelectedBook] = useState([]);
   const [booksListArr, setBooksListArr] = useState([]);
 
-  const { data } = useGetBooksQuery();
+  const [updateStatusBook] = useUpdateStatusBookMutation();
+  const { data = [] } = useGetBooksQuery();
 
   const handleChangeBook = event => {
     event.preventDefault();
     setSelectedBook(event.target.value);
-    console.log(selectedBook);
   };
 
   const handleAddBook = e => {
     e.preventDefault();
 
-    const booksArrInfo = data.filter(book => book.title === selectedBook);
-    setBooksListArr([booksArrInfo, ...booksListArr].flat());
-    console.log(booksListArr);
+    [...data].filter(book => {
+      if (book.title === selectedBook) {
+        try {
+          updateStatusBook({
+            id: book._id,
+            status: 'Reading now',
+            isReadBook: true,
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    });
   };
+
+  useEffect(() => {
+    const sortBook = [...data].filter(book => book.status === 'Reading now');
+    setBooksListArr(sortBook);
+  }, [data]);
 
   return (
     <>
       <div className={s.container}>
         <h1 className={s.title}>My Training</h1>
-        <form
-          className={s.form}
-          // onSubmit={handleSubmit}
-          autoComplete="off"
-        >
-          <TimerForm
-            date_start={date_start}
-            date_finish={date_finish}
-            setDate_start={setDate_start}
-            setDate_finish={setDate_finish}
-          />
+        <form className={s.form} autoComplete="off">
+          {!isShow && (
+            <TimerForm
+              date_start={date_start}
+              date_finish={date_finish}
+              setDate_start={setDate_start}
+              setDate_finish={setDate_finish}
+            />
+          )}
 
           <div className={s.tableSelect}>
             <Box sx={{ minWidth: 120 }} className={s.boxSelect}>

@@ -19,13 +19,12 @@ const UserMenu = () => {
 
             {islogin && (
               <div className={s.wrapNav}>
-                <Media queries={{ small: { minWidth: 767 } }}>
-                  {matches => matches.small && <UserHeader />}
-                </Media>
-                <Navigation />
-                <Media queries={{ small: { maxWidth: 768 } }}>
-                  {matches => matches.small && <UserHeader />}
-                </Media>
+                <div className={s.userInfo}>
+                  <Navigation />
+                  <Media queries={{ small: { minWidth: 768 } }}>
+                    {matches => matches.small && <UserHeader />}
+                  </Media>
+                </div>
                 <ButtonLogout />
               </div>
             )}
