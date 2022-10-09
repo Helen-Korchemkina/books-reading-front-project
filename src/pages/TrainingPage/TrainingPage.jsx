@@ -46,21 +46,6 @@ const TrainingPage = () => {
     setShowMobileForm(true);
   }, [isMobileScreen]);
 
-  // console.log(data)
-
-  // const checkUserData = (data) =>{
-  //   console.log(data, JSON.stringify(data) === '{}', data.length > 0)
-  //   if(JSON.stringify(data) !== '{}' || data.length > 0){
-  //     setDate_start(data.training.startMillisecond);
-  //     setDate_finish(data.training.finishMillisecond);
-  //     setTimerIsActive(true);
-  //   }
-  // }
-
-  // checkUserData(data);
-
-  // console.log(date_start, date_finish)
-
   async function handleSubmitTrainingStart(e) {
     setTimerIsActive(true);
     try {
@@ -108,8 +93,8 @@ const TrainingPage = () => {
         {!showAddForm && (
           <>
             {timerIsActive && (
-              <Timer date_finish={date_finish} timerIsActive={timerIsActive} />
-            )}
+          <Timer date_finish={date_finish} timerIsActive={timerIsActive} />
+        )}
             <MyGoals isShow={timerIsActive} time={date_finish} />
             <BookList />
             {date_start && date_finish && !timerIsActive && (
