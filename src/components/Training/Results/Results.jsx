@@ -26,10 +26,10 @@ const Results = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      const dateToday = data?.training?.startMillisecond
+      const dateStart = data?.training?.startMillisecond
         ? Math.max(+data?.training?.startMillisecond, Date.now())
         : Date.now();
-      setDate(millisecondsToDate(dateToday));
+      setDate(dateStart);
     }
   }, [data?.training?.startMillisecond, isSuccess]);
 
@@ -41,7 +41,7 @@ const Results = () => {
     onSubmit: async (values, actions) => {
       try {
         const body = {
-          readDate: Date.now().toString(),
+          readDate: String(date),
           numberOfPagesRead: values.countOfPages,
         };
         await updateStatistics(body);
@@ -62,7 +62,7 @@ const Results = () => {
               label={{ id: 'readDate', text: 'Date' }}
               input={{
                 type: 'text',
-                value: date,
+                value: millisecondsToDate(date),
                 onChange: formik.handleChange,
               }}
               disabled
