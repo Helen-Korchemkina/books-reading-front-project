@@ -1,10 +1,8 @@
 import { MdDeleteOutline, MdOutlineMenuBook } from 'react-icons/md';
-import { useRemoveBookMutation } from 'redux/books/books-api';
 
 import s from './BooksTableMobile.module.scss';
 
-const BooksTableMobile = ({ books = [] }) => {
-  const [removeBook] = useRemoveBookMutation();
+const BooksTableMobile = ({ books = [], onDel }) => {
   return (
     <ul className={s.list}>
       {books.map(({ _id, title, author, countOfPages, releaseDate }) => (
@@ -12,10 +10,7 @@ const BooksTableMobile = ({ books = [] }) => {
           <div className={s.title__wrap}>
             <MdOutlineMenuBook className={s.iconBook} />
             <span className={s.title}>{title}</span>
-            <MdDeleteOutline
-              className={s.iconDel}
-              onClick={() => removeBook(_id)}
-            />
+            <MdDeleteOutline className={s.iconDel} onClick={() => onDel(_id)} />
           </div>
           <p className={s.text}>
             <span className={s.subtext__title}>Author:</span>
