@@ -60,7 +60,9 @@ const TrainingForm = ({
   };
 
   useEffect(() => {
-    const sortBook = [...data].filter(book => book.status === 'Reading now');
+    const sortBook = [...data].filter(
+      book => book.status === 'Reading now' || book.isReadBook
+    );
     setBooksListArr(sortBook);
   }, [data]);
 
