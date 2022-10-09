@@ -6,6 +6,7 @@ import 'react-datetime/css/react-datetime.css';
 import Button from 'components/common/Button';
 import s from './Results.module.scss';
 import { useUpdateStatisticsMutation } from 'redux/statistics/statistics-api';
+import { useGetUserTrainingQuery } from 'redux/auth/auth-api';
 import { millisecondsToDate } from 'helpers/date';
 
 import ResultsList from '../ResultsList';
@@ -20,12 +21,17 @@ const VALIDATION_SCHEMA = Yup.object().shape({
 
 const Results = () => {
   const [updateStatistics] = useUpdateStatisticsMutation();
+  const { data = {}, isSuccess } = useGetUserTrainingQuery();
   const [date, setDate] = useState('hhh');
 
   useEffect(() => {
-    const dateToday = Date.now();
-    setDate(millisecondsToDate(dateToday));
-  }, []);
+    if (isSuccess) {
+      const dateToday = data?.training?.startMillisecond
+        ? Math.max(+data?.training?.startMillisecond, Date.now())
+        : Date.now();
+      setDate(millisecondsToDate(dateToday));
+    }
+  }, [data?.training?.startMillisecond, isSuccess]);
 
   const formik = useFormik({
     initialValues: {
@@ -71,6 +77,7 @@ const Results = () => {
                 value: formik.values.countOfPages,
                 onChange: formik.handleChange,
               }}
+              min={1}
               modifClasses={{ label: s.titleDateForm, wrapper: s.inputMargin }}
             />
           </div>

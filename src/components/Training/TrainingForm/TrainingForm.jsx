@@ -103,6 +103,9 @@ const TrainingForm = ({
                   MenuProps={MenuProps}
                   inputProps={{ 'aria-label': 'Without label' }}
                 >
+                  <MenuItem disabled value="">
+                    <em>Choose books from the library</em>
+                  </MenuItem>
                   {data.map(book => (
                     <MenuItem key={book._id} value={book.title + ''}>
                       {book.title}
