@@ -1,14 +1,24 @@
 import Button from 'components/common/Button';
 import { MdOutlineThumbUp } from 'react-icons/md';
 import s from './ModalAllertGreate.module.scss';
-import { useLazyLogoutQuery } from 'redux/auth/auth-api';
+import { useUpdateStatusBookMutation } from 'redux/books/books-api';
 import { useNavigate } from 'react-router-dom';
+import { getReadingBooks } from 'redux/books/books-selectors';
+import { useSelector } from 'react-redux';
 function ModalAllertGreate() {
-  const [logout] = useLazyLogoutQuery();
   const navigate = useNavigate();
-  const handleLogout = () => {
-    logout();
-    navigate('/', { replace: true });
+  const [updateStatusBook] = useUpdateStatusBookMutation();
+  const readingBooks = useSelector(getReadingBooks);
+  const handleNewTraining = () => {
+    navigate('/library', { replace: true });
+
+    readingBooks.map(book =>
+      updateStatusBook({
+        id: book._id,
+        status: 'Already read',
+        isReadBook: false,
+      })
+    );
   };
 
   return (
@@ -19,9 +29,7 @@ function ModalAllertGreate() {
         <Button
           variant="filled"
           modifClass={s.button}
-          onClick={() => {
-            handleLogout();
-          }}
+          onClick={handleNewTraining}
         >
           Done
         </Button>

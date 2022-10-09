@@ -1,15 +1,26 @@
 import s from './ModalAllertFaster.module.scss';
 
 import Button from 'components/common/Button';
-import { useLazyLogoutQuery } from 'redux/auth/auth-api';
 import { useNavigate } from 'react-router-dom';
+import { getReadingBooks } from 'redux/books/books-selectors';
+import { useSelector } from 'react-redux';
+import { useUpdateStatusBookMutation } from 'redux/books/books-api';
 
-function ModalAllertFaster({ close }) {
-  const [logout] = useLazyLogoutQuery();
+function ModalAllertFaster({ click }) {
   const navigate = useNavigate();
-  const handleLogout = () => {
-    logout();
-    navigate('/', { replace: true });
+  const readingBooks = useSelector(getReadingBooks);
+  const [updateStatusBook] = useUpdateStatusBookMutation();
+
+  const handleNewTraining = () => {
+    navigate('/library', { replace: true });
+
+    readingBooks.forEach(book =>
+      updateStatusBook({
+        id: book._id,
+        status: 'Already read',
+        isReadBook: false,
+      })
+    );
   };
 
   return (
@@ -21,14 +32,11 @@ function ModalAllertFaster({ close }) {
         <Button
           variant="filled"
           modifClass={s.button}
-          onClose={() => {}}
-          onClick={() => {
-            handleLogout();
-          }}
+          onClick={handleNewTraining}
         >
           New training
         </Button>
-        <Button modifClass={s.button} onClose={() => {}}>
+        <Button modifClass={s.button} onClick={() => click(false)}>
           Back
         </Button>
       </div>
