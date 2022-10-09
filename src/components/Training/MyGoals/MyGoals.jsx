@@ -70,7 +70,7 @@ const MyGoals = ({ isShow, time }) => {
       )}
       {isBadReading && (
         <ModalWindow onClose={setIsBadReading}>
-          <ModalAllertFaster />
+          <ModalAllertFaster click={setIsBadReading} />
         </ModalWindow>
       )}
     </div>
