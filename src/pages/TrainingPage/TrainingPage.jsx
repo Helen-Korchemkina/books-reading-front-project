@@ -26,19 +26,6 @@ const TrainingPage = () => {
   const [addTimerValue] = useUpdateUserTrainingMutation();
   const isMobileScreen = useMediaQuery({ query: '(max-width: 767px)' });
   const showAddForm = isMobileScreen ? showMobileForm : true;
-
-  useEffect(() => {
-    if (JSON.stringify(data) !== '{}') {
-      setDate_start(data.training.startMillisecond);
-      setDate_finish(data.training.finishMillisecond);
-      setTimerIsActive(true);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    setShowMobileForm(true);
-  }, [isMobileScreen]);
-
   const userHasRunnigTraining = useMemo(
     () =>
       isSuccess &&
@@ -46,6 +33,22 @@ const TrainingPage = () => {
       data.training.finishMillisecond > Date.now(),
     [isSuccess, data]
   );
+
+  useEffect(() => {
+    if (userHasRunnigTraining) {
+      setDate_start(data.training.startMillisecond);
+      setDate_finish(data.training.finishMillisecond);
+      setTimerIsActive(true);
+    }
+  }, [
+    data.training.finishMillisecond,
+    data.training.startMillisecond,
+    userHasRunnigTraining,
+  ]);
+
+  useEffect(() => {
+    setShowMobileForm(true);
+  }, [isMobileScreen]);
 
   // console.log(data)
 
