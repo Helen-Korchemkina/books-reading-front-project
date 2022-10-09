@@ -21,6 +21,18 @@ const BooksTable = ({ books = [] }) => {
     }
   };
 
+  const handleAddStatusAlreadyRead = id => {
+    try {
+      updateStatusBook({
+        id,
+        status: 'Already read',
+        isReadBook: true,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Media queries={{ small: { maxWidth: 767 } }}>
@@ -29,6 +41,7 @@ const BooksTable = ({ books = [] }) => {
             <BooksTableMobile
               books={books}
               onDel={handleClickDeliteBookFromTrening}
+              onAlready={handleAddStatusAlreadyRead}
             />
           )
         }
@@ -54,6 +67,7 @@ const BooksTable = ({ books = [] }) => {
                           className={classNames({
                             [s.icon]: true,
                           })}
+                          onClick={() => handleAddStatusAlreadyRead(_id)}
                         />
                         <span className={s.title}>{title}</span>
                       </td>
