@@ -15,7 +15,6 @@
   height: 33px;
   background-color: var(--color-super-light-grey);
   border-radius: 50%;
-  margin-right: 12px;
 }
 
 .nameFirstLater {
@@ -27,6 +26,10 @@
 @media (min-width: 768px) {
   .nameWraper {
     margin-right: 25vw;
+  }
+
+  .circleUnderLater {
+    margin-right: 12px;
   }
 }
 

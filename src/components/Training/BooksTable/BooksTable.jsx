@@ -3,11 +3,10 @@ import { MdDeleteOutline } from 'react-icons/md';
 import Button from 'components/common/Button';
 import classNames from 'classnames';
 import s from './BooksTable.module.scss';
-import {useRemoveBookMutation} from '../../../redux/books/books-api';
+import { useRemoveBookMutation } from '../../../redux/books/books-api';
 
-const BooksTable = ({books = []}) => {
+const BooksTable = ({ books = [] }) => {
   const [removeBook] = useRemoveBookMutation();
-  console.log(books)
   return (
     <>
       <table className={s.table}>
@@ -43,7 +42,8 @@ const BooksTable = ({books = []}) => {
                   <MdDeleteOutline
                     className={classNames({
                       [s.iconDelete]: true,
-                    })} onClick={() => removeBook(_id)}
+                    })}
+                    onClick={() => removeBook(_id)}
                   />
                 )}
                 <span className={s.subtitle}>Pages:</span>
@@ -53,10 +53,8 @@ const BooksTable = ({books = []}) => {
           ))}
         </tbody>
       </table>
-      
     </>
   );
 };
 
 export default BooksTable;
-

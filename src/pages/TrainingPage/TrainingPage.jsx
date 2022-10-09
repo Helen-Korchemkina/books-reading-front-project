@@ -27,15 +27,13 @@ const TrainingPage = () => {
   const isMobileScreen = useMediaQuery({ query: '(max-width: 767px)' });
   const showAddForm = isMobileScreen ? showMobileForm : true;
 
-  console.log(data)
-
-  useEffect(()=>{
-    if(JSON.stringify(data) !== '{}'){
+  useEffect(() => {
+    if (JSON.stringify(data) !== '{}') {
       setDate_start(data.training.startMillisecond);
       setDate_finish(data.training.finishMillisecond);
       setTimerIsActive(true);
     }
-  },[data])
+  }, [data]);
 
   useEffect(() => {
     setShowMobileForm(true);
@@ -50,7 +48,7 @@ const TrainingPage = () => {
   );
 
   // console.log(data)
-  
+
   // const checkUserData = (data) =>{
   //   console.log(data, JSON.stringify(data) === '{}', data.length > 0)
   //   if(JSON.stringify(data) !== '{}' || data.length > 0){
@@ -61,23 +59,22 @@ const TrainingPage = () => {
   // }
 
   // checkUserData(data);
-  
+
   // console.log(date_start, date_finish)
 
-  async function handleSubmitTrainingStart(e){
+  async function handleSubmitTrainingStart(e) {
     setTimerIsActive(true);
     try {
       await addTimerValue({
-        date_start:date_start,
-        date_finish:date_finish
+        date_start: date_start,
+        date_finish: date_finish,
       }).unwrap();
 
       toast.dismiss();
     } catch (error) {
       console.log(error);
     }
-
-  };
+  }
 
   return (
     <Container>
@@ -112,8 +109,8 @@ const TrainingPage = () => {
         {!showAddForm && (
           <>
             {timerIsActive && (
-          <Timer date_finish={date_finish} timerIsActive={timerIsActive} />
-        )}
+              <Timer date_finish={date_finish} timerIsActive={timerIsActive} />
+            )}
             <MyGoals isShow={timerIsActive} time={date_finish} />
             <BookList />
             {date_start && date_finish && !timerIsActive && (

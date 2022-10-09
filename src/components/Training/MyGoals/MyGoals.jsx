@@ -9,11 +9,13 @@ import { millisecondsToDay } from 'helpers/date';
 import { useGetStatisticsQuery } from 'redux/statistics/statistics-api';
 
 import s from './MyGoals.module.scss';
+import { useGetBooksQuery } from 'redux/books/books-api';
 
 const ALREADY_READ = 'Already read';
 
-const MyGoals = ({ isShow, books = [], time }) => {
+const MyGoals = ({ isShow, time }) => {
   const { data: statistics = {} } = useGetStatisticsQuery();
+  const { data = [] } = useGetBooksQuery();
 
   const [isGoodReading, setIsGoodReading] = useState(false);
   const [isBadReading, setIsBadReading] = useState(false);
@@ -22,8 +24,8 @@ const MyGoals = ({ isShow, books = [], time }) => {
   const showBlock = isShow ? 'isShowBlock' : 'block';
   const showNumber = isShow ? 'isShowNumber' : 'number';
 
-  const alreadyReadLength = filterBooksStatus(books, ALREADY_READ);
-  const isRead = filterBooksIsRead(books, true);
+  const alreadyReadLength = filterBooksStatus(data, ALREADY_READ);
+  const isRead = filterBooksIsRead(data, true);
   const numberOfPagesFromStatistics = countPageStatistics(statistics);
   const numberOfPagesFromIsRead = countPageIsRead(isRead);
   const page = numberOfPagesFromIsRead - numberOfPagesFromStatistics;
