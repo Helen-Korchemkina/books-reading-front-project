@@ -13,7 +13,7 @@ const BooksTableMobile = ({ books = [], onDel, onAlready }) => {
           <li key={_id} className={s.item}>
             <div className={s.title__wrap}>
               <MdOutlineMenuBook
-                className={s.iconBook}
+                className={s[isRead(status)]}
                 onClick={() => onAlready(_id)}
               />
               <span className={s.title}>{title}</span>

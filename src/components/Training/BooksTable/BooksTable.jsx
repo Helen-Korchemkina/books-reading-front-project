@@ -33,6 +33,10 @@ const BooksTable = ({ books = [] }) => {
     }
   };
 
+  const isActivIcon = status => {
+    return status === 'Already read' ? 'iconActive' : 'icon';
+  };
+
   return (
     <>
       <Media queries={{ small: { maxWidth: 767 } }}>
@@ -60,12 +64,19 @@ const BooksTable = ({ books = [] }) => {
               </thead>
               <tbody>
                 {books.map(
-                  ({ _id, title, author, countOfPages, releaseDate }) => (
+                  ({
+                    _id,
+                    title,
+                    author,
+                    countOfPages,
+                    releaseDate,
+                    status,
+                  }) => (
                     <tr key={_id} className={s.bodyRow}>
                       <td className={s.bodyRowTitle}>
                         <MdOutlineMenuBook
                           className={classNames({
-                            [s.icon]: true,
+                            [s[isActivIcon(status)]]: true,
                           })}
                           onClick={() => handleAddStatusAlreadyRead(_id)}
                         />

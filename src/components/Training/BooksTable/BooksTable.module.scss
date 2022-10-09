@@ -71,6 +71,11 @@
   cursor: pointer;
 }
 
+.iconActive {
+  composes: icon;
+  color: var(--color-orange);
+}
+
 .iconDelete {
   position: absolute;
   right: 0;
