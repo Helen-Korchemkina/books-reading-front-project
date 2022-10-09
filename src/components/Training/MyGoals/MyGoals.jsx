@@ -9,6 +9,9 @@ import { millisecondsToDay } from 'helpers/date';
 import { useGetStatisticsQuery } from 'redux/statistics/statistics-api';
 
 import s from './MyGoals.module.scss';
+import ModalAllertFaster from './ModalAlerts/ModalAlertFaster';
+import ModalAllertGreate from './ModalAlerts/ModalAlertGreate';
+import ModalWindow from 'components/common/ModalWindow';
 import { useGetBooksQuery } from 'redux/books/books-api';
 
 const ALREADY_READ = 'Already read';
@@ -60,8 +63,16 @@ const MyGoals = ({ isShow, time }) => {
           </div>
         )}
       </div>
-      {isGoodReading && ''}
-      {isBadReading && ''}
+      {isGoodReading && (
+        <ModalWindow onClose={setIsGoodReading}>
+          <ModalAllertGreate />
+        </ModalWindow>
+      )}
+      {isBadReading && (
+        <ModalWindow onClose={setIsBadReading}>
+          <ModalAllertFaster />
+        </ModalWindow>
+      )}
     </div>
   );
 };
