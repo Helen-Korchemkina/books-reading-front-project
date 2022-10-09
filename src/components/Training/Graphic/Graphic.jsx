@@ -16,7 +16,7 @@ import { useGetUserTrainingQuery } from 'redux/auth/auth-api';
 import { useGetBooksQuery } from 'redux/books/books-api';
 import { useGetStatisticsQuery } from 'redux/statistics/statistics-api';
 import { getTraining } from 'redux/auth/authSelectors';
-import { getReadingBooks } from 'redux/books/books-selectors';
+import { getBooksOfTranning } from 'redux/books/books-selectors';
 import {
   getGraphOptions,
   getGraphData,
@@ -40,21 +40,20 @@ const Graphic = () => {
   useGetUserTrainingQuery();
   const { data: statistics = [], isSuccess } = useGetStatisticsQuery();
 
-  const readingBooks = useSelector(getReadingBooks);
+  const booksOfTranning = useSelector(getBooksOfTranning);
   const currentTraining = useSelector(getTraining);
-  // console.log('currentTraining', currentTraining);
 
   const { labels, planningPoints = [] } = useMemo(
     () =>
       getPlanningGraphData(
         currentTraining.startMillisecond,
         currentTraining.finishMillisecond,
-        readingBooks
+        booksOfTranning
       ),
     [
       currentTraining.finishMillisecond,
       currentTraining.startMillisecond,
-      readingBooks,
+      booksOfTranning,
     ]
   );
 
