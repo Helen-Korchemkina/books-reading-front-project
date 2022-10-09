@@ -44,7 +44,12 @@ const TrainingForm = ({
   const handleAddBook = e => {
     e.preventDefault();
 
+<<<<<<< HEAD
     [...data].forEach(book => {
+=======
+    // eslint-disable-next-line array-callback-return
+    [...data].filter(book => {
+>>>>>>> main
       if (book.title === selectedBook) {
         try {
           updateStatusBook({
@@ -60,7 +65,9 @@ const TrainingForm = ({
   };
 
   useEffect(() => {
-    const sortBook = [...data].filter(book => book.status === 'Reading now');
+    const sortBook = [...data].filter(
+      book => book.status === 'Reading now' || book.isReadBook
+    );
     setBooksListArr(sortBook);
   }, [data]);
 

@@ -25,6 +25,12 @@
   height: 17px;
   color: #a6abb9;
   margin-right: 12px;
+  cursor: pointer;
+}
+
+.iconBookActive {
+  composes: iconBook;
+  color: var(--color-orange);
 }
 
 .title {
@@ -41,6 +47,7 @@
   height: 18px;
   color: #a6abb9;
   margin-left: auto;
+  cursor: pointer;
 }
 
 .text {
