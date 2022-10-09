@@ -15,7 +15,6 @@ import { useSelector } from 'react-redux';
 import { useGetUserTrainingQuery } from 'redux/auth/auth-api';
 import { useGetBooksQuery } from 'redux/books/books-api';
 import { useGetStatisticsQuery } from 'redux/statistics/statistics-api';
-import { getTraining } from 'redux/auth/authSelectors';
 import { getBooksOfTranning } from 'redux/books/books-selectors';
 import {
   getGraphOptions,
@@ -37,36 +36,38 @@ ChartJS.register(
 
 const Graphic = () => {
   useGetBooksQuery();
-  useGetUserTrainingQuery();
+  const { data: trainingData = {} } = useGetUserTrainingQuery();
   const { data: statistics = [], isSuccess } = useGetStatisticsQuery();
-
   const booksOfTranning = useSelector(getBooksOfTranning);
-  const currentTraining = useSelector(getTraining);
 
   const { labels, planningPoints = [] } = useMemo(
     () =>
       getPlanningGraphData(
-        currentTraining.startMillisecond,
-        currentTraining.finishMillisecond,
+        trainingData?.training?.startMillisecond,
+        trainingData?.training?.finishMillisecond,
         booksOfTranning
       ),
     [
-      currentTraining.finishMillisecond,
-      currentTraining.startMillisecond,
+      trainingData?.training?.finishMillisecond,
+      trainingData?.training?.startMillisecond,
       booksOfTranning,
     ]
   );
 
   const factPoints = useMemo(() => {
-    if (isSuccess && currentTraining?.startMillisecond && labels.length > 0) {
+    if (
+      isSuccess &&
+      trainingData?.training?.startMillisecond &&
+      labels.length > 0
+    ) {
       return getFactPoints(
-        currentTraining.startMillisecond,
+        trainingData?.training?.startMillisecond,
         labels,
         statistics
       );
     }
     return [];
-  }, [isSuccess, statistics, currentTraining.startMillisecond, labels]);
+  }, [isSuccess, statistics, trainingData?.training?.startMillisecond, labels]);
 
   return (
     <div className={s.container}>
