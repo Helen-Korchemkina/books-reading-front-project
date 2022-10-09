@@ -2,13 +2,11 @@ import Container from 'components/common/Container';
 import { Link } from 'react-router-dom';
 import Button from 'components/common/Button';
 import FormInput from 'components/common/FormInput';
-import GoogleBtn from 'components/GoogleBtn/GoogleBtn';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import s from './LoginPage.module.scss';
-import { useLoginMutation } from 'redux/auth/auth-api';
-import { useAuth } from 'redux/auth/authSlice';
+import s from '../LoginPage/LoginPage.module.scss';
 import { useEffect, useState } from 'react';
+import ModalWindow from 'components/common/ModalWindow';
 import axios from 'axios';
 
 const SignupSchema = Yup.object().shape({
@@ -21,22 +19,10 @@ const SignupSchema = Yup.object().shape({
       /[a-z0-9!#$%&'*+/=?^_`{|}~-]{2,}(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
       'Invalid email'
     ),
-  password: Yup.string()
-    .required('Please Enter your password')
-    .min(5, 'Must be 8 characters or more')
-    .max(30, 'Must be no more than 30 characters ')
-    .matches(/[a-z]+/, 'Must contain one lowercase character')
-    .matches(/[A-Z]+/, 'Must contain one uppercase character')
-    .matches(/\d+/, 'Must contain one number')
-    .matches(
-      /^(?![.-]+)(?!.* )(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,30}/,
-      'Must not contain spaces, and starts with - or .'
-    ),
 });
 
-export default function LoginPage() {
-  const [login] = useLoginMutation();
-  const { credentialsUpdate } = useAuth();
+export default function ForgotPassword() {
+  const [togle, setTogle] = useState(false);
   const defaultQuote = `Books are the ships of thoughts, wandering through the waves of
             time.`;
   const defaultAuthor = `Francis Bacon`;
@@ -45,28 +31,25 @@ export default function LoginPage() {
   const formik = useFormik({
     initialValues: {
       email: '',
-      password: '',
     },
     validationSchema: SignupSchema,
     onSubmit: (values, actions) => {
-      const loginCheckFetch = async loginData => {
-        const response = await login(loginData);
-        if (response?.error?.status === 400) {
-          return;
-        } else {
-          credentialsUpdate({
-            user: {
-              name: response.data?.data?.name,
-              email: response.data?.data?.email,
-            },
-            token: response.data?.token,
-          });
+      async function forgotPasswordPost() {
+        try {
+          const response = await axios.post(
+            `https://books-reading-project.herokuapp.com/api/auth/forgot`,
+
+            {
+              email: values.email,
+            }
+          );
+          setTogle(true);
+          console.log(response.data);
+        } catch (error) {
+          console.error(error);
         }
-      };
-      loginCheckFetch({
-        email: values.email,
-        password: values.password,
-      });
+      }
+      forgotPasswordPost();
       actions.resetForm();
     },
   });
@@ -92,8 +75,7 @@ export default function LoginPage() {
     <div className={s.wrapper}>
       <div className={s.pictureWrapper}>
         <Container>
-          <div className={s.loginWrapper}>
-            <GoogleBtn />
+          <div className={s.forgotPasswordWrapper}>
             <div className={s.formWrapper}>
               <form
                 onSubmit={formik.handleSubmit}
@@ -120,40 +102,37 @@ export default function LoginPage() {
                     errors.email && touched.email ? errors.email : ''
                   }
                 />
-                <FormInput
-                  label={{
-                    id: 'password',
-                    text: (
-                      <>
-                        <span className={s.formText}>Password</span>
-                        <span className={s.isRequiredField}> *</span>
-                      </>
-                    ),
-                  }}
-                  input={{
-                    type: 'password',
-                    value: formik.values.password,
-                    onChange: formik.handleChange,
-                    placeholder: 'Password',
-                  }}
-                  modifClasses={s.inputform}
-                  errorMessage={
-                    errors.password && touched.password ? errors.password : ''
-                  }
-                />
                 <Button variant="filled" modifClass={s.loginBtn} type="submit">
-                  Login
+                  OK
                 </Button>
               </form>
             </div>
 
-            <Link className={s.regLink} to="/register">
-              Register
-            </Link>
-            <Link className={s.regLink} to="/forgot-password">
-              Forgot password
+            <Link className={s.regLink} to="/login">
+              Login
             </Link>
           </div>
+          {togle ? (
+            <ModalWindow
+              onClose={() => {
+                setTogle(false);
+              }}
+              modifClass={s.ForgotPasswordModal}
+            >
+              <p>
+                We have sent you a link to your email to reset your password.
+              </p>
+              <Button
+                variant="filled"
+                modifClass={s.loginBtn}
+                onClick={() => {
+                  setTogle(false);
+                }}
+              >
+                OK
+              </Button>
+            </ModalWindow>
+          ) : null}
         </Container>
       </div>
 
