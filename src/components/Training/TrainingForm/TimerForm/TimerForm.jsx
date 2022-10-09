@@ -35,6 +35,8 @@ const TimerForm = ({
             selected={date_start}
             onChange={date => setDate_start(Date.parse(date).toString())}
             selectsStart
+            timeFormat={false}
+            dateFormat={'DD MM YYYY'}
             closeOnClickOutside="true"
             closeOnSelect={true}
             inputProps={inputPropsStart}
@@ -53,7 +55,8 @@ const TimerForm = ({
             selected={date_finish}
             onChange={date => setDate_finish(Date.parse(date).toString())}
             selectsFinish
-            minDate={date_start}
+            timeFormat={false}
+            dateFormat={'DD MM YYYY'}
             closeOnClickOutside="true"
             closeOnSelect={true}
             isValidDate={current => current.isAfter(Number(date_start))}
