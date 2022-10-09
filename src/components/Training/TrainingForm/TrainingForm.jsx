@@ -44,12 +44,7 @@ const TrainingForm = ({
   const handleAddBook = e => {
     e.preventDefault();
 
-<<<<<<< HEAD
     [...data].forEach(book => {
-=======
-    // eslint-disable-next-line array-callback-return
-    [...data].filter(book => {
->>>>>>> main
       if (book.title === selectedBook) {
         try {
           updateStatusBook({
