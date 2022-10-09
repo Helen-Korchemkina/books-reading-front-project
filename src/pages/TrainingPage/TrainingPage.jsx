@@ -40,11 +40,7 @@ const TrainingPage = () => {
       setDate_finish(data.training.finishMillisecond);
       setTimerIsActive(true);
     }
-  }, [
-    data.training.finishMillisecond,
-    data.training.startMillisecond,
-    userHasRunnigTraining,
-  ]);
+  }, [data, userHasRunnigTraining]);
 
   useEffect(() => {
     setShowMobileForm(true);
