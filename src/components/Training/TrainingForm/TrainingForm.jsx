@@ -32,6 +32,7 @@ const TrainingForm = ({
 }) => {
   const [selectedBook, setSelectedBook] = useState([]);
   const [booksListArr, setBooksListArr] = useState([]);
+  const [booksSelected, SetbooksSelected] = useState([]);
 
   const [updateStatusBook] = useUpdateStatusBookMutation();
   const { data = [] } = useGetBooksQuery();
@@ -52,6 +53,7 @@ const TrainingForm = ({
             status: 'Reading now',
             isReadBook: true,
           });
+        
         } catch (error) {
           console.log(error);
         }
@@ -65,6 +67,11 @@ const TrainingForm = ({
     );
     setBooksListArr(sortBook);
   }, [data]);
+  useEffect(() => {
+    const result = [...data].filter(book => book.status !== 'Reading now');
+    SetbooksSelected(result);
+  }, [data])
+
 
   return (
     <>
@@ -106,7 +113,7 @@ const TrainingForm = ({
                   <MenuItem disabled value="">
                     <em>Choose books from the library</em>
                   </MenuItem>
-                  {data.map(book => (
+                  {booksSelected.map(book => (
                     <MenuItem key={book._id} value={book.title + ''}>
                       {book.title}
                     </MenuItem>
