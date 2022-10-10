@@ -49,13 +49,12 @@ const TrainingForm = ({
 
   useEffect(() => {
     isInTable(booksListForTable.length);
-  }, [booksListForTable.length, isInTable]);
+  }, [booksListForTable, isInTable]);
 
   useEffect(() => {
     const sortBook = filterBooksGoingAndStatus(
       data,
-      // BOOKS_STATUS.pending,
-      BOOKS_STATUS.finish,
+      BOOKS_STATUS.pending,
       false
     );
     setBooksListForSelect(sortBook);
