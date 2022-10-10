@@ -2,18 +2,23 @@ import { MdOutlineMenuBook } from 'react-icons/md';
 import { MdDeleteOutline } from 'react-icons/md';
 import Media from 'react-media';
 import classNames from 'classnames';
+
 import BooksTableMobile from '../BooksTableMobile';
+import {
+  useUpdateStatusBookMutation,
+  BOOKS_STATUS,
+} from '../../../redux/books/books-api';
 import s from './BooksTable.module.scss';
-import { useUpdateStatusBookMutation } from '../../../redux/books/books-api';
 
 const BooksTable = ({ books = [] }) => {
   const [updateStatusBook] = useUpdateStatusBookMutation();
 
-  const handleClickDeliteBookFromTrening = id => {
+  const handleClickDeliteBookFromTrening = (id, status) => {
+    if (status === BOOKS_STATUS.reading) return;
     try {
       updateStatusBook({
         id,
-        status: 'Going to read',
+        status: BOOKS_STATUS.pending,
         isReadBook: false,
       });
     } catch (error) {
@@ -25,7 +30,7 @@ const BooksTable = ({ books = [] }) => {
     try {
       updateStatusBook({
         id,
-        status: 'Already read',
+        status: BOOKS_STATUS.finish,
         isReadBook: true,
       });
     } catch (error) {
@@ -34,7 +39,7 @@ const BooksTable = ({ books = [] }) => {
   };
 
   const isActivIcon = status => {
-    return status === 'Already read' ? 'iconActive' : 'icon';
+    return status === BOOKS_STATUS.finish ? 'iconActive' : 'icon';
   };
 
   return (
@@ -97,7 +102,7 @@ const BooksTable = ({ books = [] }) => {
                               [s.iconDelete]: true,
                             })}
                             onClick={() =>
-                              handleClickDeliteBookFromTrening(_id)
+                              handleClickDeliteBookFromTrening(_id, status)
                             }
                           />
                         )}

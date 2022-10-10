@@ -1,7 +1,10 @@
 import Button from 'components/common/Button';
 import { MdOutlineThumbUp } from 'react-icons/md';
 import s from './ModalAllertGreate.module.scss';
-import { useUpdateStatusBookMutation } from 'redux/books/books-api';
+import {
+  BOOKS_STATUS,
+  useUpdateStatusBookMutation,
+} from 'redux/books/books-api';
 import { useNavigate } from 'react-router-dom';
 import { getReadingBooks } from 'redux/books/books-selectors';
 import { useSelector } from 'react-redux';
@@ -14,13 +17,14 @@ function ModalAllertGreate({ click }) {
   const readingBooks = useSelector(getReadingBooks);
   const [updateStatistics] = useUpdateStatisticsMutation();
   const [updateUserTraining] = useUpdateUserTrainingMutation();
+
   const handleNewTraining = () => {
     navigate('/library', { replace: true });
 
     readingBooks.map(book =>
       updateStatusBook({
         id: book._id,
-        status: 'Already read',
+        status: BOOKS_STATUS.finish,
         isReadBook: false,
       })
     );
@@ -40,7 +44,7 @@ function ModalAllertGreate({ click }) {
         <Button
           variant="filled"
           modifClass={s.button}
-          onClick={handleNewTraining}
+          onClick={() => handleNewTraining()}
         >
           Done
         </Button>
