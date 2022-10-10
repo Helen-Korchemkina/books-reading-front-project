@@ -1,7 +1,7 @@
+import MediaQuery from 'react-responsive';
 import { useState, useEffect, useMemo } from 'react';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
 import { useMediaQuery } from 'react-responsive';
-import MediaQuery from 'react-responsive';
 import { toast } from 'react-toastify';
 
 import { useGetUserTrainingQuery } from 'redux/auth/auth-api';
@@ -26,8 +26,9 @@ const TrainingPage = () => {
   const [date_finish, setDate_finish] = useState(null);
   const [timerIsActive, setTimerIsActive] = useState(false);
   const [showMobileForm, setShowMobileForm] = useState(true);
-  const [isBooksInTable, setIsBooksInTable] = useState(false);
   const [addTimerValue] = useUpdateUserTrainingMutation();
+
+  const [isBooksInTable, setIsBooksInTable] = useState(false);
 
   const isMobileScreen = useMediaQuery({ query: '(max-width: 767px)' });
   const showAddForm = isMobileScreen ? showMobileForm : true;
@@ -85,6 +86,7 @@ const TrainingPage = () => {
         )}
         {showAddForm && (
           <MobileForm
+            isInTable={handleIsBooksInTable}
             date_start={date_start}
             date_finish={date_finish}
             setDate_start={setDate_start}
@@ -128,6 +130,7 @@ const TrainingPage = () => {
           </>
         )}
       </MediaQuery>
+
       <MediaQuery minWidth={768} maxWidth={1279}>
         {timerIsActive && (
           <Timer date_finish={date_finish} timerIsActive={timerIsActive} />
