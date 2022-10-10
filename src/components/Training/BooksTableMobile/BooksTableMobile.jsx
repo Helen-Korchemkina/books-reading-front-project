@@ -19,7 +19,7 @@ const BooksTableMobile = ({ books = [], onDel, onAlready }) => {
               <span className={s.title}>{title}</span>
               <MdDeleteOutline
                 className={s.iconDel}
-                onClick={() => onDel(_id)}
+                onClick={() => onDel(_id, status)}
               />
             </div>
             <p className={s.text}>

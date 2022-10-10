@@ -1,20 +1,22 @@
 import { useState, useEffect } from 'react';
+
 import {
   filterBooksIsRead,
-  filterBooksStatus,
   countPageStatistics,
   countPageIsRead,
+  filterBooksGoingAndStatus,
 } from 'helpers/filterBooks';
 import { millisecondsToDay } from 'helpers/date';
-import { useGetStatisticsQuery } from 'redux/statistics/statistics-api';
 
-import s from './MyGoals.module.scss';
+import { useGetStatisticsQuery } from 'redux/statistics/statistics-api';
+import { useGetBooksQuery } from 'redux/books/books-api';
+import { BOOKS_STATUS } from 'redux/books/books-api';
+
 import ModalAllertFaster from './ModalAlerts/ModalAlertFaster';
 import ModalAllertGreate from './ModalAlerts/ModalAlertGreate';
 import ModalWindow from 'components/common/ModalWindow';
-import { useGetBooksQuery } from 'redux/books/books-api';
 
-const ALREADY_READ = 'Already read';
+import s from './MyGoals.module.scss';
 
 const MyGoals = ({ isShow, time }) => {
   const { data: statistics = {} } = useGetStatisticsQuery();
@@ -27,8 +29,13 @@ const MyGoals = ({ isShow, time }) => {
   const showBlock = isShow ? 'isShowBlock' : 'block';
   const showNumber = isShow ? 'isShowNumber' : 'number';
 
-  const alreadyReadLength = filterBooksStatus(data, ALREADY_READ);
+  const alreadyReadLength = filterBooksGoingAndStatus(
+    data,
+    BOOKS_STATUS.finish,
+    true
+  );
   const isRead = filterBooksIsRead(data, true);
+
   const numberOfPagesFromStatistics = countPageStatistics(statistics);
   const numberOfPagesFromIsRead = countPageIsRead(isRead);
   const page = numberOfPagesFromIsRead - numberOfPagesFromStatistics;
@@ -36,24 +43,24 @@ const MyGoals = ({ isShow, time }) => {
   const days = millisecondsToDay(time);
 
   useEffect(() => {
-    if (days === 0 && page > 0) {
+    if (days === 0 && page > 0 && time !== null) {
       setIsBadReading(true);
     }
-    if (days > 0 && page <= 0) {
+    if (days > 0 && page <= 0 && isRead.length > 0) {
       setIsGoodReading(true);
     }
-  }, [days, page]);
+  }, [days, isRead.length, page, time]);
 
   return (
     <div className={s.container}>
       <h1 className={s.title}>My Goals</h1>
       <div className={s[showBlockContainer]}>
         <div className={s[showBlock]}>
-          <p className={s[showNumber]}>{isShow ? isRead.length : 0}</p>
+          <p className={s[showNumber]}>{isRead.length}</p>
           <p className={s.desc}>Amount of books</p>
         </div>
         <div className={s[showBlock]}>
-          <p className={s[showNumber]}>{isShow ? days : 0}</p>
+          <p className={s[showNumber]}>{days || 0}</p>
           <p className={s.desc}>Amount of days</p>
         </div>
         {isShow && (

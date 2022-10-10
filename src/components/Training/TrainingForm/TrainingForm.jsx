@@ -1,15 +1,23 @@
 import { useEffect, useState } from 'react';
-import TimerForm from './TimerForm/TimerForm';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
+
 import {
   useGetBooksQuery,
   useUpdateStatusBookMutation,
 } from '../../../redux/books/books-api';
+import { BOOKS_STATUS } from '../../../redux/books/books-api';
+import {
+  filterBooksIsRead,
+  filterBooksGoingAndStatus,
+} from 'helpers/filterBooks';
+
+import TimerForm from './TimerForm/TimerForm';
 import BooksTable from '../BooksTable/BooksTable';
+
 import s from './TrainingForm.module.scss';
 
 const ITEM_HEIGHT = 48;
@@ -29,13 +37,48 @@ const TrainingForm = ({
   date_finish,
   setDate_start,
   setDate_finish,
+  isInTable,
 }) => {
   const [selectedBook, setSelectedBook] = useState([]);
-  const [booksListArr, setBooksListArr] = useState([]);
-  const [booksSelected, SetbooksSelected] = useState([]);
+  const [booksListForSelect, setBooksListForSelect] = useState([]);
+  const [booksListForTable, setBooksListForTable] = useState([]);
+  const [isUpdate, setIsUpdate] = useState(true);
 
   const [updateStatusBook] = useUpdateStatusBookMutation();
   const { data = [] } = useGetBooksQuery();
+
+  useEffect(() => {
+    isInTable(booksListForTable.length);
+  }, [booksListForTable.length, isInTable]);
+
+  useEffect(() => {
+    const sortBook = filterBooksGoingAndStatus(
+      data,
+      // BOOKS_STATUS.pending,
+      BOOKS_STATUS.finish,
+      false
+    );
+    setBooksListForSelect(sortBook);
+    const result = filterBooksIsRead(data, true);
+    setBooksListForTable(result);
+  }, [data]);
+
+  useEffect(() => {
+    if (isShow && isUpdate) {
+      booksListForTable.forEach(book => {
+        try {
+          updateStatusBook({
+            id: book._id,
+            status: BOOKS_STATUS.reading,
+            isReadBook: true,
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      });
+      setIsUpdate(false);
+    }
+  }, [booksListForTable, isShow, isUpdate, updateStatusBook]);
 
   const handleChangeBook = event => {
     event.preventDefault();
@@ -50,10 +93,9 @@ const TrainingForm = ({
         try {
           updateStatusBook({
             id: book._id,
-            status: 'Reading now',
+            status: BOOKS_STATUS.pending,
             isReadBook: true,
           });
-        
         } catch (error) {
           console.log(error);
         }
@@ -61,73 +103,70 @@ const TrainingForm = ({
     });
   };
 
-  useEffect(() => {
-    const sortBook = [...data].filter(
-      book => book.status === 'Reading now' || book.isReadBook
-    );
-    setBooksListArr(sortBook);
-  }, [data]);
-  useEffect(() => {
-    const result = [...data].filter(book => book.status !== 'Reading now');
-    SetbooksSelected(result);
-  }, [data])
-
-
   return (
     <>
-      <div className={s.container}>
-        <h1 className={s.title}>My Training</h1>
-        <form className={s.form} autoComplete="off">
-          {!isShow && (
-            <TimerForm
-              date_start={date_start}
-              date_finish={date_finish}
-              setDate_start={setDate_start}
-              setDate_finish={setDate_finish}
-            />
-          )}
+      {!isShow && (
+        <div className={s.container}>
+          <h1 className={s.title}>My Training</h1>
+          <form className={s.form} autoComplete="off">
+            {!isShow && (
+              <TimerForm
+                date_start={date_start}
+                date_finish={date_finish}
+                setDate_start={setDate_start}
+                setDate_finish={setDate_finish}
+              />
+            )}
 
-          <div className={s.tableSelect}>
-            <Box sx={{ minWidth: 120 }} className={s.boxSelect}>
-              <FormControl>
-                <Select
-                  className={s.select}
-                  displayEmpty
-                  value={selectedBook}
-                  onChange={handleChangeBook}
-                  input={<OutlinedInput />}
-                  renderValue={selected => {
-                    if (selected.length === 0) {
-                      return (
-                        <em className={s.placeholder}>
-                          Choose books from the library
-                        </em>
-                      );
-                    }
+            <div className={s.tableSelect}>
+              <Box sx={{ minWidth: 120 }} className={s.boxSelect}>
+                <FormControl>
+                  <Select
+                    className={s.select}
+                    displayEmpty
+                    value={selectedBook}
+                    onChange={handleChangeBook}
+                    input={<OutlinedInput />}
+                    renderValue={selected => {
+                      if (selected.length === 0) {
+                        return (
+                          <em className={s.placeholder}>
+                            Choose books from the library
+                          </em>
+                        );
+                      }
 
-                    return selected + '';
-                  }}
-                  MenuProps={MenuProps}
-                  inputProps={{ 'aria-label': 'Without label' }}
-                >
-                  <MenuItem disabled value="">
-                    <em>Choose books from the library</em>
-                  </MenuItem>
-                  {booksSelected.map(book => (
-                    <MenuItem key={book._id} value={book.title + ''}>
-                      {book.title}
+                      return selected + '';
+                    }}
+                    MenuProps={MenuProps}
+                    inputProps={{ 'aria-label': 'Without label' }}
+                  >
+                    <MenuItem disabled value="">
+                      <em>Choose books from the library</em>
                     </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Box>
-            <button type="submit" className={s.button} onClick={handleAddBook}>
-              Add
-            </button>
-          </div>
-        </form>
-      </div>
-      {booksListArr.length > 0 && <BooksTable books={booksListArr} />}
+                    {booksListForSelect.map(book => (
+                      <MenuItem key={book._id} value={book.title + ''}>
+                        {book.title}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+              <button
+                type="submit"
+                className={s.button}
+                onClick={handleAddBook}
+              >
+                Add
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {booksListForTable.length > 0 && (
+        <BooksTable books={booksListForTable} isShow={isShow} />
+      )}
     </>
   );
 };
