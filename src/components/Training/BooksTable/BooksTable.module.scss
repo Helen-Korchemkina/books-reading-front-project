@@ -7,8 +7,6 @@
   font-size: 12px;
   line-height: 1.25;
   text-align: left;
-  border-top: 1px solid #e0e5eb;
-  border-bottom: 1px solid #e0e5eb;
   color: var(--color-grey);
 
   @media (min-width: $screenMd) {
@@ -101,4 +99,13 @@
   line-height: 20px;
   text-align: center;
   cursor: pointer;
+}
+
+.wrap {
+  border-top: 1px solid #e0e5eb;
+  border-bottom: 1px solid #e0e5eb;
+  @media (min-width: $screenLg) {
+  overflow-y: scroll;
+  height: 190px;
+ }
 }
