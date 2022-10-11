@@ -1,16 +1,15 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import {
-  filterBooksIsRead,
   countPageStatistics,
   countPageIsRead,
-  filterBooksGoingAndStatus,
+  filterBooksIsRead,
 } from 'helpers/filterBooks';
 import { millisecondsToDay } from 'helpers/date';
 
 import { useGetStatisticsQuery } from 'redux/statistics/statistics-api';
-import { useGetBooksQuery } from 'redux/books/books-api';
-import { BOOKS_STATUS } from 'redux/books/books-api';
+import { getBooks, getFinishBooks } from 'redux/books/books-selectors';
 
 import ModalAllertFaster from './ModalAlerts/ModalAlertFaster';
 import ModalAllertGreate from './ModalAlerts/ModalAlertGreate';
@@ -18,9 +17,8 @@ import ModalWindow from 'components/common/ModalWindow';
 
 import s from './MyGoals.module.scss';
 
-const MyGoals = ({ isShow, time }) => {
+const MyGoals = ({ isShow, startTime, finishTime }) => {
   const { data: statistics = {} } = useGetStatisticsQuery();
-  const { data = [] } = useGetBooksQuery();
 
   const [isGoodReading, setIsGoodReading] = useState(false);
   const [isBadReading, setIsBadReading] = useState(false);
@@ -29,27 +27,25 @@ const MyGoals = ({ isShow, time }) => {
   const showBlock = isShow ? 'isShowBlock' : 'block';
   const showNumber = isShow ? 'isShowNumber' : 'number';
 
-  const alreadyReadLength = filterBooksGoingAndStatus(
-    data,
-    BOOKS_STATUS.finish,
-    true
-  );
-  const isRead = filterBooksIsRead(data, true);
+  const alreadyRead = useSelector(getFinishBooks);
+  const allBooks = useSelector(getBooks);
+  const alreadyReadLength = filterBooksIsRead(alreadyRead, true);
+  const isRead = filterBooksIsRead(allBooks, true);
 
   const numberOfPagesFromStatistics = countPageStatistics(statistics);
   const numberOfPagesFromIsRead = countPageIsRead(isRead);
   const page = numberOfPagesFromIsRead - numberOfPagesFromStatistics;
 
-  const days = millisecondsToDay(time);
+  const days = millisecondsToDay(startTime, finishTime);
 
   useEffect(() => {
-    if (days === 0 && page > 0 && time !== null) {
+    if (days === 0 && page > 0 && finishTime !== null) {
       setIsBadReading(true);
     }
     if (days > 0 && page <= 0 && isRead.length > 0) {
       setIsGoodReading(true);
     }
-  }, [days, isRead.length, page, time]);
+  }, [days, isRead.length, page, finishTime]);
 
   return (
     <div className={s.container}>
