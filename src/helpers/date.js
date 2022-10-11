@@ -25,7 +25,7 @@ export const millisecondsToDay = (startTime, finishTime) => {
   if (Number(startTime) === 0 || Number(finishTime) === 0) return 0;
   const milliseconds = Number(finishTime) - Number(startTime);
 
-  const days = Math.ceil(milliseconds / 1000 / 60 / 60 / 24);
+  const days = Math.floor(milliseconds / 1000 / 60 / 60 / 24);
 
   return days;
 };

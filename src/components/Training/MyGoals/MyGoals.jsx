@@ -31,6 +31,7 @@ const MyGoals = ({ isShow, startTime, finishTime }) => {
   const allBooks = useSelector(getBooks);
   const alreadyReadLength = filterBooksIsRead(alreadyRead, true);
   const isRead = filterBooksIsRead(allBooks, true);
+  const booksLeft = isRead.length - alreadyReadLength.length;
 
   const numberOfPagesFromStatistics = countPageStatistics(statistics);
   const numberOfPagesFromIsRead = countPageIsRead(isRead);
@@ -42,17 +43,20 @@ const MyGoals = ({ isShow, startTime, finishTime }) => {
     if (days === 0 && page > 0 && finishTime !== null) {
       setIsBadReading(true);
     }
-    if (days > 0 && page <= 0 && isRead.length > 0) {
+    if (
+      (days > 0 && page <= 0 && isRead.length > 0) ||
+      (booksLeft === 0 && isRead.length > 0)
+    ) {
       setIsGoodReading(true);
     }
-  }, [days, isRead.length, page, finishTime]);
+  }, [days, isRead.length, page, finishTime, booksLeft]);
 
   return (
     <div className={s.container}>
       <h1 className={s.title}>My Goals</h1>
       <div className={s[showBlockContainer]}>
         <div className={s[showBlock]}>
-          <p className={s[showNumber]}>{isRead.length}</p>
+          <p className={s[showNumber]}>{isRead.length || 0}</p>
           <p className={s.desc}>Amount of books</p>
         </div>
         <div className={s[showBlock]}>
@@ -61,7 +65,7 @@ const MyGoals = ({ isShow, startTime, finishTime }) => {
         </div>
         {isShow && (
           <div className={s[showBlock]}>
-            <p className={s.numberShow}>{alreadyReadLength.length}</p>
+            <p className={s.numberShow}>{booksLeft || 0}</p>
             <p className={s.desc}>Books left</p>
           </div>
         )}
