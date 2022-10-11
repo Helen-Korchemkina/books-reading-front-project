@@ -1,29 +1,29 @@
-.item{
-    display: flex;
-    justify-content: space-between;
-    margin: 0 0 15px 0;
+.item {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 15px 0;
 }
 
-.desc{
-    margin-right: 162px;
-    color: var(--color-grey);
+.desc {
+  margin-right: 162px;
+  color: var(--color-grey);
 }
 
-.listIcon{
-    display: flex;
-    flex-direction: row;
+.listIcon {
+  display: flex;
+  flex-direction: row;
 }
 
 .iconFill {
-    color: var(--color-orange);
-  }
+  color: var(--color-orange);
+}
 .icon {
-margin-left:-29px;
-width: 22px;
-height: 17px;
-color: var(--color-light-grey);
+  margin-left: -42px;
+  width: 22px;
+  height: 17px;
+  color: var(--color-light-grey);
 }
 
-.listTitle{
-    margin: 0 0 12px 9px;
+.listTitle {
+  margin: 0 0 12px 20px;
 }
