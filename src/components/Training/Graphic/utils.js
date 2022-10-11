@@ -63,14 +63,12 @@ export const getPlanningGraphData = (start, finish, books) => {
     (new Date(+finish) - new Date(+start)) / (1000 * 3600 * 24)
   );
   const pages = books.reduce((summ, book) => (summ += book.countOfPages), 0);
-  const pagePerDay = Math.ceil(pages / countDays);
-  const lastDayPages = pages % pagePerDay;
+  const pagePerDay = Math.round((pages / countDays) * 100) / 100;
 
   const labels = Array(countDays)
     .fill()
     .map((_, i) => i + 1);
   const planningPoints = Array(countDays).fill(pagePerDay);
-  planningPoints[planningPoints.length - 1] = lastDayPages;
 
   return { labels, planningPoints };
 };
