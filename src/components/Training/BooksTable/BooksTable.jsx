@@ -76,6 +76,7 @@ const BooksTable = ({ books = [] }) => {
                     countOfPages,
                     releaseDate,
                     status,
+                    isReadBook,
                   }) => (
                     <tr key={_id} className={s.bodyRow}>
                       <td className={s.bodyRowTitle}>
@@ -96,7 +97,7 @@ const BooksTable = ({ books = [] }) => {
                         {releaseDate}
                       </td>
                       <td className={s.inlineTitle}>
-                        {title !== '...' && (
+                        {title !== '...' && status === BOOKS_STATUS.pending && (
                           <MdDeleteOutline
                             className={classNames({
                               [s.iconDelete]: true,

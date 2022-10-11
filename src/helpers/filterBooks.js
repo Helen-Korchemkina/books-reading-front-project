@@ -1,15 +1,5 @@
-export const filterBooksStatus = (array, status) => {
-  return [...array].filter(book => book.status === status);
-};
-
 export const filterBooksIsRead = (array, isRead) => {
   return [...array].filter(book => book.isReadBook === isRead);
-};
-
-export const filterBooksGoingAndStatus = (array, status, isRead) => {
-  return [...array].filter(
-    book => book.status === status && book.isReadBook === isRead
-  );
 };
 
 export const countPageStatistics = statistics => {

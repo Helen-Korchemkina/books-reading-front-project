@@ -1,19 +1,17 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import Media from 'react-media';
 
-import {
-  useGetBooksQuery,
-  useUpdateStatusBookMutation,
-} from '../../../redux/books/books-api';
-import { BOOKS_STATUS } from '../../../redux/books/books-api';
-import {
-  filterBooksIsRead,
-  filterBooksGoingAndStatus,
-} from 'helpers/filterBooks';
+import { useUpdateStatusBookMutation } from 'redux/books/books-api';
+import { BOOKS_STATUS } from 'redux/books/books-api';
+import { getBooks, getPendingBooks } from 'redux/books/books-selectors';
+
+import { filterBooksIsRead } from 'helpers/filterBooks';
 
 import TimerForm from './TimerForm/TimerForm';
 import BooksTable from '../BooksTable/BooksTable';
@@ -37,47 +35,22 @@ const TrainingForm = ({
   date_finish,
   setDate_start,
   setDate_finish,
-  isInTable,
 }) => {
   const [selectedBook, setSelectedBook] = useState([]);
   const [booksListForSelect, setBooksListForSelect] = useState([]);
   const [booksListForTable, setBooksListForTable] = useState([]);
-  const [isUpdate, setIsUpdate] = useState(true);
 
   const [updateStatusBook] = useUpdateStatusBookMutation();
-  const { data = [] } = useGetBooksQuery();
+  const allBooks = useSelector(getBooks);
+  const bookPending = useSelector(getPendingBooks);
 
   useEffect(() => {
-    isInTable(booksListForTable.length);
-  }, [booksListForTable, isInTable]);
-
-  useEffect(() => {
-    const sortBook = filterBooksGoingAndStatus(
-      data,
-      BOOKS_STATUS.pending,
-      false
-    );
+    const sortBook = filterBooksIsRead(bookPending, false);
     setBooksListForSelect(sortBook);
-    const result = filterBooksIsRead(data, true);
-    setBooksListForTable(result);
-  }, [data]);
 
-  useEffect(() => {
-    if (isShow && isUpdate) {
-      booksListForTable.forEach(book => {
-        try {
-          updateStatusBook({
-            id: book._id,
-            status: BOOKS_STATUS.reading,
-            isReadBook: true,
-          });
-        } catch (error) {
-          console.log(error);
-        }
-      });
-      setIsUpdate(false);
-    }
-  }, [booksListForTable, isShow, isUpdate, updateStatusBook]);
+    const isRead = filterBooksIsRead(allBooks, true);
+    setBooksListForTable(isRead);
+  }, [allBooks, bookPending]);
 
   const handleChangeBook = event => {
     event.preventDefault();
@@ -87,7 +60,7 @@ const TrainingForm = ({
   const handleAddBook = e => {
     e.preventDefault();
 
-    [...data].forEach(book => {
+    bookPending.forEach(book => {
       if (book.title === selectedBook) {
         try {
           updateStatusBook({
@@ -163,9 +136,11 @@ const TrainingForm = ({
         </div>
       )}
 
-      {booksListForTable.length > 0 && (
-        <BooksTable books={booksListForTable} isShow={isShow} />
-      )}
+      <Media queries={{ small: { minWidth: 768 } }}>
+        {booksListForTable.length > 0 && (
+          <BooksTable books={booksListForTable} isShow={isShow} />
+        )}
+      </Media>
     </>
   );
 };
