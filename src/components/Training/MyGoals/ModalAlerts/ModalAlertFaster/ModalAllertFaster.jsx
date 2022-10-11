@@ -1,12 +1,16 @@
-import s from './ModalAllertFaster.module.scss';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import Button from 'components/common/Button';
-import { useNavigate } from 'react-router-dom';
 import { getReadingBooks } from 'redux/books/books-selectors';
-import { useSelector } from 'react-redux';
-import { useUpdateStatusBookMutation } from 'redux/books/books-api';
+import {
+  BOOKS_STATUS,
+  useUpdateStatusBookMutation,
+} from 'redux/books/books-api';
 import { useUpdateStatisticsMutation } from 'redux/statistics/statistics-api';
 import { useUpdateUserTrainingMutation } from 'redux/auth/auth-api';
+
+import s from './ModalAllertFaster.module.scss';
 
 function ModalAllertFaster({ click }) {
   const navigate = useNavigate();
@@ -18,13 +22,15 @@ function ModalAllertFaster({ click }) {
   const handleNewTraining = () => {
     navigate('/library', { replace: true });
 
-    readingBooks.forEach(book =>
-      updateStatusBook({
-        id: book._id,
-        status: 'Already read',
-        isReadBook: false,
-      })
-    );
+    readingBooks.forEach(book => {
+      if (book.status !== BOOKS_STATUS.finish) {
+        updateStatusBook({
+          id: book._id,
+          status: BOOKS_STATUS.pending,
+          isReadBook: false,
+        });
+      }
+    });
     updateStatistics({ numberOfPagesRead: null, readDate: null });
     updateUserTraining({
       date_start: '0',

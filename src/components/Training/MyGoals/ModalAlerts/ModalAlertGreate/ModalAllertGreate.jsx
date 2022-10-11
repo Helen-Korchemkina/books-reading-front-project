@@ -1,9 +1,12 @@
 import Button from 'components/common/Button';
 import { MdOutlineThumbUp } from 'react-icons/md';
 import s from './ModalAllertGreate.module.scss';
-import { useUpdateStatusBookMutation } from 'redux/books/books-api';
+import {
+  BOOKS_STATUS,
+  useUpdateStatusBookMutation,
+} from 'redux/books/books-api';
 import { useNavigate } from 'react-router-dom';
-import { getReadingBooks } from 'redux/books/books-selectors';
+import { getBooks } from 'redux/books/books-selectors';
 import { useSelector } from 'react-redux';
 import { useUpdateStatisticsMutation } from 'redux/statistics/statistics-api';
 import { useUpdateUserTrainingMutation } from 'redux/auth/auth-api';
@@ -11,19 +14,25 @@ import { useUpdateUserTrainingMutation } from 'redux/auth/auth-api';
 function ModalAllertGreate({ click }) {
   const navigate = useNavigate();
   const [updateStatusBook] = useUpdateStatusBookMutation();
-  const readingBooks = useSelector(getReadingBooks);
+  const allBooks = useSelector(getBooks);
   const [updateStatistics] = useUpdateStatisticsMutation();
   const [updateUserTraining] = useUpdateUserTrainingMutation();
+
   const handleNewTraining = () => {
     navigate('/library', { replace: true });
 
-    readingBooks.map(book =>
-      updateStatusBook({
-        id: book._id,
-        status: 'Already read',
-        isReadBook: false,
-      })
-    );
+    allBooks.map(async book => {
+      if (
+        (book.status === BOOKS_STATUS.reading && book.isReadBook) ||
+        (book.status === BOOKS_STATUS.finish && book.isReadBook)
+      ) {
+        await updateStatusBook({
+          id: book._id,
+          status: BOOKS_STATUS.finish,
+          isReadBook: false,
+        });
+      }
+    });
     click(false);
     updateStatistics({ numberOfPagesRead: null, readDate: null });
     updateUserTraining({
@@ -40,7 +49,7 @@ function ModalAllertGreate({ click }) {
         <Button
           variant="filled"
           modifClass={s.button}
-          onClick={handleNewTraining}
+          onClick={() => handleNewTraining()}
         >
           Done
         </Button>

@@ -1,7 +1,3 @@
-export const filterBooksStatus = (array, status) => {
-  return [...array].filter(book => book.status === status);
-};
-
 export const filterBooksIsRead = (array, isRead) => {
   return [...array].filter(book => book.isReadBook === isRead);
 };

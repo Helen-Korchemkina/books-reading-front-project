@@ -2,32 +2,33 @@ import { MdOutlineMenuBook } from 'react-icons/md';
 import classNames from 'classnames';
 import s from './Book.module.css';
 
-const Book = () =>{
-    return(
+const Book = () => {
+  return (
     <>
-    <li>
+      <li>
         <div className={s.listIcon}>
-            <MdOutlineMenuBook
+          <MdOutlineMenuBook
             className={classNames({
-                [s.icon]: true,
+              [s.icon]: true,
             })}
-            />
-            <h2 className={s.listTitle}>...</h2>
+          />
+          <h2 className={s.listTitle}>...</h2>
         </div>
         <p className={s.item}>
-            <span classname={s.name}>Author:</span> 
-            <span className={s.desc}>...</span>
+          <span className={s.name}>Author:</span>
+          <span className={s.desc}>...</span>
         </p>
         <p className={s.item}>
-            <span classname={s.name}>Year:</span> 
-            <span className={s.desc}>...</span>
+          <span className={s.name}>Year:</span>
+          <span className={s.desc}>...</span>
         </p>
         <p className={s.item}>
-            <span classname={s.name}>Pages:</span> 
-            <span className={s.desc}>...</span>
+          <span className={s.name}>Pages:</span>
+          <span className={s.desc}>...</span>
         </p>
-    </li>
-    </>)
-}
+      </li>
+    </>
+  );
+};
 
 export default Book;

@@ -63,6 +63,7 @@
 .isShowBlockContainer {
   composes: blockContainer;
   padding: 32px 34px 32px 29px;
+  justify-content: space-around;
   @media (min-width: $screenMd) {
     margin-left: 100px;
     padding: 0;
