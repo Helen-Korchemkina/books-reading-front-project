@@ -1,10 +1,12 @@
 import { MdDeleteOutline, MdOutlineMenuBook } from 'react-icons/md';
 
+import { BOOKS_STATUS } from 'redux/books/books-api';
+
 import s from './BooksTableMobile.module.scss';
 
 const BooksTableMobile = ({ books = [], onDel, onAlready }) => {
   const isRead = status => {
-    return status === 'Already read' ? 'iconBookActive' : 'iconBook';
+    return status === BOOKS_STATUS.finish ? 'iconBookActive' : 'iconBook';
   };
   return (
     <ul className={s.list}>
@@ -42,4 +44,3 @@ const BooksTableMobile = ({ books = [], onDel, onAlready }) => {
 };
 
 export default BooksTableMobile;
-// Already read

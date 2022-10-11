@@ -168,6 +168,7 @@ const TrainingPage = () => {
           setDate_start={setDate_start}
           setDate_finish={setDate_finish}
         />
+
         {date_start &&
           date_finish &&
           !timerIsActive &&
