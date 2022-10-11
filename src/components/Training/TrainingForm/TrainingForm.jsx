@@ -75,17 +75,17 @@ const TrainingForm = ({
 
   return (
     <>
-      <div className={s.container}>
+     {!isShow && ( <div className={s.container}>
         <h1 className={s.title}>My Training</h1>
         <form className={s.form} autoComplete="off">
-          {!isShow && (
+         
             <TimerForm
               date_start={date_start}
               date_finish={date_finish}
               setDate_start={setDate_start}
               setDate_finish={setDate_finish}
             />
-          )}
+       
 
           <div className={s.tableSelect}>
             <Box sx={{ minWidth: 120 }} className={s.boxSelect}>
@@ -126,7 +126,7 @@ const TrainingForm = ({
             </button>
           </div>
         </form>
-      </div>
+      </div>)}
       {booksListArr.length > 0 && <BooksTable books={booksListArr} />}
     </>
   );

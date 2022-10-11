@@ -111,7 +111,25 @@ const TrainingPage = () => {
               <Timer date_finish={date_finish} timerIsActive={timerIsActive} />
             )}
             <MyGoals isShow={timerIsActive} time={date_finish} />
-            <BookList />
+            <MobileForm
+            date_start={date_start}
+            date_finish={date_finish}
+            setDate_start={setDate_start}
+            setDate_finish={setDate_finish}
+            onFormSubmit={
+              isMobileScreen
+                ? () => {
+                    setShowMobileForm(false);
+                    setTimeout(() => {
+                      window.scrollTo({
+                        top: document.body.scrollHeight + 120,
+                        behavior: 'smooth',
+                      });
+                    });
+                  }
+                : null
+            }
+          />
             {date_start && date_finish && !timerIsActive && (
               <Button
                 variant="filled"

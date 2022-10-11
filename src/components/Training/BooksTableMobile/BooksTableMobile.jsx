@@ -6,6 +6,10 @@ const BooksTableMobile = ({ books = [], onDel, onAlready }) => {
   const isRead = status => {
     return status === 'Already read' ? 'iconBookActive' : 'iconBook';
   };
+ const iconDelete = status => {
+  return status !== 'Going to read' ? 'iconNone' : 'iconDel';
+ }
+  
   return (
     <ul className={s.list}>
       {books.map(
@@ -18,7 +22,7 @@ const BooksTableMobile = ({ books = [], onDel, onAlready }) => {
               />
               <span className={s.title}>{title}</span>
               <MdDeleteOutline
-                className={s.iconDel}
+                className={s[iconDelete(status)]}
                 onClick={() => onDel(_id)}
               />
             </div>
