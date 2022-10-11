@@ -21,9 +21,9 @@ export const millisecondsToTime = mls => {
   return `${H}:${M}:${S}`;
 };
 
-export const millisecondsToDay = mls => {
-  if (Number(mls) === 0) return 0;
-  const milliseconds = Number(mls) - Date.now();
+export const millisecondsToDay = (startTime, finishTime) => {
+  if (Number(startTime) === 0 || Number(finishTime) === 0) return 0;
+  const milliseconds = Number(finishTime) - Number(startTime);
 
   const days = Math.ceil(milliseconds / 1000 / 60 / 60 / 24);
 
