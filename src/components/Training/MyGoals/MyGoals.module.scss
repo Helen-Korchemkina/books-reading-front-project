@@ -5,7 +5,6 @@
   margin-top: 20px;
 
   @media (min-width: $screenMd) {
-    // width: 100%;
     display: flex;
     padding: 20px 52px 8px 28px;
     margin-bottom: 28px;
@@ -36,6 +35,7 @@
     padding: 18px 0;
     width: 275px;
     height: 60px;
+    margin-left: 40px;
   }
   @media (min-width: $screenLg) {
     width: 100%;
@@ -65,7 +65,7 @@
   padding: 32px 34px 32px 29px;
   justify-content: space-around;
   @media (min-width: $screenMd) {
-    margin-left: auto;
+    margin-left: 100px;
     padding: 0;
     box-shadow: none;
   }

@@ -26,13 +26,22 @@ const BooksTable = ({ books = [] }) => {
     }
   };
 
-  const handleAddStatusAlreadyRead = id => {
+  const handleAddStatusAlreadyRead = (id, status )=> {
     try {
+      if(status === BOOKS_STATUS.finish) {
+        updateStatusBook({
+          id,
+          status: BOOKS_STATUS.reading,
+          isReadBook: false,
+        });
+        return;
+      }
       updateStatusBook({
         id,
         status: BOOKS_STATUS.finish,
         isReadBook: true,
       });
+      
     } catch (error) {
       console.log(error);
     }
@@ -41,6 +50,10 @@ const BooksTable = ({ books = [] }) => {
   const isActivIcon = status => {
     return status === BOOKS_STATUS.finish ? 'iconActive' : 'icon';
   };
+
+  // const iconDelete = status => {
+  //   return status !== 'Going to read' ? 'iconNone' : 'iconDel';
+  //  }
 
   return (
     <>
@@ -58,6 +71,7 @@ const BooksTable = ({ books = [] }) => {
       <Media queries={{ small: { minWidth: 768 } }}>
         {matches =>
           matches.small && (
+            <div className={s.wrap}>
             <table className={s.table}>
               <thead>
                 <tr className={s.headerRow}>
@@ -84,7 +98,7 @@ const BooksTable = ({ books = [] }) => {
                           className={classNames({
                             [s[isActivIcon(status)]]: true,
                           })}
-                          onClick={() => handleAddStatusAlreadyRead(_id)}
+                          onClick={() => handleAddStatusAlreadyRead(_id, status)}
                         />
                         <span className={s.title}>{title}</span>
                       </td>
@@ -99,9 +113,9 @@ const BooksTable = ({ books = [] }) => {
                       <td className={s.inlineTitle}>
                         {title !== '...' && status === BOOKS_STATUS.pending && (
                           <MdDeleteOutline
-                            className={classNames({
-                              [s.iconDelete]: true,
-                            })}
+                          className={classNames({
+                            [s.iconDelete]: true,
+                          })}
                             onClick={() =>
                               handleClickDeliteBookFromTrening(_id, status)
                             }
@@ -114,7 +128,7 @@ const BooksTable = ({ books = [] }) => {
                   )
                 )}
               </tbody>
-            </table>
+            </table></div>
           )
         }
       </Media>
