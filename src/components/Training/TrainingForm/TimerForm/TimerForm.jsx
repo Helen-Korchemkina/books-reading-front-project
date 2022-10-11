@@ -59,7 +59,10 @@ const TimerForm = ({
             dateFormat={'DD MM YYYY'}
             closeOnClickOutside="true"
             closeOnSelect={true}
-            isValidDate={current => current.isAfter(Number(date_start))}
+            isValidDate={current =>
+              current.isAfter(Number(date_start)) &&
+              !current.isAfter(moment().add(31, 'days'))
+            }
             inputProps={inputPropsFinish}
           />
         </div>
