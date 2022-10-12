@@ -17,7 +17,7 @@ import { useGetBooksQuery } from 'redux/books/books-api';
 import { useGetStatisticsQuery } from 'redux/statistics/statistics-api';
 import { getBooksOfTranning } from 'redux/books/books-selectors';
 import {
-  getGraphOptions,
+  graphOptions,
   getGraphData,
   getPlanningGraphData,
   getFactPoints,
@@ -72,8 +72,14 @@ const Graphic = () => {
   return (
     <div className={s.container}>
       <div className={s.graphic}>
+        <p className={s.title}>
+          Amont of pages / DA
+          <span className={s.countOfDay}>
+            {planningPoints.length > 0 ? Math.trunc(planningPoints[0]) : 0}
+          </span>
+        </p>
         <Line
-          options={getGraphOptions(labels.length)}
+          options={graphOptions}
           data={getGraphData(labels, planningPoints, factPoints)}
         />
       </div>
