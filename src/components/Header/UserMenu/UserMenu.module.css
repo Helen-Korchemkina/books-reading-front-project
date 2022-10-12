@@ -73,7 +73,7 @@
 
 @media (min-width: 1280px) {
   .header__logo {
-    margin-right: 520px;
+    /* margin-right: 520px; */
   }
 
   .wrapNav {

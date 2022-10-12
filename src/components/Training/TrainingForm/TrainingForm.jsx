@@ -15,7 +15,6 @@ import { filterBooksIsRead } from 'helpers/filterBooks';
 
 import TimerForm from './TimerForm/TimerForm';
 import BooksTable from '../BooksTable/BooksTable';
-import BooksTableStub from 'components/Training/BooksTable/BooksTableStub';
 
 import s from './TrainingForm.module.scss';
 
@@ -141,12 +140,7 @@ const TrainingForm = ({
       )}
 
       <Media queries={{ small: { minWidth: 768 } }}>
-        <BooksTableStub books={booksListForTable} isShow={isShow} />
-        {/* {booksListForTable.length === 0 ? (
-          <BooksTableStub />
-        ) : (
-          <BooksTable books={booksListForTable} isShow={isShow} />
-        )} */}
+        <BooksTable books={booksListForTable} isShow={isShow} />
       </Media>
     </>
   );

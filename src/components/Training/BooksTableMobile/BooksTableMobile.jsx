@@ -1,7 +1,6 @@
 import { MdDeleteOutline, MdOutlineMenuBook } from 'react-icons/md';
 
 import CheckBox from '../BooksTable/CheckBox';
-import { BOOKS_STATUS } from 'redux/books/books-api';
 
 import s from './BooksTableMobile.module.scss';
 
@@ -24,7 +23,7 @@ const BooksTableMobile = ({ books = [], onDel }) => {
         }) => (
           <li key={_id} className={s.item}>
             <div className={s.title__wrap}>
-              {status === BOOKS_STATUS.reading ? (
+              {isReadBook ? (
                 <CheckBox
                   status={status}
                   id={_id}
