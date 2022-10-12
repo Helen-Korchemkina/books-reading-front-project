@@ -1,18 +1,11 @@
-export const getGraphOptions = days => ({
+export const graphOptions = {
   responsive: true,
   plugins: {
     legend: {
       display: false,
-      title: 'Action',
     },
-    title: {
-      display: true,
-      text: `Amont of pages / DA ${days}`,
-      align: 'start',
-      font: {
-        size: 14,
-        weight: 500,
-      },
+    tooltip: {
+      displayColors: false,
     },
   },
   scales: {
@@ -20,19 +13,28 @@ export const getGraphOptions = days => ({
       stacked: true,
       title: {
         display: true,
-        text: 'DAY',
+        text: 'TIME',
         align: 'end',
-        font: {
-          size: 14,
-          weight: 500,
-        },
+      },
+      font: {
+        family: 'Montserrat, sans-serif',
+        size: 12,
+        weight: 600,
       },
     },
     y: {
       min: 0,
+      grid: {
+        display: false,
+      },
+      font: {
+        family: 'Montserrat, sans-serif',
+        size: 12,
+        weight: 600,
+      },
     },
   },
-});
+};
 
 export const getGraphData = (labels, planningData, factData) => ({
   labels,

@@ -1,3 +1,5 @@
+@import 'scss-variables.scss';
+
 .container {
   margin: 35px 0 38px 0px;
   background-color: var(--color-white);
@@ -6,4 +8,25 @@
 
 .graphic {
   padding: 20px;
+
+  @media (min-width: $screenMd) {
+    padding: 35px 45px;
+  }
+}
+
+.title {
+  margin: 0 0 10px 0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 15px;
+  color: var(--color-grey);
+  text-transform: uppercase;
+}
+
+.countOfDay {
+  display: inline-block;
+  vertical-align: center;
+  margin-left: 8px;
+  padding: 8px;
+  background-color: #f5f7fa;
 }
