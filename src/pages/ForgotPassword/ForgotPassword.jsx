@@ -26,8 +26,8 @@ export default function ForgotPassword() {
   const defaultQuote = `Books are the ships of thoughts, wandering through the waves of
             time.`;
   const defaultAuthor = `Francis Bacon`;
-  const [quote, setQuote] = useState(defaultQuote);
-  const [author, setAuthor] = useState(defaultAuthor);
+  const [quote, setQuote] = useState(null);
+  const [author, setAuthor] = useState(null);
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -56,20 +56,27 @@ export default function ForgotPassword() {
 
   const { errors, touched } = formik;
 
-  useEffect(() => {
-    async function getRandomQuote() {
-      try {
-        const response = await axios.get(
-          'https://books-reading-project.herokuapp.com/api/quote/random'
-        );
-        setQuote(response.data.random.quote);
-        setAuthor(response.data.random.author);
-      } catch (error) {
-        console.error(error);
+  useEffect(
+    () => {
+      async function getRandomQuote() {
+        try {
+          const response = await axios.get(
+            'https://books-reading-project.herokuapp.com/api/quote/random'
+          );
+
+          setQuote(response.data.random.quote);
+          setAuthor(response.data.random.author);
+        } catch (error) {
+          setQuote(defaultQuote);
+          setAuthor(defaultAuthor);
+          console.error(error);
+        }
       }
-    }
-    getRandomQuote();
-  }, []);
+
+      getRandomQuote();
+    },
+    [defaultAuthor, defaultQuote]
+  );
 
   return (
     <div className={s.wrapper}>
