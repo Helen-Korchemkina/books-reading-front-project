@@ -1,27 +1,38 @@
 import { MdDeleteOutline, MdOutlineMenuBook } from 'react-icons/md';
 
+import CheckBox from '../BooksTable/CheckBox';
 import { BOOKS_STATUS } from 'redux/books/books-api';
 
 import s from './BooksTableMobile.module.scss';
 
-const BooksTableMobile = ({ books = [], onDel, onAlready }) => {
-  const isRead = status => {
-    return status === BOOKS_STATUS.finish ? 'iconBookActive' : 'iconBook';
+const BooksTableMobile = ({ books = [], onDel }) => {
+  const iconDelete = status => {
+    return status !== 'Going to read' ? 'iconNone' : 'iconDel';
   };
- const iconDelete = status => {
-  return status !== 'Going to read' ? 'iconNone' : 'iconDel';
- }
-  
+
   return (
     <ul className={s.list}>
       {books.map(
-        ({ _id, title, author, countOfPages, releaseDate, status }) => (
+        ({
+          _id,
+          title,
+          author,
+          countOfPages,
+          releaseDate,
+          status,
+          isReadBook,
+        }) => (
           <li key={_id} className={s.item}>
             <div className={s.title__wrap}>
-              <MdOutlineMenuBook
-                className={s[isRead(status)]}
-                onClick={() => onAlready(_id)}
-              />
+              {status === BOOKS_STATUS.reading ? (
+                <CheckBox
+                  status={status}
+                  id={_id}
+                  countOfPages={countOfPages}
+                />
+              ) : (
+                <MdOutlineMenuBook className={s.iconBook} />
+              )}
               <span className={s.title}>{title}</span>
               <MdDeleteOutline
                 className={s[iconDelete(status)]}

@@ -1,129 +1,130 @@
 @import 'scss-variables.scss';
 
-.container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-      @media (min-width: $screenLg) {
-        margin-top: 40px;
-      }
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media (min-width: $screenLg) {
+    margin-top: 40px;
+  }
 }
 
-.title{
-    width: 100%;
-    margin:0 0 20px 0;
-    padding: 18px 0px;
-    font-size: 20px;
-    text-align: center;
-    color: var(--color-white);
-    background-color: #B1B5C2; 
-    @media (min-width: $screenMd) {
-        min-width: 704px;
-        height: 60px;
-        margin-bottom: 28px;
-      }
-    
-      @media (min-width: $screenLg) {
-        padding: 18px 0 18px 0;
-      }
+.title {
+  width: 100%;
+  margin: 0 0 20px 0;
+  padding: 18px 0px;
+  font-size: 20px;
+  text-align: center;
+  color: var(--color-white);
+  background-color: #b1b5c2;
+  @media (min-width: $screenMd) {
+    min-width: 704px;
+    height: 60px;
+    margin-bottom: 28px;
+  }
+
+  @media (min-width: $screenLg) {
+    padding: 18px 0 18px 0;
+  }
 }
 
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-
-.form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
-    @media (min-width: $screenMd) {
-        align-items: flex-start;
-      }
+  @media (min-width: $screenMd) {
+    align-items: flex-start;
+  }
 }
 
-.content{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
-    @media (min-width: $screenMd) {
-        flex-direction: row;
-        justify-content: left;
-        margin-bottom: 24px;
-      }
-      @media (min-width: $screenLg) {
-        margin-left: auto;
-        margin-right: auto;
-      }
+  @media (min-width: $screenMd) {
+    flex-direction: row;
+    justify-content: left;
+    margin-bottom: 24px;
+  }
+  @media (min-width: $screenLg) {
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
-.iconContainer{
+.iconContainer {
   position: relative;
 }
 
-.icon{
-    position: absolute;
-    top: 10px;
-    left: 15px;
-    width: 20px;
-    height: 20px;
-    color: #B1B5C2;
-    cursor: pointer;
-    z-index: 10;
-    @media (min-width: $screenMd) {
-      left: 50px;
-    }
+.icon {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  width: 20px;
+  height: 20px;
+  color: #b1b5c2;
+  cursor: pointer;
+  z-index: 10;
+  @media (min-width: $screenMd) {
+    left: 50px;
+  }
 }
 
 .icon:hover,
-.icon:focus{
+.icon:focus {
   color: var(--color-orange);
 }
 
-
-
 .icon::placeholder {
-  color:#B1B5C2;
+  color: #b1b5c2;
   text-align: center;
 }
 
-.content .dataTimePicker{
-    width: 280px;
-    height: 42px;
-    margin:0 0 20px 0;
+.content .dataTimePicker {
+  width: 280px;
+  height: 42px;
+  margin: 0 0 20px 0;
 
-    @media (min-width: $screenMd) {
-        width: 250px;
-        margin: 0 0 20px 40px;
-      }
+  @media (min-width: $screenMd) {
+    width: 250px;
+    margin: 0 0 20px 40px;
+  }
 }
 
-.dataTimePicker{
+.dataTimePicker {
   padding-left: 41px;
 }
 
-.dataTimePicker:focus{
-  border-color:var(--color-orange);
-}
-
-.select{
-    width: 280px;
-    margin: 0 0 32px 0;
-    background: #FFFFFF;
-    box-shadow: inset 0px 1px 2px rgba(29, 29, 27, 0.15);
-    @media (min-width: $screenMd) {
-        width: 483px;
-        height: 42px;
-        margin: 0 50px 0 0;
-      }
-}
-
-.select input:focus{
-  color: #A6ABB9;
+.dataTimePicker:focus {
   border-color: var(--color-orange);
 }
 
-.placeholder{
-  color: #A6ABB9;
+.select {
+  width: 280px;
+  margin: 0 0 32px 0;
+  color: #a6abb9;
+  background: #ffffff;
+  box-shadow: inset 0px 1px 2px rgba(29, 29, 27, 0.15);
+  @media (min-width: $screenMd) {
+    width: 483px;
+    height: 42px;
+    margin: 0 50px 0 0;
+  }
+  @media (min-width: $screenLg) {
+    width: 715px;
+  }
+}
+
+.select input:focus {
+  color: #a6abb9;
+  border-color: var(--color-orange);
+}
+
+.placeholder {
+  color: #a6abb9;
   font-family: Montserrat;
   font-style: normal;
   font-size: 14px;
@@ -133,17 +134,18 @@
   text-align: left;
 }
 
-.tableSelect{
+.tableSelect {
+  width: 100%;
   display: flex;
   flex-direction: column;
-    @media (min-width: $screenMd) {
+  @media (min-width: $screenMd) {
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
-    }
+  }
 }
 
-.button{
+.button {
   margin-left: auto;
   margin-right: auto;
   width: 171px;
@@ -151,7 +153,7 @@
   cursor: pointer;
   margin-bottom: 40px;
   @media (min-width: $screenMd) {
-    margin: 0 0 40px 0;
-    }
-    
+    margin-right: 0;
+    margin-left: auto;
+  }
 }
