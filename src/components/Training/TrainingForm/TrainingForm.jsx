@@ -36,7 +36,9 @@ const TrainingForm = ({
   setDate_start,
   setDate_finish,
 }) => {
-  const [selectedBook, setSelectedBook] = useState([]);
+  const [selectedBook, setSelectedBook] = useState(
+    'Choose books from the library'
+  );
   const [booksListForSelect, setBooksListForSelect] = useState([]);
   const [booksListForTable, setBooksListForTable] = useState([]);
 
@@ -73,6 +75,8 @@ const TrainingForm = ({
         }
       }
     });
+
+    setSelectedBook('Choose books from the library');
   };
 
   return (
@@ -95,6 +99,7 @@ const TrainingForm = ({
                 <FormControl>
                   <Select
                     className={s.select}
+                    sx={{ color: '#a6abb9' }}
                     displayEmpty
                     value={selectedBook}
                     onChange={handleChangeBook}
@@ -102,9 +107,7 @@ const TrainingForm = ({
                     renderValue={selected => {
                       if (selected.length === 0) {
                         return (
-                          <em className={s.placeholder}>
-                            Choose books from the library
-                          </em>
+                          <em className={s.placeholder}>{selectedBook}</em>
                         );
                       }
 
@@ -137,9 +140,7 @@ const TrainingForm = ({
       )}
 
       <Media queries={{ small: { minWidth: 768 } }}>
-        {booksListForTable.length > 0 && (
-          <BooksTable books={booksListForTable} isShow={isShow} />
-        )}
+        <BooksTable books={booksListForTable} isShow={isShow} />
       </Media>
     </>
   );

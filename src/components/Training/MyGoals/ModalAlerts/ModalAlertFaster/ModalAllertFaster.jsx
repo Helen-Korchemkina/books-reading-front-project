@@ -20,7 +20,7 @@ function ModalAllertFaster({ click }) {
   const [updateUserTraining] = useUpdateUserTrainingMutation();
 
   const handleNewTraining = () => {
-    navigate('/library', { replace: true });
+    navigate('/training', { replace: true });
 
     readingBooks.forEach(book => {
       if (book.status !== BOOKS_STATUS.finish) {

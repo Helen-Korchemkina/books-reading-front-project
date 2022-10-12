@@ -1,25 +1,37 @@
 import { MdDeleteOutline, MdOutlineMenuBook } from 'react-icons/md';
 
+import CheckBox from '../BooksTable/CheckBox';
+
 import s from './BooksTableMobile.module.scss';
 
-const BooksTableMobile = ({ books = [], onDel, onAlready }) => {
-  const isRead = status => {
-    return status === 'Already read' ? 'iconBookActive' : 'iconBook';
+const BooksTableMobile = ({ books = [], onDel }) => {
+  const iconDelete = status => {
+    return status !== 'Going to read' ? 'iconNone' : 'iconDel';
   };
- const iconDelete = status => {
-  return status !== 'Going to read' ? 'iconNone' : 'iconDel';
- }
-  
+
   return (
     <ul className={s.list}>
       {books.map(
-        ({ _id, title, author, countOfPages, releaseDate, status }) => (
+        ({
+          _id,
+          title,
+          author,
+          countOfPages,
+          releaseDate,
+          status,
+          isReadBook,
+        }) => (
           <li key={_id} className={s.item}>
             <div className={s.title__wrap}>
-              <MdOutlineMenuBook
-                className={s[isRead(status)]}
-                onClick={() => onAlready(_id)}
-              />
+              {isReadBook ? (
+                <CheckBox
+                  status={status}
+                  id={_id}
+                  countOfPages={countOfPages}
+                />
+              ) : (
+                <MdOutlineMenuBook className={s.iconBook} />
+              )}
               <span className={s.title}>{title}</span>
               <MdDeleteOutline
                 className={s[iconDelete(status)]}
@@ -46,4 +58,3 @@ const BooksTableMobile = ({ books = [], onDel, onAlready }) => {
 };
 
 export default BooksTableMobile;
-// Already read

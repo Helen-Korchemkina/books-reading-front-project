@@ -10,10 +10,13 @@ const getFinishBooks = state =>
   getBooks(state)?.filter(book => book.status === BOOKS_STATUS.finish);
 const getBooksOfTranning = state =>
   getBooks(state)?.filter(book => book.isReadBook);
+const countPageReadingBooks = state =>
+  getReadingBooks(state)?.reduce((acc, book) => (acc += book.countOfPages), 0);
 export {
   getBooks,
   getPendingBooks,
   getReadingBooks,
   getFinishBooks,
   getBooksOfTranning,
+  countPageReadingBooks,
 };

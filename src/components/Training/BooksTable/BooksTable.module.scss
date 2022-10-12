@@ -1,111 +1,168 @@
 @import 'scss-variables.scss';
 
-.table {
-  position: relative;
-  width: 100%;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 1.25;
-  text-align: left;
-  color: var(--color-grey);
-
-  @media (min-width: $screenMd) {
-    border-collapse: separate;
-    border-spacing: 0 12px;
-    font-size: 14px;
-    margin-bottom: 40px;
-  }
+.wrap {
+  margin-bottom: 40px;
 }
 
-.headerRow {
-  display: table-row;
-  font-weight: inherit;
-  color: var(--color-light-grey);
+.titleWrap {
+  padding: 12px 0;
+  border-top: 1px solid #e0e5eb;
 }
 
 .title {
-  margin-left: 40px;
-}
-
-.bodyRowTitle {
-  @media (min-width: $screenMd) {
-    display: flex;
-    align-items: center;
-  }
-}
-
-.bodyRow td {
-  @media (min-width: $screenMd) {
-    padding-top: 12px;
-    border-top: 1px solid #e0e5eb;
-    font-weight: 500;
-    line-height: 17px;
-  }
-}
-
-.inlineTitle {
-  display: grid;
-  grid-template-columns: 80px 1fr;
-
-  @media (min-width: $screenMd) {
-    display: table-cell;
-  }
-}
-
-.subtitle {
+  width: 100%;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
   color: #898f9f;
+}
 
-  @media (min-width: $screenMd) {
-    display: none;
+.titleB {
+  composes: title;
+  margin-right: 217px;
+  @media (min-width: $screenLg) {
+    margin-right: 300px;
   }
+}
+.titleA {
+  composes: title;
+  margin-right: 162px;
+  @media (min-width: $screenLg) {
+    margin-right: 180px;
+  }
+}
+.titleY {
+  composes: title;
+  margin-right: 61px;
+  @media (min-width: $screenLg) {
+    margin-right: 65px;
+  }
+}
+.titleP {
+  composes: title;
+}
+
+.contentWrap {
+  position: relative;
+  padding: 20px 0;
+  border-top: 1px solid #e0e5eb;
+  border-bottom: 1px solid #e0e5eb;
+}
+
+.isContentWrap {
+  composes: contentWrap;
+  overflow: hidden;
+  overflow-y: scroll;
+  height: 171px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgba(177, 181, 194, 0.25);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b1b5c2;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b1b5c2;
 }
 
 .icon {
-  position: absolute;
-  left: 0;
-  width: 20px;
-  height: 20px;
-  color: var(--color-light-grey);
-  cursor: pointer;
+  width: 22px;
+  height: 17px;
+  color: #898f9f;
+  margin-right: 12px;
 }
 
-.iconActive {
-  composes: icon;
-  color: var(--color-orange);
+.spanText {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
 }
 
-.iconDelete {
+.spanScroll {
   position: absolute;
+  top: 0;
   right: 0;
-  width: 20px;
-  height: 20px;
-  color: var(--color-light-grey);
-  cursor: pointer;
+  width: 5px;
+  height: 58px;
+  background: rgba(177, 181, 194, 0.25);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 7px;
+    width: 5px;
+    height: 27px;
+    background: #b1b5c2;
+  }
 }
 
-.iconFill {
-  color: var(--color-orange);
+.inputWrap {
+  display: flex;
+  align-items: center;
 }
 
-.button {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 200px;
-  height: 40px;
-  padding: 10px 0 10px 0;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 20px;
-  text-align: center;
-  cursor: pointer;
+.isContentWrap .inputWrap {
+  margin-bottom: 20px;
 }
 
-.wrap {
-  border-top: 1px solid #e0e5eb;
-  border-bottom: 1px solid #e0e5eb;
+.input {
+  border: none;
+  background-color: transparent;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #242a37;
+  padding: 0;
+  padding-right: 5px;
+  outline: none;
+}
+
+.titleBInput {
+  composes: input;
+
+  width: 250px;
   @media (min-width: $screenLg) {
-  overflow-y: scroll;
-  height: 190px;
- }
+    width: 330px;
+  }
+}
+
+.titleAInput {
+  composes: input;
+  width: 215px;
+  @media (min-width: $screenLg) {
+    width: 230px;
+  }
+}
+
+.titleYInput {
+  composes: input;
+  width: 95px;
+  @media (min-width: $screenLg) {
+    width: 85px;
+  }
+}
+
+.titlePInput {
+  composes: input;
+  text-align: right;
+  width: 45px;
+  margin-right: 40px;
+  @media (min-width: $screenLg) {
+    width: 55px;
+    margin-right: 120px;
+  }
+}
+
+.iconDel {
+  width: 22px;
+  height: 17px;
+  color: #a6abb9;
+  cursor: pointer;
 }

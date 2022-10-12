@@ -28,11 +28,6 @@
   cursor: pointer;
 }
 
-.iconBookActive {
-  composes: iconBook;
-  color: var(--color-orange);
-}
-
 .title {
   width: 182px;
   font-weight: 500;
@@ -50,7 +45,7 @@
   cursor: pointer;
 }
 
-.iconNone{
+.iconNone {
   display: none;
 }
 
