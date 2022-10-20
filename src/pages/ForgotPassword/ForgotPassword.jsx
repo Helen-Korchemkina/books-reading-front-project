@@ -28,6 +28,9 @@ export default function ForgotPassword() {
   const defaultAuthor = `Francis Bacon`;
   const [quote, setQuote] = useState(null);
   const [author, setAuthor] = useState(null);
+  const [modalMessage, setModalMessage] = useState(
+    'We have sent you a link to your email to reset your password.'
+  );
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -46,6 +49,8 @@ export default function ForgotPassword() {
           setTogle(true);
           console.log(response.data);
         } catch (error) {
+          setModalMessage(`${values.email} is not registered`);
+          setTogle(true);
           console.error(error);
         }
       }
@@ -126,9 +131,7 @@ export default function ForgotPassword() {
               }}
               modifClass={s.ForgotPasswordModal}
             >
-              <p>
-                We have sent you a link to your email to reset your password.
-              </p>
+              <p>{modalMessage}</p>
               <Button
                 variant="filled"
                 modifClass={s.loginBtn}
